@@ -35,10 +35,10 @@ export default function Header({ t, lang, setLang, compact }) {
 
   const navLinks = [
     { id: 'top', href: '#top', label: t.navHome },
+    { id: 'meet', href: '#meet', label: t.navAbout },
     { id: 'gallery', href: '#gallery', label: t.navGallery },
     { id: 'process', href: '#process', label: t.navProcess },
     { id: 'which-photo', href: '#which-photo', label: t.navWhich },
-    { id: 'meet', href: '#meet', label: t.navAbout },
     { id: 'contact', href: '#contact', label: t.navContact },
   ];
   const menuLinks = [...navLinks, { id: 'commission', href: '/commission', label: t.ctaCommission }];
