@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from 'react';
 import Slot from '../../components/Slot.jsx';
-import { PhotosContext, photoBox, resolvePhoto } from '../../lib/photos.js';
+import { PhotosContext, focusOf, placement, resolvePhoto } from '../../lib/photos.js';
 import { uploadPhoto } from './api.js';
 
 // Studio photo frame. Fills its positioned parent (give the parent an
@@ -9,14 +9,16 @@ import { uploadPhoto } from './api.js';
 //   - drag the photo to move it inside the frame, and zoom with the slider
 //   - go back to the original photo
 // Every change calls onChange(nextPhotos) with the whole ad-photos object.
+// Positions are saved as a focal point (see lib/photos.js), so the website
+// shows the same part of the photo in frames of any shape.
 //
-// Props: slotId, src (built-in default), placeholder, radius, photos
+// Props: slotId, src (built-in default), focus (its focal point), placeholder, radius, photos
 // (current ad-photos), onChange(nextPhotos), compact (small frames: one
 // "Change" button below the frame instead of controls over it).
-export default function EditableSlot({ slotId, src, placeholder = 'Drop a photo here', radius = 0, photos, onChange, compact = false }) {
+export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a photo here', radius = 0, photos, onChange, compact = false }) {
   const inherited = useContext(PhotosContext);
   const all = photos || inherited || {};
-  const photo = resolvePhoto(all, slotId, src);
+  const photo = resolvePhoto(all, slotId, src, focus);
   const hasOwn = !!(all[slotId] && all[slotId].url);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -38,7 +40,7 @@ export default function EditableSlot({ slotId, src, placeholder = 'Drop a photo 
     setBusy(true); setError('');
     try {
       const url = await uploadPhoto(file, slotId);
-      commit({ url, s: 1, x: 0, y: 0 });
+      commit({ url, s: 1, fx: 0.5, fy: 0.5 });
     } catch (e) {
       setError('The upload did not work. Please try again.');
     } finally {
@@ -46,23 +48,41 @@ export default function EditableSlot({ slotId, src, placeholder = 'Drop a photo 
     }
   };
 
-  const clamp = (p) => {
+  // The focal point this frame actually shows (legacy x/y and out-of-reach
+  // points resolved), so dragging always starts from what is on screen.
+  const measure = (p) => {
     const el = frameRef.current;
-    if (!el || !imgRatio.current) return p;
+    if (!el || !imgRatio.current) return null;
     const r = el.getBoundingClientRect();
-    const box = photoBox(p, imgRatio.current, r.width / r.height);
-    return { ...p, x: Math.max(-box.maxX, Math.min(box.maxX, p.x)), y: Math.max(-box.maxY, Math.min(box.maxY, p.y)) };
+    const box = placement(p, imgRatio.current, r.width / r.height);
+    return { r, box, fx: (50 - box.left) / box.w, fy: (50 - box.top) / box.h };
+  };
+
+  const toFocus = (p) => {
+    const el = frameRef.current;
+    if (!el || !imgRatio.current || 'fx' in p) return p;
+    const r = el.getBoundingClientRect();
+    return { url: p.url, s: p.s, ...focusOf(p, imgRatio.current, r.width / r.height) };
   };
 
   const onPointerDown = (e) => {
     if (!photo || busy || e.button > 0) return;
     const el = frameRef.current;
-    const r = el.getBoundingClientRect();
-    const start = { px: e.clientX, py: e.clientY, base: photo };
+    const m = measure(photo);
+    if (!m) return;
+    const start = { px: e.clientX, py: e.clientY };
     let latest = photo;
     el.setPointerCapture(e.pointerId);
+    // Dragging may push the point past what this frame can show (clamped to
+    // the photo's edges): a wider or taller frame elsewhere will use it.
+    // An axis she doesn't move keeps its saved value, so a vertical nudge here
+    // doesn't undo a sideways aim that only a phone frame can show.
+    const saved = focusOf(photo, imgRatio.current, m.r.width / m.r.height);
+    const axis = (delta, eff, size, keep) => (Math.abs(delta) < 3 ? keep : Math.min(1, Math.max(0, eff - delta / size)));
     const move = (ev) => {
-      latest = clamp({ ...start.base, x: start.base.x + (ev.clientX - start.px) / r.width * 100, y: start.base.y + (ev.clientY - start.py) / r.height * 100 });
+      const fx = axis(ev.clientX - start.px, m.fx, m.r.width * m.box.w / 100, saved.fx);
+      const fy = axis(ev.clientY - start.py, m.fy, m.r.height * m.box.h / 100, saved.fy);
+      latest = { url: photo.url, s: photo.s, fx, fy };
       setDraft(latest);
     };
     const up = () => {
@@ -113,7 +133,7 @@ export default function EditableSlot({ slotId, src, placeholder = 'Drop a photo 
               <span>Zoom</span>
               <input
                 type="range" min="1" max="3" step="0.01" value={shown.s}
-                onChange={(e) => setDraft(clamp({ ...(draft || photo), s: Number(e.target.value) }))}
+                onChange={(e) => setDraft({ ...toFocus(draft || photo), s: Number(e.target.value) })}
                 onPointerUp={() => { if (draft) { commit(draft); setDraft(null); } }}
                 onKeyUp={() => { if (draft) { commit(draft); setDraft(null); } }}
                 style={{ width: 70 }}

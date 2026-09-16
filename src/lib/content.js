@@ -7,7 +7,7 @@ export const CONTENT_KEYS = [
   'ad-gallery-extra',       // [{slotId, title:{en,pt,nl}, caption:{en,pt,nl}, category}]
   'ad-gallery-hidden',      // [slotId]
   'ad-gallery-text',        // {slotId: {title:{en,pt,nl}, caption:{en,pt,nl}}}
-  'ad-photos',              // {slotId: {url, s, x, y}}  see photos.js
+  'ad-photos',              // {slotId: {url, s, fx, fy}}  see photos.js
   'ad-testimonials',        // see testimonials.js
   'ad-testimonials-hidden',
   'ad-testimonials-text',

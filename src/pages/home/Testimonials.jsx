@@ -55,10 +55,10 @@ export default function Testimonials({ t, lang, compact, content }) {
 function Card({ item, compact, style, hovered, onToggle, onEnter, onLeave }) {
   const avatar = usePhoto(item.avatarSlotId, item.avatar || undefined);
   const veilStyle = 'position:absolute;inset:0;pointer-events:none;background:rgba(20,38,44,.72);transition:opacity .5s ease;opacity:' + (hovered ? 0 : 1);
-  const captionStyle = 'grid-area:1/1;align-self:end;position:relative;z-index:1;padding:' + (compact ? '16px' : 'clamp(20px,2.2vw,28px)') + ';display:flex;flex-direction:column;gap:' + (compact ? '9px' : '12px') + ';transition:opacity .5s ease;opacity:' + (hovered ? 0 : 1);
+  const captionStyle = 'grid-area:1/1;align-self:start;position:relative;z-index:1;padding:' + (compact ? '16px' : 'clamp(20px,2.2vw,28px)') + ';display:flex;flex-direction:column;gap:' + (compact ? '9px' : '12px') + ';transition:opacity .5s ease;opacity:' + (hovered ? 0 : 1);
   const textStyle = compact
-    ? "margin:0;font-family:'Newsreader',serif;font-size:14px;line-height:1.5;color:#FCFAF6;font-weight:300;text-wrap:pretty"
-    : "margin:0;font-family:'Newsreader',serif;font-size:15.5px;line-height:1.65;color:#FCFAF6;font-weight:300;text-wrap:pretty";
+    ? "margin:0;font-family:'Newsreader',serif;font-size:14px;line-height:1.5;color:#FCFAF6;font-weight:600;text-wrap:pretty"
+    : "margin:0;font-family:'Newsreader',serif;font-size:15.5px;line-height:1.65;color:#FCFAF6;font-weight:600;text-wrap:pretty";
 
   return (
     <div onClick={onToggle} onMouseEnter={onEnter} onMouseLeave={onLeave} style={s(style)}>
@@ -66,7 +66,7 @@ function Card({ item, compact, style, hovered, onToggle, onEnter, onLeave }) {
         <Slot slotId={item.slotId} placeholder="Photo of the client or their piece" />
       </div>
       <div style={s(veilStyle)}></div>
-      <div aria-hidden="true" style={s('grid-area:1/1;width:100%;aspect-ratio:3/4')}></div>
+      <div aria-hidden="true" style={s('grid-area:1/1;width:100%;aspect-ratio:4/5')}></div>
       <figcaption style={s(captionStyle)}>
         <span style={s("font-family:'Cardo',serif;font-size:66px;line-height:.5;color:#EAC66B")}>“</span>
         {item.lines.filter(Boolean).map((line, j) => (

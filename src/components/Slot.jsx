@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { photoBox, usePhoto } from '../lib/photos.js';
+import { isPlain, placement, usePhoto } from '../lib/photos.js';
 
 // Read-only photo frame: fills its (positioned) parent, crops like the Design
 // tool's image-slot, and shows a soft placeholder when there is no photo.
-// Pass `photo` to render a specific photo instead of looking up slotId.
-export default function Slot({ slotId, src, placeholder = '', alt = '', radius = 0, photo: forced, style }) {
-  const looked = usePhoto(slotId, src);
+// Pass `photo` to render a specific photo instead of looking up slotId, and
+// `focus` ({fx, fy}) to aim the built-in src at part of the image.
+export default function Slot({ slotId, src, focus, placeholder = '', alt = '', radius = 0, photo: forced, style }) {
+  const looked = usePhoto(slotId, src, focus);
   const photo = forced || looked;
   const frameRef = useRef(null);
   const [ratios, setRatios] = useState(null);
-  const plain = !photo || (photo.s === 1 && photo.x === 0 && photo.y === 0);
+  const plain = !photo || isPlain(photo);
 
   useEffect(() => {
     if (plain || !frameRef.current) return undefined;
@@ -34,12 +35,11 @@ export default function Slot({ slotId, src, placeholder = '', alt = '', radius =
 
   let imgStyle = { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' };
   if (!plain && ratios && ratios.frame && ratios.image) {
-    const box = photoBox(photo, ratios.image, ratios.frame);
+    const box = placement(photo, ratios.image, ratios.frame);
     imgStyle = {
       position: 'absolute', maxWidth: 'none', display: 'block',
       width: box.w + '%', height: box.h + '%',
-      left: 50 + photo.x + '%', top: 50 + photo.y + '%',
-      transform: 'translate(-50%,-50%)',
+      left: box.left + '%', top: box.top + '%',
     };
   }
 

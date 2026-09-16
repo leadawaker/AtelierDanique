@@ -3,6 +3,8 @@ import Slot from '../../components/Slot.jsx';
 import { HERO_VEIL } from './settings.js';
 
 const BANNER_SRC = '/uploads/Project%20(20260915100023).jpg';
+// Aim at the right side of the photo, so narrow (phone) frames show it.
+const BANNER_FOCUS = { fx: 1, fy: 0.5 };
 const TEXT_PAD = 'padding:clamp(56px,6vw,104px) clamp(24px,4vw,56px) clamp(52px,6vw,104px) clamp(24px,5vw,80px)';
 
 // Cream veil over the banner photo: a left-to-right gradient on desktop, a flat
@@ -45,7 +47,7 @@ function HeroText({ t, compact, links }) {
 export default function Hero(props) {
   const { compact, content } = props;
   const split = content['ad-hero-layout'] === 'split';
-  const slot = <Slot slotId="ad-hero-banner" src={BANNER_SRC} placeholder="Hero banner photo" alt="" />;
+  const slot = <Slot slotId="ad-hero-banner" src={BANNER_SRC} focus={BANNER_FOCUS} placeholder="Hero banner photo" alt="" />;
 
   if (!split) {
     return (

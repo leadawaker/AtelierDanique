@@ -17,8 +17,7 @@ const RAW_TESTIMONIALS = [
     avatar: 'uploads/avatar-marcia.jpg',
     lines: [
       'I chose a moment between me and my granddaughter that I will always remember as ours: the way she looked up at me while I was feeding her.',
-      'The painting is beautiful, delicate, and deeply emotional. Danique captured not only the photograph, but the feeling behind it.',
-      'She paints with her hands, but mostly with her heart.'
+      'The painting is beautiful, delicate, and deeply emotional. Danique captured not only the photograph, but the feeling behind it.'
     ]
   },
   {

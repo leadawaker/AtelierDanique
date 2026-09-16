@@ -12,7 +12,7 @@ export const FLOATING_WHATSAPP = true;
 export const HERO_VEIL = { reach: 74, softness: 47, opacity: 86, mobileOpacity: 85 };
 
 export const GALLERY_TWEAKS = {
-  height: 400,
+  height: 450,
   slatWidth: 3,
   slatGap: 5,
   gap: 23,
