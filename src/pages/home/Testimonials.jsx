@@ -6,20 +6,18 @@ import Slot from '../../components/Slot.jsx';
 
 const GAP = 'clamp(18px,2vw,28px)';
 
-// Desktop layout adapts to the count: 4 keeps the original 2x2 at 880px; any
-// other count uses a centred flex row of third-width cards, so 1-2 sit centred,
-// 3 fill one row and a short last row (5 or 6) is centred under the first.
-function gridStyle(compact, count) {
+// Desktop layout adapts to the count: up to 4 cards share one centred row;
+// 5 or 6 use rows of three with the short last row centred.
+function gridStyle(compact) {
   if (compact) return 'display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:6px';
-  if (count === 4) return 'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:' + GAP + ';max-width:880px;margin:0 auto';
-  return '--tg:' + GAP + ';display:flex;flex-wrap:wrap;justify-content:center;gap:var(--tg);max-width:1200px;margin:0 auto';
+  return '--tg:' + GAP + ';display:flex;flex-wrap:wrap;justify-content:center;gap:var(--tg);max-width:1400px;margin:0 auto';
 }
 
 function cardStyle(compact, count) {
   const base = 'position:relative;display:grid;grid-template-columns:minmax(0,1fr);overflow:hidden;border-radius:6px;cursor:pointer;';
   if (compact) return base + 'flex:0 0 86%;scroll-snap-align:center';
-  if (count === 4) return base + 'min-width:0';
-  return base + 'min-width:0;flex:0 0 calc((100% - 2 * var(--tg)) / 3)';
+  const perRow = count === 4 ? 4 : 3;
+  return base + 'min-width:0;flex:0 0 calc((100% - ' + (perRow - 1) + ' * var(--tg)) / ' + perRow + ')';
 }
 
 export default function Testimonials({ t, lang, compact, content }) {
@@ -35,7 +33,7 @@ export default function Testimonials({ t, lang, compact, content }) {
           <p style={s('margin:0 0 10px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E36B54')}>{t.testEyebrow}</p>
           <h2 style={s("margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(32px,3.8vw,52px);line-height:1.05;letter-spacing:-.02em")}>{t.testTitle}</h2>
         </div>
-        <div data-noscrollbar="" style={s(gridStyle(compact, items.length))}>
+        <div data-noscrollbar="" style={s(gridStyle(compact))}>
           {items.map((item, i) => (
             <Card
               key={item.slotId}
@@ -68,7 +66,7 @@ function Card({ item, compact, style, hovered, onToggle, onEnter, onLeave }) {
         <Slot slotId={item.slotId} placeholder="Photo of the client or their piece" />
       </div>
       <div style={s(veilStyle)}></div>
-      <div aria-hidden="true" style={s('grid-area:1/1;width:100%;aspect-ratio:1/1')}></div>
+      <div aria-hidden="true" style={s('grid-area:1/1;width:100%;aspect-ratio:3/4')}></div>
       <figcaption style={s(captionStyle)}>
         <span style={s("font-family:'Cardo',serif;font-size:66px;line-height:.5;color:#EAC66B")}>“</span>
         {item.lines.filter(Boolean).map((line, j) => (

@@ -23,7 +23,7 @@ export default function TestimonialCard({ item, values, onEdit, badge, badgeColo
 
   return (
     <div style={card}>
-      <div style={{ position: 'relative', aspectRatio: '1 / 1', borderRadius: 6, overflow: 'hidden', background: '#E3E1D8' }}>
+      <div style={{ position: 'relative', aspectRatio: '3 / 4', borderRadius: 6, overflow: 'hidden', background: '#E3E1D8' }}>
         <EditableSlot slotId={item.slotId} radius={6} placeholder="Photo of the client or their piece" photos={photos} onChange={onPhotos} />
       </div>
 
