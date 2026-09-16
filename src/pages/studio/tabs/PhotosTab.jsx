@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { s } from '../../../lib/css.js';
 import { parseVideo } from '../../../lib/video.js';
 import EditableSlot from '../EditableSlot.jsx';
+import InstagramPanel from '../InstagramPanel.jsx';
 
 // Photos tab: the fixed photos around the site, the hero layout switch and
-// the video link.
+// the video link and the Instagram update button.
 
 const SITE_PHOTOS = [
   { slotId: 'ad-hero-banner', name: 'Hero banner', where: 'Top of the home page, behind the headline.', src: '/uploads/Project%20(20260915100023).jpg', ratio: '16/9' },
@@ -27,6 +28,7 @@ export default function PhotosTab({ content, update }) {
       <SitePhotos photos={content['ad-photos']} onChange={(next) => update('ad-photos', next)} />
       <HeroLayout value={content['ad-hero-layout']} onChange={(v) => update('ad-hero-layout', v)} />
       <VideoLink value={content['ad-video-url'] || ''} onChange={(v) => update('ad-video-url', v)} />
+      <InstagramPanel />
     </div>
   );
 }
