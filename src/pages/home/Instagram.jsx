@@ -103,15 +103,15 @@ export default function Instagram({ t, lang, links }) {
           <div style={s('display:flex;gap:clamp(16px,2vw,24px);width:max-content;align-items:stretch')}>
             {cards.map((post) => (
               <figure key={post.id} className="h-lift" style={s('margin:0;' + CARD)}>
-                <div style={s('position:relative;aspect-ratio:3/4;overflow:hidden;background:#E3E1D8')}>
+                <a href={post.permalink} target="_blank" rel="noopener" aria-label="Open this post on Instagram" style={s('position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:#E3E1D8;cursor:pointer')}>
                   <Slot photo={{ url: post.url, s: 1, x: 0, y: 0 }} alt={post.title} />
                   <div className="h-show" style={s('position:absolute;inset:0;background:rgba(38,69,79,.74);opacity:0;transition:opacity .35s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:16px')}>
-                    <a href={post.permalink} target="_blank" rel="noopener" aria-label="Open this post on Instagram" className="h-fill-coral" style={s('position:absolute;top:10px;right:10px;width:34px;height:34px;border:1px solid rgba(241,244,242,.45);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#F1F4F2;transition:background .25s,border-color .25s')}>
-                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{IG_ICON}</svg>
-                    </a>
+                    <span aria-hidden="true" style={s('position:absolute;top:10px;right:10px;width:34px;height:34px;background:#E36B54;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#FCFAF6')}>
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{IG_ICON}</svg>
+                    </span>
                     <p style={s('margin:0;font-size:13px;line-height:1.6;color:#E4EDEA;font-weight:300;text-wrap:pretty;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:8;overflow:hidden;white-space:pre-line')}>{post.description}</p>
                   </div>
-                </div>
+                </a>
                 <figcaption style={s('padding:16px 4px 20px;display:flex;flex-direction:column;gap:4px;flex:1')}>
                   <a href={post.permalink} target="_blank" rel="noopener" className="h-color-coral" style={s('margin:0;font-size:14px;color:#26454F')}>{post.title || '@atelierdanique'}</a>
                   <p style={s('margin:0;font-size:12px;color:#85949A;font-weight:300;letter-spacing:.04em')}>{formatDate(post.timestamp, lang)}</p>
