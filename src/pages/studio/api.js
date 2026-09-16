@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { upload } from '@vercel/blob/client';
 import { EMPTY_CONTENT, fetchContent } from '../../lib/content.js';
+import { shrinkImage } from '../../lib/image.js';
 
 // ---- Session (password checked on the server, HttpOnly cookie) ----
 
@@ -84,37 +85,16 @@ export function useStudioContent({ onUnauthorized } = {}) {
 
 // ---- Photo upload: shrink in the browser, then upload straight to Blob ----
 
-const MAX_EDGE = 2400;
-
-// Phone photos are 5-15 MB. Downscale to 2400px on the long edge as JPEG
-// before upload; if the browser cannot decode the file (e.g. HEIC outside
-// Safari) the original is uploaded as-is.
-async function shrink(file) {
-  try {
-    const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
-    const k = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
-    const canvas = document.createElement('canvas');
-    canvas.width = Math.round(bitmap.width * k);
-    canvas.height = Math.round(bitmap.height * k);
-    canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-    bitmap.close && bitmap.close();
-    const blob = await new Promise((r) => canvas.toBlob(r, 'image/jpeg', 0.88));
-    return blob ? { body: blob, ext: 'jpg', type: 'image/jpeg' } : null;
-  } catch (e) {
-    return null;
-  }
-}
-
 // Returns the public URL of the uploaded photo.
 export async function uploadPhoto(file, slotId) {
-  const small = await shrink(file);
-  const body = small ? small.body : file;
-  const ext = small ? small.ext : (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const small = await shrinkImage(file);
+  const body = small || file;
+  const ext = small ? 'jpg' : (file.name.split('.').pop() || 'jpg').toLowerCase();
   const safeSlot = String(slotId).replace(/[^\w-]/g, '');
   const result = await upload('photos/' + safeSlot + '.' + ext, body, {
     access: 'public',
     handleUploadUrl: '/api/upload',
-    contentType: small ? small.type : file.type || undefined,
+    contentType: small ? 'image/jpeg' : file.type || undefined,
   });
   return result.url;
 }

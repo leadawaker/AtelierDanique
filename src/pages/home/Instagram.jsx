@@ -90,12 +90,15 @@ export default function Instagram({ t, lang, links }) {
   return (
     <section id="instagram" style={s('background:#F1EFE8;padding:clamp(48px,7vw,100px) 0')}>
       <div data-reveal="" style={s('max-width:1400px;margin:0 auto;padding:0 clamp(24px,5vw,80px)')}>
-        <div style={s('display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,52px)')}>
-          <div>
-            <p style={s('margin:0 0 10px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E36B54')}>{t.igEyebrow}</p>
+        <div style={s('margin-bottom:clamp(28px,4vw,52px)')}>
+          <p style={s('margin:0 0 10px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E36B54')}>{t.igEyebrow}</p>
+          <div style={s('display:flex;align-items:center;gap:clamp(12px,1.4vw,18px)')}>
             <h2 style={s("margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(36px,4.4vw,60px);line-height:1;letter-spacing:-.02em")}>{t.igTitle}</h2>
+            <a href={links.instagramUrl} target="_blank" rel="noopener" aria-label={t.igSeeMore} title="@atelierdanique" className="h-bg-coral-dark"
+              style={s('flex:0 0 auto;width:clamp(38px,3.6vw,48px);height:clamp(38px,3.6vw,48px);background:#E36B54;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#FCFAF6;transition:background .25s')}>
+              <svg width="55%" height="55%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{IG_ICON}</svg>
+            </a>
           </div>
-          <a href={links.instagramUrl} target="_blank" rel="noopener" className="h-color-coral" style={s('font-size:14px;color:#455459;border-bottom:1px solid #EAC66B;padding-bottom:3px')}>{t.igSeeMore}{' '} →</a>
         </div>
       </div>
       <div style={s('position:relative')}>
