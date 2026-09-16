@@ -1,0 +1,28 @@
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #E2E0D7; color: #26454F; font-family: 'Jost', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+a { color: #E36B54; text-decoration: none; }
+a:hover { color: #C0503B; }
+::selection { background: #F7D8CF; }
+input, textarea, select, button { font-family: inherit; font-size: inherit; color: inherit; }
+[data-reveal] { transition: opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1); }
+[data-reveal="out"] { opacity: 0; transform: translateY(18px); }
+[data-noscrollbar]::-webkit-scrollbar { display: none; }
+
+/* Hover states. The Design files used style-hover attributes; these classes
+   are their one-to-one replacements. Named h-<what it does>. */
+.h-bg-coral-dark:hover { background: #C0503B !important; color: #FCFAF6 !important; }
+.h-bg-coral-light:hover { background: #EE8B75 !important; color: #FCFAF6 !important; }
+.h-color-coral:hover { color: #E36B54 !important; }
+.h-color-teal:hover { color: #26454F !important; }
+.h-color-gold:hover { color: #EAC66B !important; }
+.h-color-light:hover { color: #F1F4F2 !important; }
+.h-border-coral:hover { border-color: #E36B54 !important; }
+.h-opacity:hover { opacity: .85 !important; }
+.h-lift:hover { transform: translateY(-6px); box-shadow: 0 7px 14px rgba(38,69,79,.18) !important; }
+.h-show:hover { opacity: 1 !important; }
+.h-play:hover { background: rgba(227,107,84,.85) !important; transform: scale(1.06); }
+.h-ig-outline:hover { border-color: #E36B54 !important; color: #E36B54 !important; background: #EFF4F2 !important; }
+.h-wa-float:hover { background: #1B333B !important; transform: translateY(-2px); }
+.h-fill-coral:hover { background: #E36B54 !important; border-color: #E36B54 !important; color: #FCFAF6 !important; }
+.f-coral:focus { border-bottom-color: #E36B54 !important; }

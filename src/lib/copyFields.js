@@ -1,0 +1,78 @@
+// What the studio's Copy tab lets Danique edit, grouped by section of the
+// home page. Every key is a plain string key in STRINGS (strings.js).
+// `long: true` fields get a multi-line box.
+export const COPY_GROUPS = [
+  { id: 'hero', name: 'Top of the page', fields: [
+    { key: 'heroEyebrow', label: 'Small line above the headline' },
+    { key: 'heroT1', label: 'Headline, first line' },
+    { key: 'heroT2', label: 'Headline, second line' },
+    { key: 'heroT3', label: 'Headline, coloured words at the end' },
+    { key: 'heroBody', label: 'Text under the headline', long: true },
+    { key: 'ctaCommission', label: 'Commission button' },
+  ] },
+  { id: 'meet', name: 'Video (Meet Danique)', fields: [
+    { key: 'meetEyebrow', label: 'Small line above the title' },
+    { key: 'meetTitle', label: 'Title' },
+    { key: 'watch', label: 'Label on the video' },
+    { key: 'tagline', label: 'Handwritten line under the video' },
+    { key: 'videoSoon', label: 'Message when there is no video yet', long: true },
+  ] },
+  { id: 'gallery', name: 'Gallery', fields: [
+    { key: 'galEyebrow', label: 'Small line above the title' },
+    { key: 'galTitle', label: 'Title' },
+    { key: 'galSeeMore', label: 'Instagram link' },
+    { key: 'hintClick', label: 'Hint on computers' },
+    { key: 'hintSwipe', label: 'Hint on phones' },
+  ] },
+  { id: 'process', name: 'How it works', fields: [
+    { key: 'procEyebrow', label: 'Small line above the title' },
+    { key: 'procTitle', label: 'Title' },
+    { key: 'procIntro', label: 'Intro', long: true },
+    { key: 'step1T', label: 'Step 1 title' }, { key: 'step1B', label: 'Step 1 text', long: true },
+    { key: 'step2T', label: 'Step 2 title' }, { key: 'step2B', label: 'Step 2 text', long: true },
+    { key: 'step3T', label: 'Step 3 title' }, { key: 'step3B', label: 'Step 3 text', long: true },
+    { key: 'step4T', label: 'Step 4 title' }, { key: 'step4B', label: 'Step 4 text', long: true },
+  ] },
+  { id: 'pricing', name: 'Pricing', fields: [
+    { key: 'priceTitle', label: 'Title' },
+    { key: 'sizeLabelA5', label: 'A5 size label' },
+    { key: 'sizeLabelA4', label: 'A4 size label' },
+    { key: 'included', label: "\"What's included\" heading" },
+    { key: 'inc1', label: 'Included 1' }, { key: 'inc2', label: 'Included 2' },
+    { key: 'inc3', label: 'Included 3' }, { key: 'inc4', label: 'Included 4' },
+    { key: 'inc5', label: 'Included 5' }, { key: 'inc6', label: 'Included 6' },
+    { key: 'inc7', label: 'Included 7' }, { key: 'inc9', label: 'Included 8' },
+  ] },
+  { id: 'testimonials', name: 'Testimonials heading', fields: [
+    { key: 'testEyebrow', label: 'Small line above the title' },
+    { key: 'testTitle', label: 'Title' },
+  ] },
+  { id: 'which', name: 'Get expert advice', fields: [
+    { key: 'whichEyebrow', label: 'Small line above the title (phones)' },
+    { key: 'whichTitle', label: 'Title' },
+    { key: 'whichBody', label: 'Text', long: true },
+    { key: 'whichCta', label: 'WhatsApp button' },
+  ] },
+  { id: 'instagram', name: 'Instagram', fields: [
+    { key: 'igEyebrow', label: 'Small line above the title' },
+    { key: 'igTitle', label: 'Title' },
+    { key: 'igSeeMore', label: 'Link to Instagram' },
+  ] },
+  { id: 'faq', name: 'FAQ heading', fields: [
+    { key: 'faqEyebrow', label: 'Small line above the title' },
+    { key: 'faqTitle', label: 'Title' },
+  ] },
+  { id: 'contact', name: 'Contact', fields: [
+    { key: 'ctaEyebrow', label: 'Small line above the title' },
+    { key: 'ctaTitle', label: 'Title' },
+    { key: 'ctaBody1', label: 'Text, first line', long: true },
+    { key: 'ctaBody2', label: 'Text, second line', long: true },
+    { key: 'ctaSend', label: 'Button' },
+    { key: 'ctaNotSure', label: 'Link to the advice section' },
+  ] },
+  { id: 'footer', name: 'Footer', fields: [
+    { key: 'footTagline', label: 'Tagline' },
+    { key: 'footLocation', label: 'Location' },
+    { key: 'footCopy', label: 'Copyright line' },
+  ] },
+];

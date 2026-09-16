@@ -1,0 +1,67 @@
+import { useEffect, useState } from 'react';
+
+// Everything Danique edits in the studio is one flat JSON object, stored in
+// Redis as a hash (one field per key) and served by /api/content. The keys
+// match the localStorage keys from the Design brief.
+export const CONTENT_KEYS = [
+  'ad-gallery-extra',       // [{slotId, title:{en,pt,nl}, caption:{en,pt,nl}, category}]
+  'ad-gallery-hidden',      // [slotId]
+  'ad-gallery-text',        // {slotId: {title:{en,pt,nl}, caption:{en,pt,nl}}}
+  'ad-photos',              // {slotId: {url, s, x, y}}  see photos.js
+  'ad-testimonials',        // see testimonials.js
+  'ad-testimonials-hidden',
+  'ad-testimonials-text',
+  'ad-video-url',           // string, Vimeo or YouTube link, '' = none
+  'ad-hero-layout',         // 'banner' | 'split'
+  'ad-copy',                // {stringKey: {en, pt, nl}}
+];
+
+export const EMPTY_CONTENT = {
+  'ad-gallery-extra': [],
+  'ad-gallery-hidden': [],
+  'ad-gallery-text': {},
+  'ad-photos': {},
+  'ad-testimonials': [],
+  'ad-testimonials-hidden': [],
+  'ad-testimonials-text': {},
+  'ad-video-url': '',
+  'ad-hero-layout': 'banner',
+  'ad-copy': {},
+};
+
+// Fill missing or wrongly typed keys with the empty default, so a blank or
+// partly broken store renders exactly like the untouched design.
+export function normalizeContent(raw) {
+  const out = { ...EMPTY_CONTENT };
+  if (!raw || typeof raw !== 'object') return out;
+  for (const key of CONTENT_KEYS) {
+    const def = EMPTY_CONTENT[key];
+    const v = raw[key];
+    if (Array.isArray(def) ? Array.isArray(v)
+      : typeof def === 'string' ? typeof v === 'string'
+      : v && typeof v === 'object' && !Array.isArray(v)) out[key] = v;
+  }
+  if (out['ad-hero-layout'] !== 'split') out['ad-hero-layout'] = 'banner';
+  return out;
+}
+
+export async function fetchContent({ fresh = false } = {}) {
+  const res = await fetch('/api/content' + (fresh ? '?fresh=1' : ''), fresh ? { cache: 'no-store' } : undefined);
+  if (!res.ok) throw new Error('content ' + res.status);
+  return normalizeContent(await res.json());
+}
+
+// Public pages: render defaults immediately, swap in the stored content when
+// it arrives, and re-read when the tab regains focus (so an edit made in the
+// studio shows up on switching back).
+export function useSiteContent() {
+  const [content, setContent] = useState(EMPTY_CONTENT);
+  useEffect(() => {
+    let alive = true;
+    const load = () => fetchContent().then((c) => { if (alive) setContent(c); }).catch(() => {});
+    load();
+    window.addEventListener('focus', load);
+    return () => { alive = false; window.removeEventListener('focus', load); };
+  }, []);
+  return content;
+}

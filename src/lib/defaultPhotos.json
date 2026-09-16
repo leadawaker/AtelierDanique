@@ -1,0 +1,26 @@
+{
+  "ad-gal-places": {
+    "url": "/slots/ad-gal-places.webp",
+    "s": 1.0,
+    "x": 0.0,
+    "y": 0.0
+  },
+  "ad-t2": {
+    "url": "/slots/ad-t2.webp",
+    "s": 1.0,
+    "x": 0.0,
+    "y": 2.526824524527446
+  },
+  "ad-t3": {
+    "url": "/slots/ad-t3.webp",
+    "s": 1.2685038711909673,
+    "x": -1.1112855549199994,
+    "y": 2.3335094973102564
+  },
+  "ad-which-photo": {
+    "url": "/slots/ad-which-photo.webp",
+    "s": 1.0,
+    "x": 0.0,
+    "y": -4.47884992306565
+  }
+}

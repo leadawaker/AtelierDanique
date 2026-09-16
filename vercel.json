@@ -1,0 +1,25 @@
+{
+  "framework": "vite",
+  "crons": [
+    { "path": "/api/cron/refresh-instagram", "schedule": "0 17 * * *" },
+    { "path": "/api/cron/refresh-instagram", "schedule": "0 18 * * *" }
+  ],
+  "rewrites": [
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/edit",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    }
+  ]
+}
