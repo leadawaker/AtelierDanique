@@ -41,8 +41,8 @@ export default function Home() {
       <div id="top" style={{ maxWidth: 1440, margin: '0 auto', background: '#FCFAF6', boxShadow: '0 0 60px rgba(38,69,79,.08)' }}>
         <Header {...props} setLang={setLang} />
         <Hero {...props} />
-        <Meet {...props} />
         <Gallery {...props} />
+        <Meet {...props} />
         <Process {...props} />
         <Pricing {...props} />
         <Testimonials {...props} />
