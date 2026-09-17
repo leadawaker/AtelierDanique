@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
 import { GALLERY_TWEAKS } from './settings.js';
+import { PhotosContext, croppedRatio, resolvePhoto } from '../../lib/photos.js';
+import { galleryColumns } from '../../lib/galleryLayout.js';
 
-// Share of the free room each visible column gets: col 0 (open), 1, 2, 3.
-const SHARES = [-0.06, 0.61, 0.3, 0.15];
-const STRETCHED = [0, 0.71, 0.4, 0.25];
-const SQUEEZED = [-0.12, 0.59, 0.28, 0.13];
+// Shape assumed for a piece whose image has not loaded yet (or has no photo).
+const DEFAULT_RATIO = 16 / 9;
 
 const SQ = {
   h: GALLERY_TWEAKS.height,
@@ -19,7 +19,7 @@ const SQ = {
   hoverGrow: GALLERY_TWEAKS.hoverGrow !== false,
 };
 
-const WRAP_STYLE = 'container-type:inline-size;--sq-h:' + SQ.h + 'px;--sq-gap:' + SQ.gap + 'px;--sq-slat-gap:' + SQ.slatGap + 'px;--sq-slat:' + SQ.slat + 'px;--sq-ms:' + SQ.ms + 'ms;--sq-ease:cubic-bezier(.16,1,.3,1);--sq-hero:calc(var(--sq-h) * 16 / 9);--sq-room:calc(100cqi - var(--sq-hero) - 3 * var(--sq-slat-gap) - 3 * var(--sq-gap) - 3 * var(--sq-slat))';
+const WRAP_STYLE = '--sq-h:' + SQ.h + 'px;--sq-gap:' + SQ.gap + 'px;--sq-slat-gap:' + SQ.slatGap + 'px;--sq-slat:' + SQ.slat + 'px;--sq-ms:' + SQ.ms + 'ms;--sq-ease:cubic-bezier(.16,1,.3,1)';
 
 const ARROW = 'width:44px;height:44px;border-radius:6px;border:0;background:#E36B54;color:#FCFAF6;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:opacity .2s';
 
@@ -44,6 +44,46 @@ export default function GalleryDesktop({ items }) {
 
   openRef.current = openIdx;
   nRef.current = N;
+
+  // The strip's width, measured before paint so the first frame is laid out.
+  const wrapRef = useRef(null);
+  const [width, setWidth] = useState(0);
+  useLayoutEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return undefined;
+    setWidth(el.getBoundingClientRect().width);
+    const ro = new ResizeObserver(() => setWidth(el.getBoundingClientRect().width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Each piece's shape (width/height), read from the image itself, so the open
+  // piece can be framed at its real proportions instead of a fixed 16:9.
+  const photos = useContext(PhotosContext);
+  const shots = items.map((it) => resolvePhoto(photos, it.slotId));
+  const urls = shots.map((p) => (p && p.url) || '');
+  const [ratios, setRatios] = useState({});
+  const urlKey = urls.join('|');
+  useEffect(() => {
+    let live = true;
+    urls.forEach((url) => {
+      if (!url || ratios[url]) return;
+      const img = new Image();
+      img.onload = () => {
+        if (live && img.naturalWidth && img.naturalHeight) {
+          setRatios((prev) => ({ ...prev, [url]: img.naturalWidth / img.naturalHeight }));
+        }
+      };
+      img.src = url;
+    });
+    return () => { live = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlKey]);
+  const ratioAt = (i) => {
+    const k = ((i % N) + N) % N;
+    const natural = ratios[urls[k]];
+    return natural ? croppedRatio(shots[k], natural) : DEFAULT_RATIO;
+  };
 
   // Item count changed (piece added or hidden): start again at the first piece.
   const [seenN, setSeenN] = useState(N);
@@ -102,11 +142,27 @@ export default function GalleryDesktop({ items }) {
   const titleAt = (i) => (items[i] && items[i].title) || '';
   const capAt = (i) => (items[i] && items[i].caption) || '';
   const hoverCol = hoverIdx === null ? -9 : hoverIdx - openIdx;
-  const hoverActive = SQ.hoverGrow && hoverCol >= 0 && hoverCol <= 3;
   const trans = (props) => (still ? 'none' : props);
+
+  const cols = galleryColumns({
+    width: width || 1200,
+    height: SQ.h,
+    gap: SQ.gap,
+    slat: SQ.slat,
+    slatGap: SQ.slatGap,
+    ratio: ratioAt(openIdx),
+    hoverCol: SQ.hoverGrow ? hoverCol : -1,
+  });
+  const lastCol = cols.side.length;
+  const colWidth = (col) => {
+    if (col === 0) return cols.open;
+    if (col < 0 || col > lastCol) return SQ.slat;
+    return cols.side[col - 1];
+  };
 
   return (
     <div
+      ref={wrapRef}
       style={s(WRAP_STYLE)}
       onMouseEnter={() => { pausedRef.current = true; }}
       onMouseLeave={() => { pausedRef.current = false; setHoverIdx(null); }}
@@ -118,16 +174,13 @@ export default function GalleryDesktop({ items }) {
         >
           {loop.map((it, i) => {
             const col = i - openIdx;
-            const shares = hoverActive ? (hoverCol === col ? STRETCHED : SQUEEZED) : SHARES;
-            const width = (col < 0 || col > 3)
-              ? 'var(--sq-slat)'
-              : (col === 0
-                ? 'calc(var(--sq-hero) + var(--sq-room) * ' + shares[0] + ')'
-                : 'calc(var(--sq-room) * ' + shares[col] + ')');
-            const panelStyle = 'position:relative;height:100%;flex-shrink:0;overflow:hidden;cursor:pointer;background:#E3E1D8;width:' + width
-              + ';margin-left:' + (i === 0 ? '0' : (col < 4 ? 'var(--sq-gap)' : 'var(--sq-slat-gap)'))
-              + ';border-radius:min(' + SQ.radius + 'px, calc(' + width + ' / 2));transition:' + trans('width var(--sq-ms) var(--sq-ease),margin-left var(--sq-ms) var(--sq-ease)');
-            const imageWrapStyle = 'position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:var(--sq-hero);min-width:100%;'
+            const w = colWidth(col);
+            const panelStyle = 'position:relative;height:100%;flex-shrink:0;overflow:hidden;cursor:pointer;background:#E3E1D8;width:' + w + 'px'
+              + ';margin-left:' + (i === 0 ? '0' : (col <= lastCol ? 'var(--sq-gap)' : 'var(--sq-slat-gap)'))
+              + ';border-radius:' + Math.min(SQ.radius, w / 2) + 'px;transition:' + trans('width var(--sq-ms) var(--sq-ease),margin-left var(--sq-ms) var(--sq-ease)');
+            // The image keeps its own full width inside a narrower panel, so a
+            // column opening up reveals more of it rather than rescaling it.
+            const imageWrapStyle = 'position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:' + (SQ.h * ratioAt(i)) + 'px;min-width:100%;'
               + (col === 0 ? '' : 'pointer-events:none');
             return (
               <div

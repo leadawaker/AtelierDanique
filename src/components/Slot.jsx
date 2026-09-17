@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { isPlain, placement, usePhoto } from '../lib/photos.js';
+import { imageBox, isPlain, usePhoto } from '../lib/photos.js';
 
 // Read-only photo frame: fills its (positioned) parent, crops like the Design
 // tool's image-slot, and shows a soft placeholder when there is no photo.
@@ -33,9 +33,11 @@ export default function Slot({ slotId, src, focus, placeholder = '', alt = '', r
     );
   }
 
-  let imgStyle = { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' };
+  // A cropped photo stays invisible until it can be placed: shown uncropped
+  // for a moment, the part she cut away would flash up first.
+  let imgStyle = { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: photo.crop ? 0 : 1 };
   if (!plain && ratios && ratios.frame && ratios.image) {
-    const box = placement(photo, ratios.image, ratios.frame);
+    const box = imageBox(photo, ratios.image, ratios.frame);
     imgStyle = {
       position: 'absolute', maxWidth: 'none', display: 'block',
       width: box.w + '%', height: box.h + '%',

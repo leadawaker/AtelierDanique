@@ -3,7 +3,10 @@ import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
 import { GALLERY_TWEAKS } from './settings.js';
 
-const SLIDE_STYLE = 'flex:0 0 86%;scroll-snap-align:center;position:relative;height:' + Math.round(GALLERY_TWEAKS.height * 1.25) + 'px;border-radius:6px;overflow:hidden;background:#E3E1D8';
+// Fixed rather than derived from the desktop height: raising the desktop
+// gallery should not make a phone card fill the whole screen.
+const MOBILE_HEIGHT = 562;
+const SLIDE_STYLE = 'flex:0 0 86%;scroll-snap-align:center;position:relative;height:' + MOBILE_HEIGHT + 'px;border-radius:6px;overflow:hidden;background:#E3E1D8';
 const HOLD_MS = 9000;
 
 // Centre `child` inside the horizontally scrolling `parent`.

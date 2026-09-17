@@ -137,7 +137,7 @@ function Card({ cardStyle, slotId, placeholder, photos, onPhotos, fields, badge,
   return (
     <div style={s(cardStyle)}>
       <div style={s('position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden;background:#E3E1D8')}>
-        <EditableSlot slotId={slotId} placeholder={placeholder} radius={6} photos={photos} onChange={onPhotos} />
+        <EditableSlot slotId={slotId} placeholder={placeholder} radius={6} photos={photos} onChange={onPhotos} croppable />
       </div>
       <div style={s('display:grid;gap:14px')}>
         {fields.map((f) => (

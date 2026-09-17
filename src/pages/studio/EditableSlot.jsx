@@ -1,7 +1,8 @@
 import { useContext, useRef, useState } from 'react';
 import Slot from '../../components/Slot.jsx';
-import { PhotosContext, focusOf, placement, resolvePhoto } from '../../lib/photos.js';
+import { PhotosContext, croppedRatio, focusOf, placement, resolvePhoto } from '../../lib/photos.js';
 import { uploadPhoto } from './api.js';
+import CropDialog from './CropDialog.jsx';
 
 // Studio photo frame. Fills its positioned parent (give the parent an
 // aspect-ratio, like the public page does). Danique can:
@@ -14,8 +15,9 @@ import { uploadPhoto } from './api.js';
 //
 // Props: slotId, src (built-in default), focus (its focal point), placeholder, radius, photos
 // (current ad-photos), onChange(nextPhotos), compact (small frames: one
-// "Change" button below the frame instead of controls over it).
-export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a photo here', radius = 0, photos, onChange, compact = false }) {
+// "Change" button below the frame instead of controls over it), croppable
+// (adds a "Crop" button that cuts the upload down, see lib/photos.js).
+export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a photo here', radius = 0, photos, onChange, compact = false, croppable = false }) {
   const inherited = useContext(PhotosContext);
   const all = photos || inherited || {};
   const photo = resolvePhoto(all, slotId, src, focus);
@@ -24,6 +26,7 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
   const [error, setError] = useState('');
   const [over, setOver] = useState(false);
   const [draft, setDraft] = useState(null);
+  const [cropping, setCropping] = useState(false);
   const frameRef = useRef(null);
   const inputRef = useRef(null);
   const imgRatio = useRef(null);
@@ -48,13 +51,20 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
     }
   };
 
+  // Zoom and focal point work on the cropped part, so every calculation below
+  // uses its shape rather than the upload's.
+  const ratioOf = (p) => croppedRatio(p, imgRatio.current);
+  // Carried through every drag and zoom, which otherwise rebuild the photo
+  // from url, s and focal point and would silently drop it.
+  const cropOf = (p) => (p.crop ? { crop: p.crop } : {});
+
   // The focal point this frame actually shows (legacy x/y and out-of-reach
   // points resolved), so dragging always starts from what is on screen.
   const measure = (p) => {
     const el = frameRef.current;
     if (!el || !imgRatio.current) return null;
     const r = el.getBoundingClientRect();
-    const box = placement(p, imgRatio.current, r.width / r.height);
+    const box = placement(p, ratioOf(p), r.width / r.height);
     return { r, box, fx: (50 - box.left) / box.w, fy: (50 - box.top) / box.h };
   };
 
@@ -62,7 +72,7 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
     const el = frameRef.current;
     if (!el || !imgRatio.current || 'fx' in p) return p;
     const r = el.getBoundingClientRect();
-    return { url: p.url, s: p.s, ...focusOf(p, imgRatio.current, r.width / r.height) };
+    return { url: p.url, s: p.s, ...focusOf(p, ratioOf(p), r.width / r.height), ...cropOf(p) };
   };
 
   const onPointerDown = (e) => {
@@ -77,12 +87,12 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
     // the photo's edges): a wider or taller frame elsewhere will use it.
     // An axis she doesn't move keeps its saved value, so a vertical nudge here
     // doesn't undo a sideways aim that only a phone frame can show.
-    const saved = focusOf(photo, imgRatio.current, m.r.width / m.r.height);
+    const saved = focusOf(photo, ratioOf(photo), m.r.width / m.r.height);
     const axis = (delta, eff, size, keep) => (Math.abs(delta) < 3 ? keep : Math.min(1, Math.max(0, eff - delta / size)));
     const move = (ev) => {
       const fx = axis(ev.clientX - start.px, m.fx, m.r.width * m.box.w / 100, saved.fx);
       const fy = axis(ev.clientY - start.py, m.fy, m.r.height * m.box.h / 100, saved.fy);
-      latest = { url: photo.url, s: photo.s, fx, fy };
+      latest = { url: photo.url, s: photo.s, fx, fy, ...cropOf(photo) };
       setDraft(latest);
     };
     const up = () => {
@@ -141,6 +151,9 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
               />
             </label>
           )}
+          {croppable && photo && (
+            <button type="button" style={{ ...small, pointerEvents: 'auto' }} onClick={() => setCropping(true)} disabled={busy}>Crop</button>
+          )}
           {hasOwn && (
             <button type="button" style={{ ...small, pointerEvents: 'auto' }} onClick={() => commit(null)} disabled={busy}>Use original</button>
           )}
@@ -148,6 +161,19 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
       )}
       {error && (
         <p style={{ position: 'absolute', top: 8, left: 8, right: 8, margin: 0, background: '#FCFAF6', color: '#C0503B', fontSize: 12, padding: '6px 8px', borderRadius: 2 }}>{error}</p>
+      )}
+      {cropping && photo && (
+        <CropDialog
+          url={photo.url}
+          crop={photo.crop}
+          onCancel={() => setCropping(false)}
+          onSave={(crop) => {
+            setCropping(false);
+            // A new crop is a new picture: the old zoom and aim were set on
+            // the previous shape, so start centred again.
+            commit({ url: photo.url, s: 1, fx: 0.5, fy: 0.5, ...(crop ? { crop } : {}) });
+          }}
+        />
       )}
       <input ref={inputRef} type="file" accept="image/*" hidden onChange={(e) => { pick(e.target.files && e.target.files[0]); e.target.value = ''; }} />
     </div>
