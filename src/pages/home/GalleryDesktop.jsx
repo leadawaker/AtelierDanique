@@ -28,6 +28,7 @@ export default function GalleryDesktop({ items, tweaks }) {
     radius: tweaks.radius,
     ms: tweaks.duration,
     hoverGrow: tweaks.hoverGrow !== false,
+    dim: Math.min(1, Math.max(0, (tweaks.dim || 0) / 100)),
   };
   const N = Math.max(1, items.length);
   const loop = [...items, ...items, ...items];
@@ -185,6 +186,11 @@ export default function GalleryDesktop({ items, tweaks }) {
             // column opening up reveals more of it rather than rescaling it.
             const imageWrapStyle = 'position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:' + (SQ.h * ratioAt(i)) + 'px;min-width:100%;'
               + (col === 0 ? '' : 'pointer-events:none');
+            // Fades with the same easing as the width change, so a slide
+            // arriving at the open spot loses its tint at the same pace it
+            // grows into it, rather than snapping dark or clear.
+            const dimStyle = 'position:absolute;inset:0;background:#14262C;pointer-events:none;opacity:' + (col === 0 ? 0 : SQ.dim)
+              + ';transition:' + trans('opacity var(--sq-ms) var(--sq-ease)');
             return (
               <div
                 key={i}
@@ -195,6 +201,7 @@ export default function GalleryDesktop({ items, tweaks }) {
                 <div style={s(imageWrapStyle)}>
                   <Slot slotId={it.slotId} placeholder={it.placeholder} alt={it.title} />
                 </div>
+                {SQ.dim > 0 && <div style={s(dimStyle)} />}
               </div>
             );
           })}

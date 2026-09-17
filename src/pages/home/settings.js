@@ -24,6 +24,9 @@ export const GALLERY_TWEAKS = {
   interval: 9000,
   autoplay: true,
   hoverGrow: true,
+  // 0-100: a dark tint over every picture except the one on show, so it reads
+  // as the one the eye should be on.
+  dim: 0,
 };
 
 export function galleryTweaks(content) {

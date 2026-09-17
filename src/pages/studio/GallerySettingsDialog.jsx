@@ -17,6 +17,7 @@ const FIELDS = [
   { key: 'radius', label: 'Corner roundness', unit: 'px', min: 0, max: 24, step: 1 },
   { key: 'duration', label: 'Change speed', unit: 's', min: 0.4, max: 2, step: 0.1, toUi: (ms) => ms / 1000, toStored: (s) => Math.round(s * 1000) },
   { key: 'interval', label: 'Time on each picture', unit: 's', min: 4, max: 20, step: 0.5, toUi: (ms) => ms / 1000, toStored: (s) => Math.round(s * 1000) },
+  { key: 'dim', label: 'Darken the other pictures', unit: '%', min: 0, max: 100, step: 1 },
 ];
 
 const BTN = { border: 0, borderRadius: 2, padding: '12px 22px', fontSize: 14, cursor: 'pointer', minHeight: 44 };
