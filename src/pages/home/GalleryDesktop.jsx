@@ -2,31 +2,33 @@ import { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState }
 import { flushSync } from 'react-dom';
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
-import { GALLERY_TWEAKS } from './settings.js';
 import { PhotosContext, croppedRatio, resolvePhoto } from '../../lib/photos.js';
 import { galleryColumns } from '../../lib/galleryLayout.js';
 
 // Shape assumed for a piece whose image has not loaded yet (or has no photo).
 const DEFAULT_RATIO = 16 / 9;
 
-const SQ = {
-  h: GALLERY_TWEAKS.height,
-  gap: GALLERY_TWEAKS.gap,
-  slat: GALLERY_TWEAKS.slatWidth,
-  slatGap: GALLERY_TWEAKS.slatGap,
-  radius: GALLERY_TWEAKS.radius,
-  ms: GALLERY_TWEAKS.duration,
-  hoverGrow: GALLERY_TWEAKS.hoverGrow !== false,
-};
-
-const WRAP_STYLE = '--sq-h:' + SQ.h + 'px;--sq-gap:' + SQ.gap + 'px;--sq-slat-gap:' + SQ.slatGap + 'px;--sq-slat:' + SQ.slat + 'px;--sq-ms:' + SQ.ms + 'ms;--sq-ease:cubic-bezier(.16,1,.3,1)';
+// Style string for one gallery instance's tweaks, computed per render since
+// they now come from the studio rather than being fixed at build time.
+function sqStyle(SQ) {
+  return '--sq-h:' + SQ.h + 'px;--sq-gap:' + SQ.gap + 'px;--sq-slat-gap:' + SQ.slatGap + 'px;--sq-slat:' + SQ.slat + 'px;--sq-ms:' + SQ.ms + 'ms;--sq-ease:cubic-bezier(.16,1,.3,1)';
+}
 
 const ARROW = 'width:44px;height:44px;border-radius:6px;border:0;background:#E36B54;color:#FCFAF6;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:opacity .2s';
 
 // Desktop "squeeze" strip. The strip is three copies of the gallery so columns
 // 1-3 always have cards. After a step settles, the index slides back by one
 // period with transitions off: identical picture, so the reset is invisible.
-export default function GalleryDesktop({ items }) {
+export default function GalleryDesktop({ items, tweaks }) {
+  const SQ = {
+    h: tweaks.height,
+    gap: tweaks.gap,
+    slat: tweaks.slatWidth,
+    slatGap: tweaks.slatGap,
+    radius: tweaks.radius,
+    ms: tweaks.duration,
+    hoverGrow: tweaks.hoverGrow !== false,
+  };
   const N = Math.max(1, items.length);
   const loop = [...items, ...items, ...items];
 
@@ -95,12 +97,13 @@ export default function GalleryDesktop({ items }) {
 
   const scheduleAuto = useCallback(() => {
     clearTimeout(autoT.current);
-    if (GALLERY_TWEAKS.autoplay === false) return;
+    if (tweaks.autoplay === false) return;
     autoT.current = setTimeout(() => {
       if (pausedRef.current) scheduleAuto();
       else stepRef.current(1);
-    }, GALLERY_TWEAKS.interval);
-  }, []);
+    }, tweaks.interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tweaks.autoplay, tweaks.interval]);
 
   const stepRef = useRef(null);
   const step = useCallback((by) => {
@@ -163,7 +166,7 @@ export default function GalleryDesktop({ items }) {
   return (
     <div
       ref={wrapRef}
-      style={s(WRAP_STYLE)}
+      style={s(sqStyle(SQ))}
       onMouseEnter={() => { pausedRef.current = true; }}
       onMouseLeave={() => { pausedRef.current = false; setHoverIdx(null); }}
     >

@@ -5,6 +5,7 @@ export const CONTENT_TYPES = {
   "ad-gallery-hidden": "array",
   "ad-gallery-text": "object",
   "ad-photos": "object",
+  "ad-gallery-settings": "object",
   "ad-testimonials": "array",
   "ad-testimonials-hidden": "array",
   "ad-testimonials-text": "object",

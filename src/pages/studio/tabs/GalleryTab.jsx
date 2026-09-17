@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { s } from '../../../lib/css.js';
 import { GALLERY, galleryDefaults } from '../../../lib/gallery.js';
 import EditableSlot from '../EditableSlot.jsx';
+import GallerySettingsDialog from '../GallerySettingsDialog.jsx';
 
 // "The gallery": the 11 built-in pieces (text overrides, hide / put back) and
 // the pieces Danique added herself (free text, remove).
@@ -15,6 +17,7 @@ const CARD_OFF = 'display:flex;flex-direction:column;gap:14px;border-radius:6px;
 const pickLang = (v, id) => (typeof v === 'string' ? (id === 'en' ? v : '') : (v && v[id]) || '');
 
 export default function GalleryTab({ content, update }) {
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const extras = content['ad-gallery-extra'] || [];
   const hidden = content['ad-gallery-hidden'] || [];
   const over = content['ad-gallery-text'] || {};
@@ -73,8 +76,20 @@ export default function GalleryTab({ content, update }) {
           style={s('display:flex;align-items:center;gap:10px;background:#E36B54;color:#FCFAF6;border:0;padding:15px 26px;font-size:15px;border-radius:2px;cursor:pointer;transition:background .25s')}>
           <span style={s('font-size:19px;line-height:1')}>+</span><span>Add a piece</span>
         </button>
+        <button type="button" onClick={() => setSettingsOpen(true)} className="h-color-coral"
+          style={s('background:none;border:1px solid #D3CFC4;color:#26454F;padding:14px 22px;font-size:14px;border-radius:2px;cursor:pointer;min-height:44px')}>
+          Gallery settings
+        </button>
         <p style={s('margin:0;font-size:13px;color:#85949A;font-weight:300')}>New pieces appear at the end of the carousel.</p>
       </div>
+
+      {settingsOpen && (
+        <GallerySettingsDialog
+          value={content['ad-gallery-settings']}
+          onCancel={() => setSettingsOpen(false)}
+          onSave={(next) => { update('ad-gallery-settings', next); setSettingsOpen(false); }}
+        />
+      )}
 
       <div style={s('display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:clamp(18px,2.4vw,28px)')}>
         {GALLERY.map((g) => {

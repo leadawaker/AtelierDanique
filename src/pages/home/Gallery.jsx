@@ -1,10 +1,12 @@
 import { s } from '../../lib/css.js';
 import { buildGallery } from '../../lib/gallery.js';
+import { galleryTweaks } from './settings.js';
 import GalleryDesktop from './GalleryDesktop.jsx';
 import GalleryMobile from './GalleryMobile.jsx';
 
 export default function Gallery({ t, lang, compact, content, links }) {
   const items = buildGallery(content, lang);
+  const tweaks = galleryTweaks(content);
 
   return (
     <section id="gallery" style={s('padding: clamp(48px,7vw,100px) clamp(24px,5vw,80px); background-color: #1F3C46')}>
@@ -17,7 +19,7 @@ export default function Gallery({ t, lang, compact, content, links }) {
           </div>
           <a href={links.instagramUrl} target="_blank" rel="noopener" className="h-color-gold" style={s('font-size:14px;color:#E4EDEA;border-bottom:1px solid #EAC66B;padding-bottom:3px')}>{t.galSeeMore}{'  →'}</a>
         </div>
-        {compact ? <GalleryMobile items={items} /> : <GalleryDesktop items={items} />}
+        {compact ? <GalleryMobile items={items} tweaks={tweaks} /> : <GalleryDesktop items={items} tweaks={tweaks} />}
       </div>
     </section>
   );

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
-import { GALLERY_TWEAKS } from './settings.js';
-
 // Fixed rather than derived from the desktop height: raising the desktop
 // gallery should not make a phone card fill the whole screen.
 const MOBILE_HEIGHT = 562;
 const SLIDE_STYLE = 'flex:0 0 86%;scroll-snap-align:center;position:relative;height:' + MOBILE_HEIGHT + 'px;border-radius:6px;overflow:hidden;background:#E3E1D8';
+// The autoplay pace and on/off are shared with the desktop strip, set from
+// the studio's gallery settings; everything else about this layout is fixed.
 const HOLD_MS = 9000;
 
 // Centre `child` inside the horizontally scrolling `parent`.
@@ -17,7 +17,7 @@ function centreIn(parent, child) {
 // Compact gallery: snap-scrolling cards with a thumbnail strip that follows
 // the centred card. Autoplay steps one card per interval and waits 9s after
 // the visitor touches the track or picks a thumbnail.
-export default function GalleryMobile({ items }) {
+export default function GalleryMobile({ items, tweaks }) {
   const trackRef = useRef(null);
   const thumbsRef = useRef(null);
   const holdRef = useRef(0);
@@ -26,7 +26,7 @@ export default function GalleryMobile({ items }) {
 
   // Autoplay.
   useEffect(() => {
-    if (GALLERY_TWEAKS.autoplay === false) return undefined;
+    if (tweaks.autoplay === false) return undefined;
     const id = setInterval(() => {
       const track = trackRef.current;
       if (!track || !track.offsetParent || holdRef.current > Date.now()) return;
@@ -35,9 +35,9 @@ export default function GalleryMobile({ items }) {
       const stepPx = card.getBoundingClientRect().width + 12;
       const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
       track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + stepPx, behavior: 'smooth' });
-    }, GALLERY_TWEAKS.interval);
+    }, tweaks.interval);
     return () => clearInterval(id);
-  }, []);
+  }, [tweaks.autoplay, tweaks.interval]);
 
   // Touch hold and centred-card tracking.
   useEffect(() => {

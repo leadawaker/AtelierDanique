@@ -8,6 +8,7 @@ export const CONTENT_KEYS = [
   'ad-gallery-hidden',      // [slotId]
   'ad-gallery-text',        // {slotId: {title:{en,pt,nl}, caption:{en,pt,nl}}}
   'ad-photos',              // {slotId: {url, s, fx, fy}}  see photos.js
+  'ad-gallery-settings',    // {height, gap, slatWidth, slatGap, radius, duration, interval, autoplay, hoverGrow}, see home/settings.js
   'ad-testimonials',        // see testimonials.js
   'ad-testimonials-hidden',
   'ad-testimonials-text',
@@ -21,6 +22,7 @@ export const EMPTY_CONTENT = {
   'ad-gallery-hidden': [],
   'ad-gallery-text': {},
   'ad-photos': {},
+  'ad-gallery-settings': {},
   'ad-testimonials': [],
   'ad-testimonials-hidden': [],
   'ad-testimonials-text': {},
