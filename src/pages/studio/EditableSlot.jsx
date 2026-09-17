@@ -8,7 +8,6 @@ import CropDialog from './CropDialog.jsx';
 // aspect-ratio, like the public page does). Danique can:
 //   - drop a photo on it, or click "Replace photo" to pick one
 //   - drag the photo to move it inside the frame, and zoom with the slider
-//   - go back to the original photo
 // Every change calls onChange(nextPhotos) with the whole ad-photos object.
 // Positions are saved as a focal point (see lib/photos.js), so the website
 // shows the same part of the photo in frames of any shape.
@@ -153,9 +152,6 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
           )}
           {croppable && photo && (
             <button type="button" style={{ ...small, pointerEvents: 'auto' }} onClick={() => setCropping(true)} disabled={busy}>Crop</button>
-          )}
-          {hasOwn && (
-            <button type="button" style={{ ...small, pointerEvents: 'auto' }} onClick={() => commit(null)} disabled={busy}>Use original</button>
           )}
         </div>
       )}
