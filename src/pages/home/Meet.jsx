@@ -5,7 +5,7 @@ export default function Meet({ t, content }) {
   const video = parseVideo(content['ad-video-url']);
 
   return (
-    <section id="meet" style={s('background:#FCFAF6;padding:clamp(48px,7vw,100px) clamp(24px,5vw,80px)')}>
+    <section id="meet" style={s('background:#F1EFE8;padding:clamp(48px,7vw,100px) clamp(24px,5vw,80px)')}>
       <div data-reveal="" style={s('max-width:1400px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:clamp(28px,3.4vw,48px)')}>
         <div style={s('display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center')}>
           <p style={s('margin:0;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E36B54')}>{t.meetEyebrow}</p>
