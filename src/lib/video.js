@@ -51,7 +51,7 @@ export function useVideoThumbnail(video) {
     if (provider === 'youtube') { setUrl('https://img.youtube.com/vi/' + id + '/hqdefault.jpg'); return undefined; }
     let alive = true;
     setUrl(null);
-    fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent('https://vimeo.com/' + id))
+    fetch('https://vimeo.com/api/oembed.json?width=1920&url=' + encodeURIComponent('https://vimeo.com/' + id))
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => { if (alive && data) setUrl(data.thumbnail_url || null); })
       .catch(() => {});
