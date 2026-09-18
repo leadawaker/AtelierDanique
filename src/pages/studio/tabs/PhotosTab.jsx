@@ -13,7 +13,6 @@ const SITE_PHOTOS = [
   { slotId: 'ad-price-a5', name: 'A5 commission card', where: 'Pricing, the €50 option.', src: '/uploads/a5-sheet.jpg', ratio: '3/4' },
   { slotId: 'ad-price-a4', name: 'A4 commission card', where: 'Pricing, the €75 option.', src: '/uploads/a4-sheet.jpg', ratio: '3/4' },
   { slotId: 'ad-about-portrait', name: 'Portrait of Danique', where: 'The About section near the footer.', src: '/uploads/danique.jpg', ratio: '3/4' },
-  { slotId: 'ad-video-still', name: 'Video still', where: 'Behind the play button on the home page.', src: '', ratio: '16/10' },
 ];
 
 const SECTION = 'margin-bottom:clamp(44px,6vw,72px)';
@@ -164,7 +163,7 @@ function VideoLink({ value, onChange }) {
           </div>
         )}
 
-        <p style={s(NOTE)}>Before the video plays, visitors see the "Video still" photo from the list above.</p>
+        <p style={s(NOTE)}>Before the video plays, visitors see the thumbnail from Vimeo or YouTube itself, whatever you picked there.</p>
         <p style={s(NOTE)}>Tip: on Vimeo, set the video to Unlisted for the cleanest player.</p>
       </div>
     </section>

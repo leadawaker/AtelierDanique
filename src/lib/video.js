@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 // Parses a pasted Vimeo or YouTube link into an embeddable player URL.
 // Returns null for anything it does not recognise.
 //
@@ -34,4 +36,27 @@ export function parseVideo(input) {
     };
   }
   return null;
+}
+
+// The still shown before a visitor presses play: the video's own thumbnail,
+// not a separately uploaded photo. YouTube's thumbnail URL is predictable;
+// Vimeo's is not, so it comes from their oEmbed endpoint.
+export function useVideoThumbnail(video) {
+  const [url, setUrl] = useState(null);
+  const id = video && video.id;
+  const provider = video && video.provider;
+
+  useEffect(() => {
+    if (!id) { setUrl(null); return undefined; }
+    if (provider === 'youtube') { setUrl('https://img.youtube.com/vi/' + id + '/hqdefault.jpg'); return undefined; }
+    let alive = true;
+    setUrl(null);
+    fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent('https://vimeo.com/' + id))
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => { if (alive && data) setUrl(data.thumbnail_url || null); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [id, provider]);
+
+  return url;
 }

@@ -6,6 +6,7 @@ import GalleryTab from './tabs/GalleryTab.jsx';
 import PhotosTab from './tabs/PhotosTab.jsx';
 import TestimonialsTab from './tabs/TestimonialsTab.jsx';
 import CopyTab from './tabs/CopyTab.jsx';
+import PricingTab from './tabs/PricingTab.jsx';
 
 // /edit: Danique's private Website manager. The password is checked on the
 // server; this page only asks whether the session cookie is valid.
@@ -14,6 +15,7 @@ const TABS = [
   { id: 'gallery', label: 'Gallery', Component: GalleryTab },
   { id: 'photos', label: 'Photos', Component: PhotosTab },
   { id: 'testimonials', label: 'Testimonials', Component: TestimonialsTab },
+  { id: 'pricing', label: 'Pricing', Component: PricingTab },
   { id: 'copy', label: 'Copy', Component: CopyTab },
 ];
 

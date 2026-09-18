@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { s } from '../../lib/css.js';
-import { parseVideo } from '../../lib/video.js';
-import Slot from '../../components/Slot.jsx';
+import { parseVideo, useVideoThumbnail } from '../../lib/video.js';
 
 export default function Meet({ t, content }) {
   const video = parseVideo(content['ad-video-url']);
+  const thumb = useVideoThumbnail(video);
   // 'playing' only when a real video parsed; otherwise toggles the "coming soon" note.
   const [open, setOpen] = useState(false);
   const playing = open && video;
@@ -28,7 +28,11 @@ export default function Meet({ t, content }) {
             />
           ) : (
             <>
-              <Slot slotId="ad-video-still" radius={6} placeholder="Still: brush working on an artwork" />
+              {thumb ? (
+                <img src={thumb} alt="" style={s('position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:6px;display:block')} />
+              ) : (
+                <div style={s('position:absolute;inset:0;border-radius:6px;background:#E3E1D8')} />
+              )}
               <div style={s('position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none')}>
                 <button
                   type="button"

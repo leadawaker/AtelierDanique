@@ -12,6 +12,7 @@ export const CONTENT_TYPES = {
   "ad-video-url": "string",
   "ad-hero-layout": "string",
   "ad-copy": "object",
+  "ad-pricing": "object",
 };
 
 export const CONTENT_KEYS = Object.keys(CONTENT_TYPES);
