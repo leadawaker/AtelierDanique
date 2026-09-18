@@ -1,6 +1,7 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
+import GalleryLightbox from './GalleryLightbox.jsx';
 import { PhotosContext, croppedRatio, resolvePhoto } from '../../lib/photos.js';
 // Shape assumed for a piece whose image has not loaded yet.
 const DEFAULT_RATIO = 4 / 5;
@@ -26,9 +27,15 @@ export default function GalleryMobile({ items, tweaks }) {
   const holdRef = useRef(0);
   const idxRef = useRef(0);
   const [mobIdx, setMobIdx] = useState(0);
-  // Which card's caption (and open-in-a-new-tab corner button) is showing,
-  // toggled by tapping the photo; null when every card is just the photo.
-  const [shownIdx, setShownIdx] = useState(null);
+  // The card opened full-width in the lightbox by tapping it; null when closed.
+  // Mirrored in a ref so autoplay stays paused while it is open.
+  const [viewIdx, setViewIdx] = useState(null);
+  const viewRef = useRef(null);
+  viewRef.current = viewIdx;
+  const closeView = useCallback(() => {
+    holdRef.current = Date.now() + HOLD_MS;
+    setViewIdx(null);
+  }, []);
 
   // Each piece's own shape, read from the image itself, so its card is as
   // tall as the photo needs rather than always cropping to one fixed height.
@@ -62,7 +69,7 @@ export default function GalleryMobile({ items, tweaks }) {
     if (tweaks.autoplay === false) return undefined;
     const id = setInterval(() => {
       const track = trackRef.current;
-      if (!track || !track.offsetParent || holdRef.current > Date.now()) return;
+      if (!track || !track.offsetParent || viewRef.current !== null || holdRef.current > Date.now()) return;
       const card = track.firstElementChild;
       if (!card) return;
       const stepPx = card.getBoundingClientRect().width + 12;
@@ -89,7 +96,6 @@ export default function GalleryMobile({ items, tweaks }) {
       if (best !== idxRef.current) {
         idxRef.current = best;
         setMobIdx(best);
-        setShownIdx(null);
         const strip = thumbsRef.current;
         const th = strip && strip.children[best];
         if (th) centreIn(strip, th);
@@ -119,39 +125,15 @@ export default function GalleryMobile({ items, tweaks }) {
   return (
     <>
       <div ref={trackRef} data-mob-gallery="" data-noscrollbar="" style={s('display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px')}>
-        {items.map((item, i) => {
-          const open = shownIdx === i;
-          const url = shots[i] && shots[i].url;
-          return (
-            <div
-              key={item.slotId}
-              onClick={() => setShownIdx((prev) => (prev === i ? null : i))}
-              style={s(SLIDE_STYLE + ';aspect-ratio:' + ratioAt(i) + ';max-height:' + MAX_HEIGHT + 'px;cursor:pointer')}
-            >
-              <Slot slotId={item.slotId} placeholder={item.placeholder} alt={item.title} />
-              {open && (
-                <>
-                  {url && (
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      aria-label="Open image in a new tab"
-                      style={s('position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:999px;background:rgba(20,38,44,.6);display:flex;align-items:center;justify-content:center;color:#FCFAF6')}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                    </a>
-                  )}
-                  <div style={s('position:absolute;left:0;right:0;bottom:0;padding:16px 18px;display:flex;flex-direction:column;gap:4px;background:linear-gradient(to top,rgba(20,38,44,.94) 0%,rgba(20,38,44,.6) 45%,rgba(20,38,44,0) 85%);pointer-events:none')}>
-                    <p style={s("margin:0;font-family:'Cardo',serif;font-size:21px;line-height:1.15;color:#FCFAF6")}>{item.title}</p>
-                    <p style={s('margin:0;font-size:13px;line-height:1.55;color:#E4EDEA;font-weight:300')}>{item.caption}</p>
-                  </div>
-                </>
-              )}
-            </div>
-          );
-        })}
+        {items.map((item, i) => (
+          <div
+            key={item.slotId}
+            onClick={() => setViewIdx(i)}
+            style={s(SLIDE_STYLE + ';aspect-ratio:' + ratioAt(i) + ';max-height:' + MAX_HEIGHT + 'px;cursor:pointer')}
+          >
+            <Slot slotId={item.slotId} placeholder={item.placeholder} alt={item.title} />
+          </div>
+        ))}
       </div>
       <div ref={thumbsRef} data-mob-thumbs="" data-noscrollbar="" style={s('display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px')}>
         {items.map((item, i) => (
@@ -167,6 +149,9 @@ export default function GalleryMobile({ items, tweaks }) {
           </button>
         ))}
       </div>
+      {viewIdx !== null && items[viewIdx] && (
+        <GalleryLightbox item={items[viewIdx]} photo={shots[viewIdx]} ratio={ratioAt(viewIdx)} onClose={closeView} />
+      )}
     </>
   );
 }
