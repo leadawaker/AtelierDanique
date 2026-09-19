@@ -43,7 +43,7 @@ export default function Header({ t, lang, setLang, compact }) {
     { id: 'which-photo', href: '#which-photo', label: t.navWhich },
     { id: 'contact', href: '#contact', label: t.navContact },
   ];
-  const menuLinks = [...navLinks, { id: 'commission', href: '/commission', label: t.ctaCommission }];
+  const menuLinks = [...navLinks, { id: 'commission', href: '/commission', label: t.ctaCommission }, { id: 'login', href: '/edit', label: 'Login' }];
 
   const navStyle = compact
     ? 'display:none'
@@ -73,6 +73,9 @@ export default function Header({ t, lang, setLang, compact }) {
               >{l.code}</button>
             ))}
           </div>
+          {compact ? null : (
+            <a href="/edit" className="h-border-coral" style={s('border:1px solid #D3CFC4;border-radius:2px;padding:7px 14px;font-size:12.5px;letter-spacing:.04em;color:#455459;line-height:1;white-space:nowrap;transition:border-color .2s')}>Login</a>
+          )}
           {compact ? (
             <button
               type="button"
