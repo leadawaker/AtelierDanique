@@ -24,11 +24,29 @@ function decode(key, v) {
   try { return JSON.parse(v); } catch { return wantsString ? v : undefined; }
 }
 
+// Google review links only. Checked by parsed URL (protocol, no embedded
+// credentials, exact hostname match), not by regex on the raw string, so a
+// lookalike host like www.google.evil.com can't slip through.
+const GOOGLE_REVIEW_HOSTS = new Set(["g.page", "maps.app.goo.gl", "search.google.com"]);
+const GOOGLE_HOST_RE = /^(www\.)?google\.(com|nl|be|pt|com\.br|co\.uk)$/;
+
+function isGoogleReviewUrl(url) {
+  let u;
+  try { u = new URL(url); } catch { return false; }
+  if (u.protocol !== "https:") return false;
+  if (u.username || u.password) return false;
+  return GOOGLE_REVIEW_HOSTS.has(u.hostname) || GOOGLE_HOST_RE.test(u.hostname);
+}
+
 function validate(key, value) {
   if (!CONTENT_KEYS.includes(key)) return "Unknown key";
   if (typeOf(value) !== CONTENT_TYPES[key]) return `Value for ${key} must be ${CONTENT_TYPES[key]}`;
   if (key === "ad-hero-layout" && value !== "banner" && value !== "split") return "Layout must be banner or split";
   if (key === "ad-video-url" && value.length > 500) return "Video link is too long";
+  if (key === "ad-google-reviews") {
+    if (value.url && !isGoogleReviewUrl(value.url)) return "That doesn't look like a Google review link";
+    if (value.url && value.url.length > 300) return "Link is too long";
+  }
   return null;
 }
 

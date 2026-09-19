@@ -1,5 +1,6 @@
 import { BASE_TESTIMONIALS, MAX_TESTIMONIALS } from '../../../lib/testimonials.js';
 import TestimonialCard from './TestimonialCard.jsx';
+import GoogleReviewsSetting from './GoogleReviewsSetting.jsx';
 
 // Testimonials tab. Built-in testimonials are edited through overrides in
 // ad-testimonials-text (an empty box or the original text removes the
@@ -118,6 +119,7 @@ export default function TestimonialsTab({ content, update }) {
 
   return (
     <section>
+      <GoogleReviewsSetting content={content} update={update} />
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', borderBottom: '1px solid #DDD9CF', paddingBottom: 12, marginBottom: 16 }}>
         <h2 style={{ margin: 0, fontFamily: "'Cardo',serif", fontWeight: 400, fontSize: 'clamp(22px,2.4vw,30px)', lineHeight: 1.1 }}>Testimonials</h2>
         <p style={{ margin: 0, fontSize: 13, color: '#85949A', fontWeight: 300 }}>{countLabel}</p>

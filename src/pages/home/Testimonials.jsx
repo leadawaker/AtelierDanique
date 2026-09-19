@@ -3,6 +3,7 @@ import { s } from '../../lib/css.js';
 import { normalizePhoto, usePhoto } from '../../lib/photos.js';
 import { PAINTING_FRAMES, buildTestimonials } from '../../lib/testimonials.js';
 import Slot from '../../components/Slot.jsx';
+import GoogleReviewsLink from './GoogleReviewsLink.jsx';
 
 const GAP = 'clamp(18px,2vw,28px)';
 
@@ -45,6 +46,7 @@ export default function Testimonials({ t, lang, compact, content }) {
             />
           ))}
         </div>
+        <GoogleReviewsLink t={t} content={content} />
       </div>
     </section>
   );
