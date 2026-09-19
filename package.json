@@ -12,6 +12,7 @@
   "dependencies": {
     "@upstash/redis": "^1.38.4",
     "@vercel/blob": "^2.8.0",
+    "@vimeo/player": "^2.30.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
