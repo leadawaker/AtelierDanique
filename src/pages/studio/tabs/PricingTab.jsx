@@ -1,11 +1,12 @@
 import { s } from '../../../lib/css.js';
-import { launchNote, sitePricing } from '../../../lib/pricing.js';
+import { NOTE_LANGS, launchNote, sitePricing } from '../../../lib/pricing.js';
 import { STRINGS } from '../../../lib/strings.js';
 
 // Pricing tab: the euro and reais price per size, and the launch spots note
-// under the price cards ("I'm opening my first 7 commission spots...").
-// Danique lowers "Spots still available" as commissions come in; at 0 the
-// note disappears from the website.
+// under the price cards ("I'm opening my first 7 commission spots..."): the
+// two numbers, plus the note's text in each language with {total} and
+// {left} standing for them. Danique lowers "Spots still available" as
+// commissions come in; at 0 the note disappears from the website.
 
 const SECTION = 'margin-bottom:clamp(44px,6vw,72px)';
 const H2 = "margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(22px,2.4vw,30px);line-height:1.1";
@@ -14,6 +15,8 @@ const NOTE = 'margin:0;font-size:13px;line-height:1.6;color:#85949A;font-weight:
 const PANEL = 'background:#F1EFE8;border:1px solid #E2DED4;border-radius:6px;padding:18px';
 const LABEL = 'font-size:13px;color:#455459';
 const INPUT = 'background:#FCFAF6;border:1px solid #D3CFC4;border-radius:2px;padding:12px 14px;font-size:16px;outline:none;color:#26454F;width:100%';
+
+const LANG_NAMES = { en: 'English', pt: 'Português', nl: 'Nederlands' };
 
 const SIZES = [
   { id: 'a5', name: 'A5' },
@@ -27,7 +30,6 @@ const toNumber = (raw) => {
 
 export default function PricingTab({ content, update }) {
   const pricing = sitePricing(content);
-  const note = launchNote(STRINGS.en, pricing);
 
   const setSize = (id, field, raw) => {
     update('ad-pricing', { ...pricing, [id]: { ...pricing[id], [field]: toNumber(raw) } });
@@ -35,6 +37,10 @@ export default function PricingTab({ content, update }) {
 
   const setSpots = (field, raw) => {
     update('ad-pricing', { ...pricing, [field]: toNumber(raw) });
+  };
+
+  const setNote = (lang, text) => {
+    update('ad-pricing', { ...pricing, note: { ...pricing.note, [lang]: text } });
   };
 
   return (
@@ -70,17 +76,40 @@ export default function PricingTab({ content, update }) {
           <NumberField id="ad-spots-total" label="Spots in total" value={pricing.spotsTotal} onChange={(val) => setSpots('spotsTotal', val)} />
           <NumberField id="ad-spots-left" label="Spots still available" value={pricing.spotsLeft} onChange={(val) => setSpots('spotsLeft', val)} />
         </div>
-        {note ? (
-          <div style={s(PANEL + ';max-width:560px;display:flex;flex-direction:column;gap:6px')}>
-            <p style={s(NOTE)}>The website shows, under the prices:</p>
-            <p style={s('margin:0;font-size:15px;line-height:1.6;color:#26454F')}>{note.intro}<br />{note.left}</p>
-          </div>
-        ) : (
-          <p style={s(NOTE)}>No spots left, so the website shows no note under the prices.</p>
-        )}
-        <p style={s(NOTE + ';margin-top:12px')}>
-          Lower "Spots still available" each time a commission is booked. At 0 the note disappears on its own. Raising the prices afterwards is still done by hand, above.
+        <p style={s(NOTE + ';margin-bottom:22px')}>
+          Lower "Spots still available" each time a commission is booked. At 0 the note under the prices (and the line at the top of the page) disappears on its own. Raising the prices afterwards is still done by hand, above.
         </p>
+
+        <p style={s('margin:0 0 6px;font-size:15px')}>Text under the prices</p>
+        <p style={s(NOTE + ';margin-bottom:18px;max-width:64ch')}>
+          Write {'{total}'} where the total number of spots goes and {'{left}'} where the spots still available go. The first line is shown large, the next line smaller in coral. Leave a box empty to go back to the original text. When only 1 spot is left, you may want to change "spots" to "spot".
+        </p>
+        <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(18px,2.4vw,28px)')}>
+          {NOTE_LANGS.map((lang) => {
+            const preview = launchNote(STRINGS[lang], pricing, lang);
+            return (
+              <div key={lang} style={s('display:flex;flex-direction:column;gap:10px;' + PANEL)}>
+                <label htmlFor={'ad-note-' + lang} style={s('margin:0;font-size:15px')}>{LANG_NAMES[lang]}</label>
+                <textarea
+                  id={'ad-note-' + lang} rows={5}
+                  value={pricing.note[lang] ?? STRINGS[lang].launchNote}
+                  onChange={(e) => setNote(lang, e.target.value)}
+                  style={s(INPUT + ';resize:vertical;line-height:1.5;font-family:inherit')}
+                />
+                <p style={s(NOTE)}>On the website:</p>
+                {preview ? (
+                  <div style={s('display:flex;flex-direction:column;gap:4px')}>
+                    {preview.map((line, i) => (
+                      <p key={i} style={s(i === 0 ? "margin:0;font-family:'Cardo',serif;font-size:17px;line-height:1.4;color:#26454F" : 'margin:0;font-size:13px;line-height:1.5;color:#C0503B')}>{line}</p>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={s(NOTE)}>Nothing: no spots left.</p>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </section>
     </div>
   );

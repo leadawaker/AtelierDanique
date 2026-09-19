@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { s } from '../../lib/css.js';
+import { useLang } from '../../lib/lang.js';
 import { PhotosContext } from '../../lib/photos.js';
+import { STRINGS } from '../../lib/strings.js';
+import { useCompact } from '../../lib/useCompact.js';
+import Header from '../home/Header.jsx';
 import { getSession, login, logout, useStudioContent } from './api.js';
 import GalleryTab from './tabs/GalleryTab.jsx';
 import PhotosTab from './tabs/PhotosTab.jsx';
@@ -8,8 +12,9 @@ import TestimonialsTab from './tabs/TestimonialsTab.jsx';
 import CopyTab from './tabs/CopyTab.jsx';
 import PricingTab from './tabs/PricingTab.jsx';
 
-// /edit: Danique's private Website manager. The password is checked on the
-// server; this page only asks whether the session cookie is valid.
+// /login (and /edit): Danique's private Website manager, under the site's
+// own header. The password is checked on the server; this page only asks
+// whether the session cookie is valid.
 
 const TABS = [
   { id: 'gallery', label: 'Gallery', Component: GalleryTab },
@@ -24,6 +29,8 @@ const EYEBROW = 'margin:0 0 8px;font-size:11px;letter-spacing:.2em;text-transfor
 
 export default function Studio() {
   const [authed, setAuthed] = useState(null);
+  const [lang, setLang] = useLang();
+  const compact = useCompact();
 
   useEffect(() => {
     document.title = 'Website manager · Atelier Danique';
@@ -44,9 +51,14 @@ export default function Studio() {
     };
   }, []);
 
-  if (authed === null) return null;
-  if (!authed) return <PasswordScreen onSuccess={() => setAuthed(true)} />;
-  return <Manager onSignedOut={() => setAuthed(false)} />;
+  const header = <Header t={STRINGS[lang] || STRINGS.en} lang={lang} setLang={setLang} compact={compact} base="/" />;
+  if (authed === null) return header;
+  return (
+    <>
+      {header}
+      {authed ? <Manager onSignedOut={() => setAuthed(false)} /> : <PasswordScreen onSuccess={() => setAuthed(true)} />}
+    </>
+  );
 }
 
 function PasswordScreen({ onSuccess }) {

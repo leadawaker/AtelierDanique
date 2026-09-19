@@ -26,23 +26,26 @@ function useActiveSection() {
   return active;
 }
 
-export default function Header({ t, lang, setLang, compact }) {
-  const active = useActiveSection();
+// On other pages (the studio at /login) pass base="/" so the links go back
+// to the home page sections instead of jumping within the current page.
+export default function Header({ t, lang, setLang, compact, base = '' }) {
+  const spied = useActiveSection();
+  const active = base ? null : spied;
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Leaving the compact layout closes the menu.
   useEffect(() => { if (!compact) setMenuOpen(false); }, [compact]);
 
   const navLinks = [
-    { id: 'top', href: '#top', label: t.navHome },
-    { id: 'gallery', href: '#gallery', label: t.navGallery },
-    { id: 'meet', href: '#meet', label: t.navAbout },
-    { id: 'process', href: '#process', label: t.navProcess },
-    { id: 'pricing', href: '#pricing', label: t.navPricing },
-    { id: 'testimonials', href: '#testimonials', label: t.navTestimonials },
-    { id: 'faq', href: '#faq', label: t.navFaq },
+    { id: 'top', href: base + '#top', label: t.navHome },
+    { id: 'gallery', href: base + '#gallery', label: t.navGallery },
+    { id: 'meet', href: base + '#meet', label: t.navAbout },
+    { id: 'process', href: base + '#process', label: t.navProcess },
+    { id: 'pricing', href: base + '#pricing', label: t.navPricing },
+    { id: 'testimonials', href: base + '#testimonials', label: t.navTestimonials },
+    { id: 'faq', href: base + '#faq', label: t.navFaq },
   ];
-  const menuLinks = [...navLinks, { id: 'commission', href: '/commission', label: t.ctaCommission }, { id: 'login', href: '/edit', label: 'Login' }];
+  const menuLinks = [...navLinks, { id: 'commission', href: '/commission', label: t.ctaCommission }, { id: 'login', href: '/login', label: 'Login' }];
 
   const navStyle = compact
     ? 'display:none'
@@ -51,7 +54,7 @@ export default function Header({ t, lang, setLang, compact }) {
   return (
     <header style={s('position:sticky;top:0;z-index:40;background:rgba(252,250,246,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #DDD9CF;padding:9px ' + PAD)}>
       <div style={s('display:flex;align-items:center;gap:clamp(16px,2.2vw,40px);flex-wrap:nowrap')}>
-        <a href="#top" style={s("font-family:'Satisfy',cursive;font-size:24px;color:#26454F;line-height:1;letter-spacing:.5px;white-space:nowrap")}>Atelier Danique</a>
+        <a href={base + '#top'} style={s("font-family:'Satisfy',cursive;font-size:24px;color:#26454F;line-height:1;letter-spacing:.5px;white-space:nowrap")}>Atelier Danique</a>
         <nav style={s(navStyle)} data-nav="">
           {navLinks.map((l) => (
             <a key={l.id} href={l.href} className="h-color-teal" style={navStyleFor(active, l.id)}>{l.label}</a>
@@ -73,7 +76,7 @@ export default function Header({ t, lang, setLang, compact }) {
             ))}
           </div>
           {compact ? null : (
-            <a href="/edit" className="h-border-coral" style={s('border:1px solid #D3CFC4;border-radius:2px;padding:7px 14px;font-size:12.5px;letter-spacing:.04em;color:#455459;line-height:1;white-space:nowrap;transition:border-color .2s')}>Login</a>
+            <a href="/login" className="h-border-coral" style={s('border:1px solid #D3CFC4;border-radius:2px;padding:7px 14px;font-size:12.5px;letter-spacing:.04em;color:#455459;line-height:1;white-space:nowrap;transition:border-color .2s')}>Login</a>
           )}
           {compact ? (
             <button

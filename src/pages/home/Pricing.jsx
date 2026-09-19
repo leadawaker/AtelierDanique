@@ -26,7 +26,7 @@ const MM = 'font-size: 13px; letter-spacing: normal; text-transform: none;';
 export default function Pricing({ t, lang, content }) {
   const pricing = sitePricing(content);
   const currency = currencyFor(lang);
-  const note = launchNote(t, pricing);
+  const note = launchNote(t, pricing, lang);
 
   return (
     <section id="pricing" style={s('padding: clamp(48px,7vw,104px) clamp(24px,5vw,80px); background-color: #F1EFE8')}>
@@ -52,8 +52,7 @@ export default function Pricing({ t, lang, content }) {
         </div>
         {note ? (
           <div style={s('max-width:56ch;margin:0 auto clamp(32px,4vw,48px);text-align:center;display:flex;flex-direction:column;gap:6px')}>
-            <p style={s(NOTE_INTRO)}>{note.intro}</p>
-            <p style={s(NOTE_LEFT)}>{note.left}</p>
+            {note.map((line, i) => <p key={i} style={s(i === 0 ? NOTE_INTRO : NOTE_LEFT)}>{line}</p>)}
           </div>
         ) : null}
 
