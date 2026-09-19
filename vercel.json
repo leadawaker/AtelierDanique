@@ -2,7 +2,8 @@
   "framework": "vite",
   "crons": [
     { "path": "/api/cron/refresh-instagram", "schedule": "0 17 * * *" },
-    { "path": "/api/cron/refresh-instagram", "schedule": "0 18 * * *" }
+    { "path": "/api/cron/refresh-instagram", "schedule": "0 18 * * *" },
+    { "path": "/api/cron/rebuild", "schedule": "0 3 * * *" }
   ],
   "cleanUrls": true,
   "trailingSlash": false,
