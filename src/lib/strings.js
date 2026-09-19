@@ -37,11 +37,11 @@ export const STRINGS = {
     igEyebrow: 'Latest from Instagram', igTitle: 'Follow along', igSeeMore: 'See more on Instagram',
     faqEyebrow: 'Good to know', faqTitle: 'FAQ',
     faq: [
-      { q: 'How long does it take?', a: 'Within 5 working days in the Netherlands. Internationally, allow three to four weeks including shipping.' },
+      { q: 'How long does it take?', a: 'Your painting is ready in 5 working days. In the Netherlands, add a day or two for it to arrive. Within Europe, allow about a week, and up to four weeks worldwide, depending on the location.' },
       { q: 'Do you ship outside the Netherlands?', a: "Yes, worldwide, always with track and trace. Shipping is €5 within the Netherlands, €10 to the rest of Europe and the UK, and €15 to the rest of the world. You can also pick up your artwork for free in 's-Hertogenbosch." },
       { q: 'Is it framed?', a: 'No, it arrives unframed on 300g cold pressed cotton paper, cut to standard A4 or A5 so any shop frame fits.' },
       { q: 'When do I pay?', a: 'Half up front once we agree on the photo and the size, and the other half after your artwork is delivered.' },
-      { q: 'What does the 10 days guarantee cover?', a: 'Your artwork is painted and sent within 10 days of us agreeing on the photo, or you get your money back. The only exception is an international shipping delay once the parcel has left my hands.' }
+      { q: 'How does the 10 days guarantee work?', a: 'You have 10 days after receiving your painting to change your mind. If it is not right for you, just let me know within those 10 days.' }
     ],
     posts: [
       { title: 'Meaningful places', date: '2 September 2026', description: 'A commission of the house where a family spent every summer. Ink and wash, A4.' },
@@ -94,11 +94,11 @@ export const STRINGS = {
     igEyebrow: 'Últimos posts do Instagram', igTitle: 'Acompanhe', igSeeMore: 'Veja mais no Instagram',
     faqEyebrow: 'Bom saber', faqTitle: 'Perguntas frequentes',
     faq: [
-      { q: 'Quanto tempo leva?', a: 'Até 5 dias úteis na Holanda. No exterior, considere de três a quatro semanas, incluindo o envio.' },
+      { q: 'Quanto tempo leva?', a: 'Sua obra fica pronta em 5 dias úteis. Na Holanda, some um ou dois dias para a entrega. Dentro da Europa, considere cerca de uma semana, e até quatro semanas para o resto do mundo, dependendo do local.' },
       { q: 'Você envia para fora da Holanda?', a: "Sim, para o mundo todo, sempre com rastreamento. O frete custa €5 na Holanda, €10 para o resto da Europa e o Reino Unido, e €15 para o resto do mundo. Você também pode retirar sua obra de graça em 's-Hertogenbosch." },
       { q: 'Vem com moldura?', a: 'Não, chega sem moldura em papel de algodão 300g prensado a frio, no tamanho padrão A4 ou A5, que serve em qualquer moldura de loja.' },
       { q: 'Quando eu pago?', a: 'Metade no início, quando definimos a foto e o tamanho, e a outra metade depois da entrega da obra.' },
-      { q: 'O que cobre a garantia de 10 dias?', a: 'Sua obra é pintada e enviada em até 10 dias depois de definirmos a foto, ou seu dinheiro é devolvido. A única exceção é atraso no envio internacional depois que o pacote sai das minhas mãos.' }
+      { q: 'Como funciona a garantia de 10 dias?', a: 'Você tem 10 dias, depois de receber sua obra, para mudar de ideia. Se ela não for o que você esperava, é só me avisar dentro desses 10 dias.' }
     ],
     posts: [
       { title: 'Lugares com significado', date: '2 de setembro de 2026', description: 'Uma encomenda da casa onde uma família passava todos os verões. Nanquim e aquarela, A4.' },
@@ -151,11 +151,11 @@ export const STRINGS = {
     igEyebrow: 'Laatste van Instagram', igTitle: 'Volg mee', igSeeMore: 'Bekijk meer op Instagram',
     faqEyebrow: 'Goed om te weten', faqTitle: 'Veelgestelde vragen',
     faq: [
-      { q: 'Hoe lang duurt het?', a: 'Binnen 5 werkdagen in Nederland. Internationaal duurt het drie tot vier weken, inclusief verzending.' },
+      { q: 'Hoe lang duurt het?', a: 'Je werk is binnen 5 werkdagen klaar. Binnen Nederland komt er een dag of twee bij voor de bezorging. Binnen Europa duurt het ongeveer een week, en wereldwijd tot vier weken, afhankelijk van de locatie.' },
       { q: 'Verstuur je ook buiten Nederland?', a: "Ja, wereldwijd, altijd met track & trace. Verzending kost €5 binnen Nederland, €10 naar de rest van Europa en het VK, en €15 naar de rest van de wereld. Je kunt je werk ook gratis ophalen in 's-Hertogenbosch." },
       { q: 'Zit er een lijst bij?', a: 'Nee, het komt zonder lijst op 300g koudgeperst katoenpapier, op standaard A4- of A5-formaat, dus elke winkellijst past.' },
       { q: 'Wanneer betaal ik?', a: 'De helft vooraf, zodra we de foto en het formaat hebben afgesproken, en de andere helft na levering van je werk.' },
-      { q: 'Wat dekt de 10 dagen garantie?', a: 'Je werk wordt binnen 10 dagen na het afspreken van de foto geschilderd en verzonden, of je krijgt je geld terug. De enige uitzondering is vertraging bij internationale verzending zodra het pakket uit mijn handen is.' }
+      { q: 'Hoe werkt de 10 dagen garantie?', a: 'Je hebt 10 dagen na ontvangst van je schilderij om je te bedenken. Is het toch niet wat je had verwacht, laat het me dan binnen die 10 dagen weten.' }
     ],
     posts: [
       { title: 'Betekenisvolle plekken', date: '2 september 2026', description: 'Een opdracht van het huis waar een familie elke zomer doorbracht. Inkt en aquarel, A4.' },
