@@ -17,7 +17,8 @@ export const PRIVACY = {
       ] },
       { h: 'What I collect and why', p: [
         'When you ask for a painting, I collect your name, your email or phone number, your photo, your answers about the place and the moment, any extra notes and the size you would like. Later I also need your delivery address and the details to invoice you. I use it to reply, agree the details, paint your artwork and send it to you.',
-        'When you just visit the website, the server sees your IP address and your browser, like every website. Your language choice stays in your own browser. When you send the form, your IP address is kept for about an hour so I can spot misuse. I use no analytics, advertising cookies or trackers.',
+        'When you just visit the website, the server sees your IP address and your browser, like every website. Your language choice is remembered in a small cookie in your own browser. When you send the form, your IP address is kept for about an hour so I can spot misuse. I use no advertising cookies or trackers.',
+        'To see how people find the website, I count page visits anonymously: which page, the language, the country and where the visit came from (for example Instagram or Google). No cookies, no IP address and nothing that identifies you is stored for this.',
       ] },
       { h: 'Your photos and stories', p: [
         'Your photo may show people, sometimes children, and the story behind it may be personal. I use it only to make your painting, and I never share your photo, your story or the finished painting without asking you first. If you say yes, you can change your mind at any time and I will take it down.',
@@ -59,7 +60,8 @@ export const PRIVACY = {
       ] },
       { h: 'Wat ik verzamel en waarom', p: [
         'Als je een schilderij aanvraagt, verzamel ik je naam, je e-mail of telefoonnummer, je foto, je antwoorden over de plek en het moment, eventuele extra opmerkingen en het formaat dat je wilt. Later heb ik ook je bezorgadres en de gegevens om je te factureren nodig. Ik gebruik het om je te antwoorden, de details af te spreken, je kunstwerk te schilderen en het naar je toe te sturen.',
-        'Als je alleen de website bezoekt, ziet de server je IP-adres en je browser, zoals bij elke website. Je taalkeuze blijft in je eigen browser. Als je het formulier verstuurt, bewaar ik je IP-adres ongeveer een uur, zodat ik misbruik kan opsporen. Ik gebruik geen analyse- of advertentiecookies en geen trackers.',
+        'Als je alleen de website bezoekt, ziet de server je IP-adres en je browser, zoals bij elke website. Je taalkeuze wordt onthouden in een klein cookie in je eigen browser. Als je het formulier verstuurt, bewaar ik je IP-adres ongeveer een uur, zodat ik misbruik kan opsporen. Ik gebruik geen advertentiecookies en geen trackers.',
+        'Om te zien hoe mensen de website vinden, tel ik paginabezoeken anoniem: welke pagina, de taal, het land en waar het bezoek vandaan kwam (bijvoorbeeld Instagram of Google). Hiervoor worden geen cookies, geen IP-adres en niets dat jou herkenbaar maakt opgeslagen.',
       ] },
       { h: 'Je foto’s en verhalen', p: [
         'Je foto kan mensen laten zien, soms kinderen, en het verhaal erachter kan persoonlijk zijn. Ik gebruik hem alleen om je schilderij te maken en deel je foto, je verhaal of het afgeronde schilderij nooit zonder het eerst te vragen. Zeg je ja, dan kun je je altijd bedenken en haal ik het weg.',
@@ -101,7 +103,8 @@ export const PRIVACY = {
       ] },
       { h: 'O que recolho e por quê', p: [
         'Quando você pede uma obra, recolho o seu nome, o seu e-mail ou telefone, a sua foto, as suas respostas sobre o lugar e o momento, observações extras e o tamanho que deseja. Depois também preciso do endereço de entrega e dos dados para emitir a fatura. Uso isso para responder a você, combinar os detalhes, pintar a sua obra e enviá-la.',
-        'Quando você só visita o site, o servidor vê o seu endereço IP e o seu navegador, como em qualquer site. A sua escolha de idioma fica no seu próprio navegador. Quando você envia o formulário, guardo o seu IP por cerca de uma hora, para detectar uso indevido. Não uso análise, cookies de publicidade nem rastreadores.',
+        'Quando você só visita o site, o servidor vê o seu endereço IP e o seu navegador, como em qualquer site. A sua escolha de idioma fica guardada num pequeno cookie no seu próprio navegador. Quando você envia o formulário, guardo o seu IP por cerca de uma hora, para detectar uso indevido. Não uso cookies de publicidade nem rastreadores.',
+        'Para ver como as pessoas encontram o site, conto as visitas de forma anônima: qual página, o idioma, o país e de onde veio a visita (por exemplo Instagram ou Google). Para isso, nenhum cookie, nenhum endereço IP e nada que identifique você é guardado.',
       ] },
       { h: 'As suas fotos e histórias', p: [
         'A sua foto pode mostrar pessoas, às vezes crianças, e a história por trás dela pode ser pessoal. Uso só para fazer a sua obra e nunca compartilho a foto, a história ou a obra pronta sem perguntar antes. Se você disser que sim, pode mudar de ideia a qualquer momento e eu retiro.',

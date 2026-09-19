@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useLayoutEffect } from 'react';
 import Home from './pages/home/Home.jsx';
 import { parsePath, pathFor, PAGES, HTML_LANG } from './lib/routes.js';
 import { useLang } from './lib/lang.js';
+import { trackView } from './lib/track.js';
 import { metaFor } from './seo/meta.js';
 
 const Commission = lazy(() => import('./pages/commission/Commission.jsx'));
@@ -20,6 +21,9 @@ export default function App({ url }) {
 
 function PublicPage({ routeLang, page }) {
   const [lang, setLang] = useLang(routeLang || undefined);
+
+  // One anonymous view signal per page load. Language switches are not new views.
+  useEffect(() => { trackView(lang); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Local dev has no vercel.json redirects: put the prefix in the address bar.
   useEffect(() => {
