@@ -1,0 +1,25 @@
+/* Commission page layout. One column on phones, in the order: intro and
+   painting, the form, then the info blocks and WhatsApp link. From 980px up
+   it is two columns: intro and info stacked on the left, the form on the right. */
+.commission-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 72px);
+  align-items: start;
+}
+.commission-top, .commission-info { display: flex; flex-direction: column; gap: 26px; max-width: 40ch; }
+.commission-form { min-width: 0; }
+
+@media (min-width: 980px) {
+  .commission-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto 1fr;
+    column-gap: clamp(32px, 4vw, 72px);
+    row-gap: 26px;
+  }
+  .commission-top { grid-column: 1; grid-row: 1; }
+  .commission-info { grid-column: 1; grid-row: 2; }
+  .commission-form { grid-column: 2; grid-row: 1 / span 3; }
+}

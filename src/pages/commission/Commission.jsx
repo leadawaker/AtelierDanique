@@ -6,6 +6,7 @@ import { LANGS } from '../../lib/strings.js';
 import { LINKS, whatsappLink } from '../home/settings.js';
 import { STRINGS } from './strings.js';
 import CommissionForm from './CommissionForm.jsx';
+import './commission.css';
 
 // Commission page, ported from Commission.dc.html. The form itself lives in
 // CommissionForm.jsx (send by email or continue on WhatsApp).
@@ -45,13 +46,20 @@ export default function Commission() {
       </header>
 
       <main style={s('padding:clamp(36px,5vw,80px) clamp(24px,5vw,80px) clamp(56px,7vw,110px)')}>
-        <div style={s('max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,4vw,72px);align-items:start')}>
+        <div className="commission-grid">
 
-          <div style={s('display:flex;flex-direction:column;gap:26px;max-width:40ch')}>
+          <div className="commission-top">
             <p style={s('margin:0;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E36B54')}>{t.eyebrow}</p>
             <h1 style={s("margin:0;font-family:'Newsreader',serif;font-weight:400;font-size:clamp(36px,4.4vw,60px);line-height:1.04;letter-spacing:-.02em")}>{t.title1}<br />{t.title2}</h1>
             <p style={s('margin:0;font-size:16px;line-height:1.8;color:#455459;font-weight:300;text-wrap:pretty')}>{t.intro}</p>
             <img src="/uploads/IMG_3566.JPG" alt="A watercolour of birch trunks in gold, teal and coral on cotton paper" style={s('width:100%;height:auto;border-radius:6px;display:block')} />
+          </div>
+
+          <div className="commission-form">
+            <CommissionForm t={t} lang={lang} content={content} />
+          </div>
+
+          <div className="commission-info">
             <div style={s('display:grid;gap:20px;border-top:1px solid #DDD9CF;padding-top:24px')}>
               <div><p style={INFO_T}>{t.secureT}</p><p style={INFO_B}>{t.secureB}</p></div>
               <div><p style={INFO_T}>{t.fastT}</p><p style={INFO_B}>{t.fastB}</p></div>
@@ -61,10 +69,6 @@ export default function Commission() {
               {t.talkFirst}<br />
               <a href={talkUrl} target="_blank" rel="noopener" style={s('color:#E36B54;border-bottom:1px solid #E0C2AE;padding-bottom:2px')}>WhatsApp {LINKS.whatsappNumber}{'  →'}</a>
             </p>
-          </div>
-
-          <div style={s('min-width:0')}>
-            <CommissionForm t={t} lang={lang} content={content} />
           </div>
 
         </div>
