@@ -7,7 +7,7 @@ export default function GoogleReviewsLink({ t, content }) {
   if (!g.enabled || !g.url) return null;
   return (
     <p style={s('margin:28px 0 0;text-align:center;font-size:14px')}>
-      <a href={g.url} target="_blank" rel="noopener" className="h-color-coral" style={s('color:#5E6C71;border-bottom:1px solid #D3CFC4;padding-bottom:2px')}>
+      <a href={g.url} target="_blank" rel="noopener noreferrer" className="h-color-coral" style={s('color:#5E6C71;border-bottom:1px solid #D3CFC4;padding-bottom:2px')}>
         {'★ '}{t.googleReviews}{'  →'}
       </a>
     </p>
