@@ -19,7 +19,7 @@ const INCLUDED = [
 
 const PHOTO_BOX = 'position:relative;width:100%;aspect-ratio:3/4;margin-top:18px;border-radius:6px;overflow:hidden';
 const PRICE = "margin: 0; font-family: 'Cardo',serif; font-size: clamp(38px,4vw,52px); line-height: 1; color: #C0503B";
-const NOTE_INTRO = "margin:0;font-family:'Cardo',serif;font-size:clamp(18px,1.8vw,22px);line-height:1.4;color:#26454F;text-wrap:balance";
+const NOTE_INTRO = 'margin:0;font-size:clamp(16px,1.5vw,19px);letter-spacing:.02em;line-height:1.5;color:#C0503B;text-wrap:balance';
 const NOTE_LEFT = 'margin:0;font-size:14px;letter-spacing:.02em;line-height:1.6;color:#C0503B';
 const SIZE = 'margin: 0; font-size: 14px; letter-spacing: .18em; text-transform: uppercase; color: #85949A';
 const MM = 'font-size: 13px; letter-spacing: normal; text-transform: none;';

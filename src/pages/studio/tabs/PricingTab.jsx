@@ -82,7 +82,7 @@ export default function PricingTab({ content, update }) {
 
         <p style={s('margin:0 0 6px;font-size:15px')}>Text under the prices</p>
         <p style={s(NOTE + ';margin-bottom:18px;max-width:64ch')}>
-          Write {'{total}'} where the total number of spots goes and {'{left}'} where the spots still available go. The first line is shown large, the next line smaller in coral. Leave a box empty to go back to the original text. When only 1 spot is left, you may want to change "spots" to "spot".
+          Write {'{total}'} where the total number of spots goes and {'{left}'} where the spots still available go. The first line is shown larger, the next line smaller, both in red. Leave a box empty to go back to the original text. When only 1 spot is left, you may want to change "spots" to "spot".
         </p>
         <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(18px,2.4vw,28px)')}>
           {NOTE_LANGS.map((lang) => {
@@ -100,7 +100,7 @@ export default function PricingTab({ content, update }) {
                 {preview ? (
                   <div style={s('display:flex;flex-direction:column;gap:4px')}>
                     {preview.map((line, i) => (
-                      <p key={i} style={s(i === 0 ? "margin:0;font-family:'Cardo',serif;font-size:17px;line-height:1.4;color:#26454F" : 'margin:0;font-size:13px;line-height:1.5;color:#C0503B')}>{line}</p>
+                      <p key={i} style={s(i === 0 ? 'margin:0;font-size:16px;letter-spacing:.02em;line-height:1.5;color:#C0503B' : 'margin:0;font-size:13px;line-height:1.5;color:#C0503B')}>{line}</p>
                     ))}
                   </div>
                 ) : (
