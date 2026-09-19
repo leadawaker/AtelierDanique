@@ -5,6 +5,9 @@ import { LANGS } from '../../lib/strings.js';
 const SECTION_IDS = ['gallery', 'meet', 'process', 'pricing', 'testimonials', 'faq'];
 const PAD = 'clamp(24px,5vw,80px)';
 
+// The header's call to action: always the last button, filled coral.
+const COMMISSION_BTN = 'background:#E36B54;color:#FCFAF6;border-radius:2px;padding:9px 16px;font-size:12.5px;letter-spacing:.04em;line-height:1;white-space:nowrap;transition:background .25s';
+
 const navStyleFor = (active, id) => s(active === id
   ? 'color:#26454F;border-bottom:1px solid #E36B54;padding-bottom:2px'
   : 'color:#455459;transition:color .2s;border-bottom:1px solid transparent;padding-bottom:2px');
@@ -26,9 +29,25 @@ function useActiveSection() {
   return active;
 }
 
+// The header has one more button than the design planned for, so it switches
+// to the menu layout a little earlier than the rest of the site (1000px).
+const TIGHT_QUERY = '(max-width: 1100px)';
+function useTight() {
+  const [tight, setTight] = useState(() => window.matchMedia(TIGHT_QUERY).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(TIGHT_QUERY);
+    const on = () => setTight(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  return tight;
+}
+
 // On other pages (the studio at /login) pass base="/" so the links go back
 // to the home page sections instead of jumping within the current page.
-export default function Header({ t, lang, setLang, compact, base = '' }) {
+export default function Header({ t, lang, setLang, compact: siteCompact, base = '' }) {
+  const tight = useTight();
+  const compact = siteCompact || tight;
   const spied = useActiveSection();
   const active = base ? null : spied;
   const [menuOpen, setMenuOpen] = useState(false);
@@ -45,7 +64,7 @@ export default function Header({ t, lang, setLang, compact, base = '' }) {
     { id: 'testimonials', href: base + '#testimonials', label: t.navTestimonials },
     { id: 'faq', href: base + '#faq', label: t.navFaq },
   ];
-  const menuLinks = [...navLinks, { id: 'commission', href: '/commission', label: t.ctaCommission }, { id: 'login', href: '/login', label: 'Login' }];
+  const menuLinks = [...navLinks, { id: 'login', href: '/login', label: 'Login' }];
 
   const navStyle = compact
     ? 'display:none'
@@ -78,6 +97,9 @@ export default function Header({ t, lang, setLang, compact, base = '' }) {
           {compact ? null : (
             <a href="/login" className="h-border-coral" style={s('border:1px solid #D3CFC4;border-radius:2px;padding:7px 14px;font-size:12.5px;letter-spacing:.04em;color:#455459;line-height:1;white-space:nowrap;transition:border-color .2s')}>Login</a>
           )}
+          {compact ? null : (
+            <a href="/commission" className="h-bg-coral-dark" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
+          )}
           {compact ? (
             <button
               type="button"
@@ -103,6 +125,7 @@ export default function Header({ t, lang, setLang, compact, base = '' }) {
               style={s('color:#455459;padding:13px 0;border-bottom:1px solid #E6E2D9;transition:color .2s')}
             >{l.label}</a>
           ))}
+          <a href="/commission" onClick={() => setMenuOpen(false)} className="h-bg-coral-dark" style={s(COMMISSION_BTN + ';margin-top:16px;padding:15px 20px;text-align:center;font-size:15px')}>{t.ctaCommission}</a>
         </nav>
       ) : null}
     </header>
