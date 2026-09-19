@@ -77,6 +77,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
           {navLinks.map((l) => (
             <a key={l.id} href={l.href} className="h-color-teal" style={navStyleFor(active, l.id)}>{l.label}</a>
           ))}
+          <a href="/commission" className="h-fill-coral" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
         </nav>
         <div style={s('margin-left:auto;display:flex;align-items:center;gap:14px;flex-shrink:0')}>
           <div role="group" aria-label="Language" style={s('display:flex;align-items:center;gap:2px')}>
@@ -93,9 +94,6 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
               >{l.code}</button>
             ))}
           </div>
-          {compact ? null : (
-            <a href="/commission" className="h-fill-coral" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
-          )}
           {compact ? (
             <button
               type="button"
