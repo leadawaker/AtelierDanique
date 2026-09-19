@@ -1,12 +1,12 @@
 import { s } from '../../../lib/css.js';
-import { NOTE_LANGS, launchNote, sitePricing } from '../../../lib/pricing.js';
+import { NOTE_LANGS, launchBanner, sitePricing } from '../../../lib/pricing.js';
 import { STRINGS } from '../../../lib/strings.js';
 
-// Pricing tab: the euro and reais price per size, and the launch spots note
-// under the price cards ("I'm opening my first 7 commission spots..."): the
-// two numbers, plus the note's text in each language with {total} and
-// {left} standing for them. Danique lowers "Spots still available" as
-// commissions come in; at 0 the note disappears from the website.
+// Pricing tab: the euro and reais price per size, and the launch banner above
+// the price cards: the two spot numbers, plus the banner's text in each
+// language with {total}, {left} and {prices} standing for the numbers.
+// Danique lowers "Spots still available" as commissions come in; at 0 the
+// banner disappears from the website.
 
 const SECTION = 'margin-bottom:clamp(44px,6vw,72px)';
 const H2 = "margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(22px,2.4vw,30px);line-height:1.1";
@@ -39,8 +39,8 @@ export default function PricingTab({ content, update }) {
     update('ad-pricing', { ...pricing, [field]: toNumber(raw) });
   };
 
-  const setNote = (lang, text) => {
-    update('ad-pricing', { ...pricing, note: { ...pricing.note, [lang]: text } });
+  const setBanner = (lang, text) => {
+    update('ad-pricing', { ...pricing, banner: { ...pricing.banner, [lang]: text } });
   };
 
   return (
@@ -77,31 +77,33 @@ export default function PricingTab({ content, update }) {
           <NumberField id="ad-spots-left" label="Spots still available" value={pricing.spotsLeft} onChange={(val) => setSpots('spotsLeft', val)} />
         </div>
         <p style={s(NOTE + ';margin-bottom:22px')}>
-          Lower "Spots still available" each time a commission is booked. At 0 the note under the prices (and the line at the top of the page) disappears on its own. Raising the prices afterwards is still done by hand, above.
+          Lower "Spots still available" each time a commission is booked. At 0 the launch banner above the prices, the "launch price" labels and the line at the top of the page disappear on their own. Raising the prices afterwards is still done by hand, above.
         </p>
 
-        <p style={s('margin:0 0 6px;font-size:15px')}>Text under the prices</p>
+        <p style={s('margin:0 0 6px;font-size:15px')}>Text in the launch banner</p>
         <p style={s(NOTE + ';margin-bottom:18px;max-width:64ch')}>
-          Write {'{total}'} where the total number of spots goes and {'{left}'} where the spots still available go. The first line is shown larger, the next line smaller, both in red. Leave a box empty to go back to the original text. When only 1 spot is left, you may want to change "spots" to "spot".
+          Write {'{total}'} where the total number of spots goes, {'{left}'} where the spots still available go and {'{prices}'} where the current prices go (for example €65–€90, filled in from the prices above). Each line of the box becomes a line in the banner. The title and the "spots remaining" label next to the number are in the Copy tab. Leave a box empty to go back to the original text.
         </p>
         <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(18px,2.4vw,28px)')}>
           {NOTE_LANGS.map((lang) => {
-            const preview = launchNote(STRINGS[lang], pricing, lang);
+            const preview = launchBanner(STRINGS[lang], pricing, lang);
             return (
               <div key={lang} style={s('display:flex;flex-direction:column;gap:10px;' + PANEL)}>
                 <label htmlFor={'ad-note-' + lang} style={s('margin:0;font-size:15px')}>{LANG_NAMES[lang]}</label>
                 <textarea
                   id={'ad-note-' + lang} rows={5}
-                  value={pricing.note[lang] ?? STRINGS[lang].launchNote}
-                  onChange={(e) => setNote(lang, e.target.value)}
+                  value={pricing.banner[lang] ?? STRINGS[lang].launchBody}
+                  onChange={(e) => setBanner(lang, e.target.value)}
                   style={s(INPUT + ';resize:vertical;line-height:1.5;font-family:inherit')}
                 />
                 <p style={s(NOTE)}>On the website:</p>
                 {preview ? (
-                  <div style={s('display:flex;flex-direction:column;gap:4px')}>
-                    {preview.map((line, i) => (
-                      <p key={i} style={s(i === 0 ? 'margin:0;font-size:16px;letter-spacing:.02em;line-height:1.5;color:#C0503B' : 'margin:0;font-size:13px;line-height:1.5;color:#C0503B')}>{line}</p>
+                  <div style={s('display:flex;flex-direction:column;gap:4px;background:#F7E5DD;border-radius:12px;padding:14px 16px')}>
+                    <p style={s('margin:0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C0503B')}>{preview.title}</p>
+                    {preview.lines.map((line, i) => (
+                      <p key={i} style={s('margin:0;font-size:14px;line-height:1.5;color:#455459;font-weight:300')}>{line}</p>
                     ))}
+                    <p style={s('margin:6px 0 0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#C0503B')}>{preview.count} · {preview.countLabel}</p>
                   </div>
                 ) : (
                   <p style={s(NOTE)}>Nothing: no spots left.</p>
