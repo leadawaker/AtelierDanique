@@ -46,7 +46,7 @@ export default function Slot({ slotId, src, focus, placeholder = '', alt = '', r
   }
 
   return (
-    <div ref={frameRef} style={{ ...frame, background: '#E3E1D8' }}>
+    <div ref={frameRef} style={{ ...frame, background: '#E3E1D8', ...style }}>
       <img
         src={photo.url}
         alt={alt}
