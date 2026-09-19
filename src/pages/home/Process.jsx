@@ -2,7 +2,7 @@ import Slot from '../../components/Slot.jsx';
 import { s } from '../../lib/css.js';
 
 const STEPS = [
-  { key: 1, slotId: 'ad-process-1', src: '/uploads/proc-1.jpg' },
+  { key: 1, slotId: 'ad-process-1', src: '/uploads/proc-1.webp' },
   { key: 2, slotId: 'ad-process-2', src: '/uploads/proc-2.jpg' },
   { key: 3, slotId: 'ad-process-3', src: '/uploads/proc-3.jpg', current: true },
   { key: 4, slotId: 'ad-process-4', src: '/uploads/proc-4.jpg' },

@@ -12,7 +12,7 @@ const SITE_PHOTOS = [
   { slotId: 'ad-which-photo', name: 'FAQ background', where: 'Behind the FAQ section, under a dark teal wash.', src: '/uploads/Project (20260915085353).jpg', ratio: '4/3' },
   { slotId: 'ad-price-a5', name: 'A5 commission card', where: 'Pricing, the A5 option.', src: '/uploads/a5-sheet.jpg', ratio: '3/4' },
   { slotId: 'ad-price-a4', name: 'A4 commission card', where: 'Pricing, the A4 option.', src: '/uploads/a4-sheet.jpg', ratio: '3/4' },
-  { slotId: 'ad-process-1', name: 'How it works, step 1', where: 'Above "Choose your moment". Shown without a frame, so a picture on a light or white background looks best.', src: '/uploads/proc-1.jpg', ratio: '5/4' },
+  { slotId: 'ad-process-1', name: 'How it works, step 1', where: 'Above "Choose your moment". Shown without a frame, so a picture on a light or white background looks best.', src: '/uploads/proc-1.webp', ratio: '5/4' },
   { slotId: 'ad-process-2', name: 'How it works, step 2', where: 'Above "Send your photo".', src: '/uploads/proc-2.jpg', ratio: '5/4' },
   { slotId: 'ad-process-3', name: 'How it works, step 3', where: 'Above "I create your artwork" (the highlighted step).', src: '/uploads/proc-3.jpg', ratio: '5/4' },
   { slotId: 'ad-process-4', name: 'How it works, step 4', where: 'Above "Receive your artwork".', src: '/uploads/proc-4.jpg', ratio: '5/4' },
