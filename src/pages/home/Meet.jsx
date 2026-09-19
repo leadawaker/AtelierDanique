@@ -1,8 +1,8 @@
 import { s } from '../../lib/css.js';
 import { parseVideo } from '../../lib/video.js';
 
-export default function Meet({ t, content }) {
-  const video = parseVideo(content['ad-video-url']);
+export default function Meet({ t, content, lang }) {
+  const video = parseVideo(content['ad-video-url'], lang);
 
   return (
     <section id="meet" style={s('background:#FCFAF6;padding:clamp(48px,7vw,100px) clamp(24px,5vw,80px)')}>

@@ -5,7 +5,13 @@
 // Handles: youtube.com/watch?v=ID, youtu.be/ID, youtube.com/shorts/ID,
 // youtube.com/embed/ID, vimeo.com/ID, vimeo.com/ID/HASH (unlisted),
 // player.vimeo.com/video/ID?h=HASH.
-export function parseVideo(input) {
+//
+// lang ('nl' | 'pt' | 'en') switches on the matching subtitle track of a Vimeo
+// video. English has none, so it stays off. A track that has not been uploaded
+// to Vimeo yet is simply ignored by the player.
+const VIMEO_TRACK = { nl: 'nl', pt: 'pt-BR' };
+
+export function parseVideo(input, lang) {
   if (typeof input !== 'string' || !input.trim()) return null;
   let url;
   try {
@@ -31,7 +37,8 @@ export function parseVideo(input) {
     return {
       provider: 'vimeo',
       id,
-      embedUrl: 'https://player.vimeo.com/video/' + id + '?dnt=1' + (hash ? '&h=' + hash : ''),
+      embedUrl: 'https://player.vimeo.com/video/' + id + '?dnt=1' + (hash ? '&h=' + hash : '')
+        + (VIMEO_TRACK[lang] ? '&texttrack=' + VIMEO_TRACK[lang] : ''),
     };
   }
   return null;
