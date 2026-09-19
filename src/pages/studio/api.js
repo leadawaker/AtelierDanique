@@ -83,6 +83,26 @@ export function useStudioContent({ onUnauthorized } = {}) {
   return { content, ready, loadError, status, update };
 }
 
+// ---- Stats: visitor numbers, search numbers, and the "update Google" button ----
+
+export async function fetchStats(days = 28) {
+  const res = await fetch('/api/stats?days=' + days, { cache: 'no-store' });
+  if (!res.ok) throw new Error('stats ' + res.status);
+  return res.json();
+}
+
+export async function fetchSearchStats() {
+  const res = await fetch('/api/search-stats', { cache: 'no-store' });
+  if (!res.ok) throw new Error('search ' + res.status);
+  return res.json();
+}
+
+export async function requestRebuild() {
+  const res = await fetch('/api/cron/rebuild', { method: 'POST' });
+  if (res.status === 429) return 'busy';
+  return res.ok ? 'ok' : 'error';
+}
+
 // ---- Photo upload: shrink in the browser, then upload straight to Blob ----
 
 // Returns the public URL of the uploaded photo.
