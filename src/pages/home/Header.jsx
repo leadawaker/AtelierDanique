@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { s } from '../../lib/css.js';
 import { pathFor } from '../../lib/routes.js';
 import { LANGS } from '../../lib/strings.js';
@@ -33,11 +33,14 @@ function useActiveSection() {
 // The header has one more button than the design planned for, so it switches
 // to the menu layout a little earlier than the rest of the site (1000px).
 const TIGHT_QUERY = '(max-width: 1100px)';
+// Starts as desktop (not tight) so the server HTML and the first client
+// render match, then corrects itself before the first paint.
 function useTight() {
-  const [tight, setTight] = useState(() => window.matchMedia(TIGHT_QUERY).matches);
-  useEffect(() => {
+  const [tight, setTight] = useState(false);
+  useLayoutEffect(() => {
     const mq = window.matchMedia(TIGHT_QUERY);
     const on = () => setTight(mq.matches);
+    on();
     mq.addEventListener('change', on);
     return () => mq.removeEventListener('change', on);
   }, []);

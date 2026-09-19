@@ -1,7 +1,8 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect } from 'react';
 import Home from './pages/home/Home.jsx';
-import { parsePath, pathFor, PAGES } from './lib/routes.js';
+import { parsePath, pathFor, PAGES, HTML_LANG } from './lib/routes.js';
 import { useLang } from './lib/lang.js';
+import { metaFor } from './seo/meta.js';
 
 const Commission = lazy(() => import('./pages/commission/Commission.jsx'));
 const Studio = lazy(() => import('./pages/studio/Studio.jsx'));
@@ -24,6 +25,14 @@ function PublicPage({ routeLang, page }) {
   useEffect(() => {
     if (!routeLang) window.history.replaceState(null, '', pathFor(lang, page) + window.location.search + window.location.hash);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // The prerender hides the SSR markup on narrow screens until hydration,
+  // because the static HTML is the desktop layout.
+  useLayoutEffect(() => { document.getElementById('root')?.removeAttribute('data-ssr'); }, []);
+
+  // Keep the tab title and <html lang> in sync on the client (the prerender
+  // already set them for the page it wrote).
+  useEffect(() => { document.title = metaFor(lang, page).title; document.documentElement.lang = HTML_LANG[lang]; }, [lang, page]);
 
   const props = { lang, setLang, page };
   let body = <Home {...props} />;

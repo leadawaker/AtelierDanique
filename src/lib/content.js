@@ -1,5 +1,15 @@
 import { useEffect, useState } from 'react';
 
+// The prerender script sets this before rendering. In the browser it comes
+// from the <script> the prerender inlined, so hydration matches the HTML.
+let initialContent = null;
+export function setInitialContent(raw) { initialContent = normalizeContent(raw); }
+function startContent() {
+  if (initialContent) return initialContent;
+  if (typeof window !== 'undefined' && window.__AD_CONTENT__) return (initialContent = normalizeContent(window.__AD_CONTENT__));
+  return EMPTY_CONTENT;
+}
+
 // Everything Danique edits in the studio is one flat JSON object, stored in
 // Redis as a hash (one field per key) and served by /api/content. The keys
 // match the localStorage keys from the Design brief.
@@ -59,7 +69,7 @@ export async function fetchContent({ fresh = false } = {}) {
 // it arrives, and re-read when the tab regains focus (so an edit made in the
 // studio shows up on switching back).
 export function useSiteContent() {
-  const [content, setContent] = useState(EMPTY_CONTENT);
+  const [content, setContent] = useState(startContent);
   useEffect(() => {
     let alive = true;
     const load = () => fetchContent().then((c) => { if (alive) setContent(c); }).catch(() => {});
