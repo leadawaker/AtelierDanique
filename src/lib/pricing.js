@@ -18,6 +18,11 @@ export const DEFAULT_PRICING = {
 
 export const NOTE_LANGS = ['en', 'pt', 'nl'];
 
+// The A4 card's photo starts 20% zoomed in inside its frame (s = 1.2 around
+// the paper). Used by the page and by the studio's Photos tab, so both show
+// the same default; a photo saved from the studio replaces it.
+export const A4_PHOTO_FOCUS = { s: 1.2, fx: 0.5, fy: 0.49 };
+
 // null is kept (a field Danique cleared to retype), anything else invalid
 // falls back to the default.
 const num = (v, fallback) => (v === null || (typeof v === 'number' && Number.isFinite(v)) ? v : fallback);
