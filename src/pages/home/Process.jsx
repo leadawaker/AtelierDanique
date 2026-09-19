@@ -7,11 +7,12 @@ import { s } from '../../lib/css.js';
 // normally multiplies pictures into the page, which drops a white background
 // but also tints the white parts of the picture. Pictures that are already
 // transparent set `plain` to keep their real colours; leave it off for a
-// picture with a white background.
+// picture with a white background. `transform` turns or scales a picture
+// inside its slot (step 3 is turned 15 degrees clockwise and 10% bigger).
 const STEPS = [
   { key: 1, slotId: 'ad-process-1', src: '/uploads/Project%20(20260919052116).webp', focus: { s: 1.2, fx: 0.46, fy: 0.48 }, brightness: 1.1, plain: true },
   { key: 2, slotId: 'ad-process-2', src: '/uploads/Project%20(20260919072918).webp', focus: { s: 1.2, fx: 0.517, fy: 0.497 }, plain: true },
-  { key: 3, slotId: 'ad-process-3', src: '/uploads/Project%20(20260919072504).webp', focus: { s: 1.05, fx: 0.503, fy: 0.508 }, plain: true, current: true },
+  { key: 3, slotId: 'ad-process-3', src: '/uploads/Project%20(20260919072504).webp', focus: { s: 1.05, fx: 0.503, fy: 0.508 }, plain: true, transform: 'rotate(15deg) scale(1.1)', current: true },
   { key: 4, slotId: 'ad-process-4', src: '/uploads/file_00000000d5b881f4a2eaa6c6bb25ef66.webp', focus: { fx: 0.527, fy: 0.51 }, plain: true },
 ];
 
@@ -20,7 +21,7 @@ const RULE = 'flex:1;height:1px;min-width:24px;max-width:88px;background:#D3CFC4
 
 export default function Process({ t }) {
   return (
-    <section id="process" style={s('background:#F6F2EA;padding:clamp(48px,7vw,100px) clamp(24px,5vw,80px)')}>
+    <section id="process" style={s('background:#F6F2EA;padding:clamp(48px,7vw,100px) clamp(24px,5vw,80px);overflow-x:clip')}>
       <div data-reveal="" style={s('max-width:1240px;margin:0 auto')}>
         <div style={s('display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;margin-bottom:clamp(36px,5vw,64px)')}>
           <div style={s('display:flex;align-items:center;justify-content:center;gap:clamp(12px,2vw,24px)')}>
@@ -35,7 +36,7 @@ export default function Process({ t }) {
           {STEPS.map((step) => (
             <li key={step.key} className={'proc-step' + (step.current ? ' proc-step-current' : '')}>
               <div className="proc-art" style={step.plain ? { mixBlendMode: 'normal' } : undefined}>
-                <Slot slotId={step.slotId} src={step.src} focus={step.focus} placeholder={'Photo for step ' + step.key} style={{ background: 'transparent', ...(step.brightness ? { filter: 'brightness(' + step.brightness + ')' } : {}) }} />
+                <Slot slotId={step.slotId} src={step.src} focus={step.focus} placeholder={'Photo for step ' + step.key} style={{ background: 'transparent', ...(step.brightness ? { filter: 'brightness(' + step.brightness + ')' } : {}), ...(step.transform ? { transform: step.transform } : {}) }} />
               </div>
               <div className="proc-badge-row">
                 <span className="proc-badge">{'0' + step.key}</span>
