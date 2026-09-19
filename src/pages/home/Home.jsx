@@ -12,7 +12,6 @@ import Gallery from './Gallery.jsx';
 import Process from './Process.jsx';
 import Pricing from './Pricing.jsx';
 import Testimonials from './Testimonials.jsx';
-import WhichPhoto from './WhichPhoto.jsx';
 import Instagram from './Instagram.jsx';
 import Faq from './Faq.jsx';
 import Contact from './Contact.jsx';
@@ -46,9 +45,8 @@ export default function Home() {
         <Process {...props} />
         <Pricing {...props} />
         <Testimonials {...props} />
-        <WhichPhoto {...props} />
-        <Instagram {...props} />
         <Faq {...props} />
+        <Instagram {...props} />
         <Contact {...props} />
         <Footer {...props} />
         <FloatingWhatsapp {...props} />

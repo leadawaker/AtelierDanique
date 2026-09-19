@@ -4,7 +4,7 @@
 
 export const STRINGS = {
   en: {
-    navHome: 'Home', navGallery: 'Gallery', navProcess: 'How it works', navPricing: 'Pricing', navTestimonials: 'Testimonials', navWhich: 'Which photo?', navAbout: 'About', navContact: 'Contact',
+    navHome: 'Home', navGallery: 'Gallery', navProcess: 'How it works', navPricing: 'Pricing', navTestimonials: 'Testimonials', navFaq: 'FAQ', navAbout: 'About',
     heroEyebrow: 'Hand-painted watercolour & ink', heroSpots: 'Launch prices · {left} of {total} spots remaining', heroT1: 'Real moments.', heroT2: 'Lasting', heroT3: 'forever.',
     heroBody: 'I create custom, hand-crafted artworks from your photos, turning the people and moments you love into timeless pieces for your home.',
     ctaCommission: 'Commission your piece',
@@ -25,16 +25,16 @@ export const STRINGS = {
     inc4: 'Signed by hand', inc5: 'Care card included', inc6: 'Ready in 5 working days in the NL, 3–4 weeks internationally',
     inc7: "Tracked shipping: €5 NL, €10 Europe & UK, €15 rest of the world. Free pick-up in 's-Hertogenbosch", inc8: 'Your photos stay private, never shared without asking', inc9: '30 days guarantee',
     testEyebrow: 'What clients say', testTitle: 'Testimonials',
-    whichEyebrow: 'Not sure which photo to choose?', whichTitle: 'Get expert advice.',
-    whichBody: "You don't need a perfect photo. Send me what you have and I'll tell you honestly what will work, from lighting and composition to emotional impact, before you commit to anything.",
-    whichCta: 'Get advice on WhatsApp',
+    faqPhotoQ: 'Not sure which photo to choose?',
+    faqPhotoA: "You don't need a perfect photo. Send me what you have and I'll tell you honestly what will work, from lighting and composition to emotional impact, before you commit to anything. If it won't work, I'll help you pick another one.",
     checklist: ['Good lighting','Clear composition','Visible faces and expressions','Emotional significance','High resolution if possible'],
     igEyebrow: 'Latest from Instagram', igTitle: 'Follow along', igSeeMore: 'See more on Instagram',
     faqEyebrow: 'Good to know', faqTitle: 'FAQ',
+    faqIntro: "The questions people ask most before commissioning a piece. Anything else? Just message me.",
+    faqCta: 'Ask me on WhatsApp',
     faq: [
       { q: 'How long does it take?', a: 'Within 5 working days in the Netherlands. Internationally, allow three to four weeks including shipping.' },
       { q: 'Do you ship outside the Netherlands?', a: "Yes, worldwide, always with track and trace. Shipping is €5 within the Netherlands, €10 to the rest of Europe and the UK, and €15 to the rest of the world. You can also pick up your artwork for free in 's-Hertogenbosch." },
-      { q: 'What if my photo is not good enough?', a: "Send it anyway. I'll tell you honestly whether it will work, and if it won't, I'll help you pick another one before anything is started." },
       { q: 'Is it framed?', a: 'No, it arrives unframed on 300g cold pressed cotton paper, cut to standard A4 or A5 so any shop frame fits.' },
       { q: 'When do I pay?', a: 'Half up front once we agree on the photo and the size, and the other half after your artwork is delivered.' },
       { q: 'What does the 30 days guarantee cover?', a: 'Your artwork is painted and sent within 30 days of us agreeing on the photo, or you get your money back. The only exception is an international shipping delay once the parcel has left my hands.' }
@@ -57,7 +57,7 @@ export const STRINGS = {
     videoSoon: 'The film is being made. Drop the video file in later and it plays right here.'
   },
   pt: {
-    navHome: 'Início', navGallery: 'Galeria', navProcess: 'Como funciona', navPricing: 'Preços', navTestimonials: 'Depoimentos', navWhich: 'Qual foto?', navAbout: 'Sobre', navContact: 'Contato',
+    navHome: 'Início', navGallery: 'Galeria', navProcess: 'Como funciona', navPricing: 'Preços', navTestimonials: 'Depoimentos', navFaq: 'Dúvidas', navAbout: 'Sobre',
     heroEyebrow: 'Pintado à mão em aquarela e tinta', heroSpots: 'Preços de lançamento · {left} de {total} vagas restantes', heroT1: 'Momentos reais.', heroT2: 'Que duram', heroT3: 'para sempre.',
     heroBody: 'Crio obras feitas à mão a partir das suas fotos, transformando as pessoas e os momentos que você ama em peças atemporais para a sua casa.',
     ctaCommission: 'Encomende sua obra',
@@ -78,16 +78,16 @@ export const STRINGS = {
     inc4: 'Assinado à mão', inc5: 'Cartão de cuidados incluído', inc6: 'Pronto em 5 dias úteis na Holanda, 3–4 semanas no exterior',
     inc7: "Frete rastreado: €5 Holanda, €10 Europa e Reino Unido, €15 resto do mundo. Retirada grátis em 's-Hertogenbosch", inc8: 'Suas fotos ficam privadas, nunca compartilhadas sem permissão', inc9: 'Garantia de 30 dias',
     testEyebrow: 'O que dizem os clientes', testTitle: 'Depoimentos',
-    whichEyebrow: 'Não sabe qual foto escolher?', whichTitle: 'Receba orientação.',
-    whichBody: 'Você não precisa de uma foto perfeita. Envie o que tiver e eu digo com sinceridade o que vai funcionar, da luz e da composição ao impacto emocional, antes de assumir qualquer compromisso.',
-    whichCta: 'Peça orientação no WhatsApp',
+    faqPhotoQ: 'Não sabe qual foto escolher?',
+    faqPhotoA: 'Você não precisa de uma foto perfeita. Envie o que tiver e eu digo com sinceridade o que vai funcionar, da luz e da composição ao impacto emocional, antes de assumir qualquer compromisso. Se não funcionar, ajudo você a escolher outra.',
     checklist: ['Boa iluminação','Composição clara','Rostos e expressões visíveis','Significado emocional','Alta resolução, se possível'],
     igEyebrow: 'Últimos posts do Instagram', igTitle: 'Acompanhe', igSeeMore: 'Veja mais no Instagram',
     faqEyebrow: 'Bom saber', faqTitle: 'Perguntas frequentes',
+    faqIntro: 'As perguntas mais comuns antes de encomendar uma obra. Ficou com alguma dúvida? É só me mandar uma mensagem.',
+    faqCta: 'Pergunte no WhatsApp',
     faq: [
       { q: 'Quanto tempo leva?', a: 'Até 5 dias úteis na Holanda. No exterior, considere de três a quatro semanas, incluindo o envio.' },
       { q: 'Você envia para fora da Holanda?', a: "Sim, para o mundo todo, sempre com rastreamento. O frete custa €5 na Holanda, €10 para o resto da Europa e o Reino Unido, e €15 para o resto do mundo. Você também pode retirar sua obra de graça em 's-Hertogenbosch." },
-      { q: 'E se minha foto não for boa o suficiente?', a: 'Envie de qualquer forma. Eu digo com sinceridade se ela funciona e, se não funcionar, ajudo você a escolher outra antes de começar.' },
       { q: 'Vem com moldura?', a: 'Não, chega sem moldura em papel de algodão 300g prensado a frio, no tamanho padrão A4 ou A5, que serve em qualquer moldura de loja.' },
       { q: 'Quando eu pago?', a: 'Metade no início, quando definimos a foto e o tamanho, e a outra metade depois da entrega da obra.' },
       { q: 'O que cobre a garantia de 30 dias?', a: 'Sua obra é pintada e enviada em até 30 dias depois de definirmos a foto, ou seu dinheiro é devolvido. A única exceção é atraso no envio internacional depois que o pacote sai das minhas mãos.' }
@@ -110,7 +110,7 @@ export const STRINGS = {
     videoSoon: 'O filme está sendo feito. Depois basta colocar o vídeo aqui que ele toca neste espaço.'
   },
   nl: {
-    navHome: 'Home', navGallery: 'Galerij', navProcess: 'Hoe het werkt', navPricing: 'Prijzen', navTestimonials: 'Ervaringen', navWhich: 'Welke foto?', navAbout: 'Over', navContact: 'Contact',
+    navHome: 'Home', navGallery: 'Galerij', navProcess: 'Hoe het werkt', navPricing: 'Prijzen', navTestimonials: 'Ervaringen', navFaq: 'Vragen', navAbout: 'Over',
     heroEyebrow: 'Met de hand geschilderd in aquarel en inkt', heroSpots: 'Introductieprijzen · nog {left} van {total} plekken', heroT1: 'Echte momenten.', heroT2: 'Die blijven', heroT3: 'voor altijd.',
     heroBody: "Ik maak met de hand gemaakte kunstwerken van jouw foto's en verander de mensen en momenten die je liefhebt in tijdloze stukken voor je huis.",
     ctaCommission: 'Bestel jouw werk',
@@ -131,16 +131,16 @@ export const STRINGS = {
     inc4: 'Met de hand gesigneerd', inc5: 'Onderhoudskaartje inbegrepen', inc6: 'Binnen 5 werkdagen klaar in NL, internationaal 3–4 weken',
     inc7: "Verzending met track & trace: €5 NL, €10 Europa en VK, €15 rest van de wereld. Gratis ophalen in 's-Hertogenbosch", inc8: "Je foto's blijven privé, nooit gedeeld zonder te vragen", inc9: '30 dagen garantie',
     testEyebrow: 'Wat klanten zeggen', testTitle: 'Ervaringen',
-    whichEyebrow: 'Weet je niet welke foto je moet kiezen?', whichTitle: 'Krijg deskundig advies.',
-    whichBody: 'Je hebt geen perfecte foto nodig. Stuur wat je hebt en ik vertel je eerlijk wat gaat werken, van licht en compositie tot emotionele impact, voordat je iets vastlegt.',
-    whichCta: 'Vraag advies via WhatsApp',
+    faqPhotoQ: 'Weet je niet welke foto je moet kiezen?',
+    faqPhotoA: 'Je hebt geen perfecte foto nodig. Stuur wat je hebt en ik vertel je eerlijk wat gaat werken, van licht en compositie tot emotionele impact, voordat je iets vastlegt. Werkt hij niet, dan help ik je een andere kiezen.',
     checklist: ['Goed licht','Heldere compositie','Zichtbare gezichten en uitdrukkingen','Emotionele waarde','Hoge resolutie indien mogelijk'],
     igEyebrow: 'Laatste van Instagram', igTitle: 'Volg mee', igSeeMore: 'Bekijk meer op Instagram',
     faqEyebrow: 'Goed om te weten', faqTitle: 'Veelgestelde vragen',
+    faqIntro: 'De vragen die mensen het vaakst stellen voordat ze een werk bestellen. Staat je vraag er niet bij? Stuur me gerust een bericht.',
+    faqCta: 'Vraag het via WhatsApp',
     faq: [
       { q: 'Hoe lang duurt het?', a: 'Binnen 5 werkdagen in Nederland. Internationaal duurt het drie tot vier weken, inclusief verzending.' },
       { q: 'Verstuur je ook buiten Nederland?', a: "Ja, wereldwijd, altijd met track & trace. Verzending kost €5 binnen Nederland, €10 naar de rest van Europa en het VK, en €15 naar de rest van de wereld. Je kunt je werk ook gratis ophalen in 's-Hertogenbosch." },
-      { q: 'Wat als mijn foto niet goed genoeg is?', a: 'Stuur hem toch. Ik zeg je eerlijk of het gaat werken, en zo niet help ik je een andere foto kiezen voordat er iets begint.' },
       { q: 'Zit er een lijst bij?', a: 'Nee, het komt zonder lijst op 300g koudgeperst katoenpapier, op standaard A4- of A5-formaat, dus elke winkellijst past.' },
       { q: 'Wanneer betaal ik?', a: 'De helft vooraf, zodra we de foto en het formaat hebben afgesproken, en de andere helft na levering van je werk.' },
       { q: 'Wat dekt de 30 dagen garantie?', a: 'Je werk wordt binnen 30 dagen na het afspreken van de foto geschilderd en verzonden, of je krijgt je geld terug. De enige uitzondering is vertraging bij internationale verzending zodra het pakket uit mijn handen is.' }

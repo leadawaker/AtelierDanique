@@ -14,7 +14,7 @@ export default function Footer({ t, links }) {
         <nav style={s('display:grid;gap:10px;font-size:14px')}>
           <a href="#gallery" className="h-color-coral" style={s(LINK)}>{t.navGallery}</a>
           <a href="#process" className="h-color-coral" style={s(LINK)}>{t.navProcess}</a>
-          <a href="#which-photo" className="h-color-coral" style={s(LINK)}>{t.navWhich}</a>
+          <a href="#faq" className="h-color-coral" style={s(LINK)}>{t.navFaq}</a>
           <a href="/commission" className="h-color-coral" style={s(LINK)}>{t.ctaCommission}</a>
         </nav>
         <div style={s('display:grid;gap:10px;font-size:14px')}>

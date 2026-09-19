@@ -47,20 +47,18 @@ export const COPY_GROUPS = [
     { key: 'testEyebrow', label: 'Small line above the title' },
     { key: 'testTitle', label: 'Title' },
   ] },
-  { id: 'which', name: 'Get expert advice', fields: [
-    { key: 'whichEyebrow', label: 'Small line above the title (phones)' },
-    { key: 'whichTitle', label: 'Title' },
-    { key: 'whichBody', label: 'Text', long: true },
-    { key: 'whichCta', label: 'WhatsApp button' },
+  { id: 'faq', name: 'FAQ', fields: [
+    { key: 'faqEyebrow', label: 'Small line above the title' },
+    { key: 'faqTitle', label: 'Title' },
+    { key: 'faqIntro', label: 'Text under the title', long: true },
+    { key: 'faqCta', label: 'WhatsApp button' },
+    { key: 'faqPhotoQ', label: 'Photo question' },
+    { key: 'faqPhotoA', label: 'Photo question, answer', long: true },
   ] },
   { id: 'instagram', name: 'Instagram', fields: [
     { key: 'igEyebrow', label: 'Small line above the title' },
     { key: 'igTitle', label: 'Title' },
     { key: 'igSeeMore', label: 'Link to Instagram' },
-  ] },
-  { id: 'faq', name: 'FAQ heading', fields: [
-    { key: 'faqEyebrow', label: 'Small line above the title' },
-    { key: 'faqTitle', label: 'Title' },
   ] },
   { id: 'contact', name: 'Contact', fields: [
     { key: 'ctaEyebrow', label: 'Small line above the title' },
@@ -68,7 +66,7 @@ export const COPY_GROUPS = [
     { key: 'ctaBody1', label: 'Text, first line', long: true },
     { key: 'ctaBody2', label: 'Text, second line', long: true },
     { key: 'ctaSend', label: 'Button' },
-    { key: 'ctaNotSure', label: 'Link to the advice section' },
+    { key: 'ctaNotSure', label: 'Link to the photo question in the FAQ' },
   ] },
   { id: 'footer', name: 'Footer', fields: [
     { key: 'footTagline', label: 'Tagline' },

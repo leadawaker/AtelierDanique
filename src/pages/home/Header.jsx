@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { s } from '../../lib/css.js';
 import { LANGS } from '../../lib/strings.js';
 
-const SECTION_IDS = ['gallery', 'meet', 'process', 'pricing', 'testimonials', 'which-photo', 'contact'];
+const SECTION_IDS = ['gallery', 'meet', 'process', 'pricing', 'testimonials', 'faq'];
 const PAD = 'clamp(24px,5vw,80px)';
 
 const navStyleFor = (active, id) => s(active === id
@@ -40,8 +40,7 @@ export default function Header({ t, lang, setLang, compact }) {
     { id: 'process', href: '#process', label: t.navProcess },
     { id: 'pricing', href: '#pricing', label: t.navPricing },
     { id: 'testimonials', href: '#testimonials', label: t.navTestimonials },
-    { id: 'which-photo', href: '#which-photo', label: t.navWhich },
-    { id: 'contact', href: '#contact', label: t.navContact },
+    { id: 'faq', href: '#faq', label: t.navFaq },
   ];
   const menuLinks = [...navLinks, { id: 'commission', href: '/commission', label: t.ctaCommission }, { id: 'login', href: '/edit', label: 'Login' }];
 
