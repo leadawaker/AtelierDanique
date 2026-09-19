@@ -40,7 +40,7 @@ export const STRINGS = {
       { q: 'How long does it take?', a: 'Your painting is ready in 5 working days. In the Netherlands, add a day or two for it to arrive. Within Europe, allow about a week, and up to four weeks worldwide, depending on the location.' },
       { q: 'Do you ship outside the Netherlands?', a: "Yes, worldwide, always with track and trace. Shipping is €5 within the Netherlands, €10 to the rest of Europe and the UK, and €15 to the rest of the world. You can also pick up your artwork for free in 's-Hertogenbosch." },
       { q: 'Is it framed?', a: 'No, it arrives unframed on 300g cold pressed cotton paper, cut to standard A4 or A5 so any shop frame fits.' },
-      { q: 'When do I pay?', a: 'Half up front once we agree on the photo and the size, and the other half after your artwork is delivered.' },
+      { q: 'When do I pay?', a: 'Half up front once we agree on the photo and the size, and the other half when your artwork is finished, before I send it.' },
       { q: 'How does the 10 days guarantee work?', a: 'You have 10 days after receiving your painting to change your mind. If it is not right for you, just let me know within those 10 days.' }
     ],
     posts: [
@@ -97,7 +97,7 @@ export const STRINGS = {
       { q: 'Quanto tempo leva?', a: 'Sua obra fica pronta em 5 dias úteis. Na Holanda, some um ou dois dias para a entrega. Dentro da Europa, considere cerca de uma semana, e até quatro semanas para o resto do mundo, dependendo do local.' },
       { q: 'Você envia para fora da Holanda?', a: "Sim, para o mundo todo, sempre com rastreamento. O frete custa €5 na Holanda, €10 para o resto da Europa e o Reino Unido, e €15 para o resto do mundo. Você também pode retirar sua obra de graça em 's-Hertogenbosch." },
       { q: 'Vem com moldura?', a: 'Não, chega sem moldura em papel de algodão 300g prensado a frio, no tamanho padrão A4 ou A5, que serve em qualquer moldura de loja.' },
-      { q: 'Quando eu pago?', a: 'Metade no início, quando definimos a foto e o tamanho, e a outra metade depois da entrega da obra.' },
+      { q: 'Quando eu pago?', a: 'Metade no início, quando definimos a foto e o tamanho, e a outra metade quando a obra estiver pronta, antes de eu enviar.' },
       { q: 'Como funciona a garantia de 10 dias?', a: 'Você tem 10 dias, depois de receber sua obra, para mudar de ideia. Se ela não for o que você esperava, é só me avisar dentro desses 10 dias.' }
     ],
     posts: [
@@ -154,7 +154,7 @@ export const STRINGS = {
       { q: 'Hoe lang duurt het?', a: 'Je werk is binnen 5 werkdagen klaar. Binnen Nederland komt er een dag of twee bij voor de bezorging. Binnen Europa duurt het ongeveer een week, en wereldwijd tot vier weken, afhankelijk van de locatie.' },
       { q: 'Verstuur je ook buiten Nederland?', a: "Ja, wereldwijd, altijd met track & trace. Verzending kost €5 binnen Nederland, €10 naar de rest van Europa en het VK, en €15 naar de rest van de wereld. Je kunt je werk ook gratis ophalen in 's-Hertogenbosch." },
       { q: 'Zit er een lijst bij?', a: 'Nee, het komt zonder lijst op 300g koudgeperst katoenpapier, op standaard A4- of A5-formaat, dus elke winkellijst past.' },
-      { q: 'Wanneer betaal ik?', a: 'De helft vooraf, zodra we de foto en het formaat hebben afgesproken, en de andere helft na levering van je werk.' },
+      { q: 'Wanneer betaal ik?', a: 'De helft vooraf, zodra we de foto en het formaat hebben afgesproken, en de andere helft als je werk klaar is, voordat ik het verstuur.' },
       { q: 'Hoe werkt de 10 dagen garantie?', a: 'Je hebt 10 dagen na ontvangst van je schilderij om je te bedenken. Is het toch niet wat je had verwacht, laat het me dan binnen die 10 dagen weten.' }
     ],
     posts: [

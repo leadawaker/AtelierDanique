@@ -16,7 +16,7 @@ export const TERMS = {
         'Each painting is watercolour and ink on 300 g cotton paper, unframed and signed by hand. It is painted from your photo in my own style, so it is one of a kind rather than an exact copy, and colours can look different on your screen. Please only send photos you have the right to use. If a photo will not work well, I will tell you honestly and help you choose another.',
       ] },
       { h: 'Paying', p: [
-        'Half of the price is paid up front once we agree, and the other half after your painting has arrived. I send you the payment details, and I start painting when I receive the deposit.',
+        'Half of the price is paid up front once we agree, and the other half when your painting is finished, before I send it. I send you the payment details, and I start painting when I receive the deposit.',
       ] },
       { h: 'Delivery', p: [
         'Your painting is ready in about 5 working days, packed flat between rigid boards and sent tracked. Shipping is extra:',
@@ -60,7 +60,7 @@ export const TERMS = {
         'Elk schilderij is aquarel en inkt op 300 g katoenpapier, zonder lijst en met de hand gesigneerd. Het is geschilderd naar je foto in mijn eigen stijl, dus uniek in plaats van een exacte kopie, en kleuren kunnen op jouw scherm anders overkomen. Stuur alleen foto’s waarvan je het recht hebt ze te gebruiken. Werkt een foto niet goed, dan zeg ik dat eerlijk en help ik je een andere kiezen.',
       ] },
       { h: 'Betalen', p: [
-        'De helft van de prijs betaal je vooraf zodra we het eens zijn, en de andere helft nadat je schilderij is aangekomen. Ik stuur je de betaalgegevens en ik begin met schilderen zodra ik de aanbetaling heb ontvangen.',
+        'De helft van de prijs betaal je vooraf zodra we het eens zijn, en de andere helft als je schilderij klaar is, voordat ik het verstuur. Ik stuur je de betaalgegevens en ik begin met schilderen zodra ik de aanbetaling heb ontvangen.',
       ] },
       { h: 'Bezorging', p: [
         'Je schilderij is in ongeveer 5 werkdagen klaar, plat verpakt tussen stevige platen en met track & trace verstuurd. Verzending komt erbij:',
@@ -104,7 +104,7 @@ export const TERMS = {
         'Cada obra é aquarela e nanquim em papel de algodão 300 g, sem moldura e assinada à mão. Ela é pintada a partir da sua foto no meu próprio estilo, então é única em vez de uma cópia exata, e as cores podem parecer diferentes na sua tela. Envie apenas fotos que você tenha o direito de usar. Se uma foto não funcionar bem, eu digo com sinceridade e ajudo você a escolher outra.',
       ] },
       { h: 'Pagamento', p: [
-        'Metade do preço é paga antes, quando combinarmos, e a outra metade depois que a sua obra chegar. Envio os dados de pagamento e começo a pintar quando recebo o sinal.',
+        'Metade do preço é paga antes, quando combinarmos, e a outra metade quando a sua obra estiver pronta, antes de eu enviar. Envio os dados de pagamento e começo a pintar quando recebo o sinal.',
       ] },
       { h: 'Entrega', p: [
         'A sua obra fica pronta em cerca de 5 dias úteis, embalada na horizontal entre placas rígidas e enviada com rastreamento. O frete é à parte:',
