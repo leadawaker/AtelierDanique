@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { s } from '../../lib/css.js';
+import { useSiteContent } from '../../lib/content.js';
 import { useLang } from '../../lib/lang.js';
 import { LANGS } from '../../lib/strings.js';
 import { LINKS, whatsappLink } from '../home/settings.js';
@@ -14,6 +15,7 @@ const INFO_B = s('margin:0;font-size:14px;line-height:1.7;color:#5E6C71;font-wei
 
 export default function Commission() {
   const [lang, setLang] = useLang();
+  const content = useSiteContent();
   const t = STRINGS[lang] || STRINGS.en;
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function Commission() {
           </div>
 
           <div style={s('min-width:0')}>
-            <CommissionForm t={t} lang={lang} />
+            <CommissionForm t={t} lang={lang} content={content} />
           </div>
 
         </div>

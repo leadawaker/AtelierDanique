@@ -1,10 +1,11 @@
 import { s } from '../../../lib/css.js';
-import { discountActive, sitePricing } from '../../../lib/pricing.js';
+import { launchNote, sitePricing } from '../../../lib/pricing.js';
+import { STRINGS } from '../../../lib/strings.js';
 
-// Pricing tab: the two euro prices, the two reais prices (each with its own
-// optional "was" price for a strikethrough), and one shared end date that
-// controls both discounts at once. Past that date the website quietly goes
-// back to showing a plain price, no strikethrough, no note.
+// Pricing tab: the euro and reais price per size, and the launch spots note
+// under the price cards ("I'm opening my first 7 commission spots...").
+// Danique lowers "Spots still available" as commissions come in; at 0 the
+// note disappears from the website.
 
 const SECTION = 'margin-bottom:clamp(44px,6vw,72px)';
 const H2 = "margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(22px,2.4vw,30px);line-height:1.1";
@@ -19,18 +20,21 @@ const SIZES = [
   { id: 'a4', name: 'A4' },
 ];
 
+const toNumber = (raw) => {
+  const num = raw === '' ? null : Number(raw);
+  return Number.isFinite(num) ? num : null;
+};
+
 export default function PricingTab({ content, update }) {
   const pricing = sitePricing(content);
-  const active = discountActive(pricing.until);
+  const note = launchNote(STRINGS.en, pricing);
 
   const setSize = (id, field, raw) => {
-    const num = raw === '' ? null : Number(raw);
-    const next = { ...pricing, [id]: { ...pricing[id], [field]: Number.isFinite(num) ? num : null } };
-    update('ad-pricing', next);
+    update('ad-pricing', { ...pricing, [id]: { ...pricing[id], [field]: toNumber(raw) } });
   };
 
-  const setUntil = (value) => {
-    update('ad-pricing', { ...pricing, until: value });
+  const setSpots = (field, raw) => {
+    update('ad-pricing', { ...pricing, [field]: toNumber(raw) });
   };
 
   return (
@@ -40,7 +44,7 @@ export default function PricingTab({ content, update }) {
           <h2 style={s(H2)}>Prices</h2>
         </div>
         <p style={s(NOTE + ';margin-bottom:22px;font-size:14px')}>
-          Fill in "Was" only while a size is on a discount. Leave it empty for a plain price with no strikethrough.
+          Visitors who pick Portuguese see the reais price, everyone else sees euros.
         </p>
         <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(18px,2.4vw,28px)')}>
           {SIZES.map((size) => {
@@ -48,18 +52,10 @@ export default function PricingTab({ content, update }) {
             return (
               <div key={size.id} style={s('display:flex;flex-direction:column;gap:16px;' + PANEL)}>
                 <p style={s('margin:0;font-size:15px')}>{size.name}</p>
-                <CurrencyFields
-                  currencyLabel="Euros (€)"
-                  price={v.eur} was={v.eurWas}
-                  onPrice={(val) => setSize(size.id, 'eur', val)}
-                  onWas={(val) => setSize(size.id, 'eurWas', val)}
-                />
-                <CurrencyFields
-                  currencyLabel="Reais (R$)"
-                  price={v.brl} was={v.brlWas}
-                  onPrice={(val) => setSize(size.id, 'brl', val)}
-                  onWas={(val) => setSize(size.id, 'brlWas', val)}
-                />
+                <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:10px')}>
+                  <NumberField id={`ad-price-${size.id}-eur`} label="Euros (€)" value={v.eur} onChange={(val) => setSize(size.id, 'eur', val)} />
+                  <NumberField id={`ad-price-${size.id}-brl`} label="Reais (R$)" value={v.brl} onChange={(val) => setSize(size.id, 'brl', val)} />
+                </div>
               </div>
             );
           })}
@@ -68,42 +64,33 @@ export default function PricingTab({ content, update }) {
 
       <section>
         <div style={s(H2_WRAP)}>
-          <h2 style={s(H2)}>Discount end date</h2>
+          <h2 style={s(H2)}>Launch spots</h2>
         </div>
-        <div style={s('display:flex;flex-direction:column;gap:12px;max-width:320px')}>
-          <label htmlFor="ad-pricing-until" style={s(LABEL)}>Show the "Was" prices until</label>
-          <input
-            id="ad-pricing-until" type="date" value={pricing.until}
-            onChange={(e) => setUntil(e.target.value)}
-            style={s(INPUT)}
-          />
-          <p style={s(NOTE)}>
-            {pricing.until
-              ? (active
-                ? 'The strikethrough and this date are showing on the website now. They will disappear on their own the day after.'
-                : "This date has passed, so the website is showing a plain price now, even though a \"Was\" price is still filled in above. Clear the \"Was\" fields or pick a new date to bring it back.")
-              : 'No date set: the website always shows a plain price, whatever is in "Was" above.'}
-          </p>
+        <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:420px;margin-bottom:18px')}>
+          <NumberField id="ad-spots-total" label="Spots in total" value={pricing.spotsTotal} onChange={(val) => setSpots('spotsTotal', val)} />
+          <NumberField id="ad-spots-left" label="Spots still available" value={pricing.spotsLeft} onChange={(val) => setSpots('spotsLeft', val)} />
         </div>
+        {note ? (
+          <div style={s(PANEL + ';max-width:560px;display:flex;flex-direction:column;gap:6px')}>
+            <p style={s(NOTE)}>The website shows, under the prices:</p>
+            <p style={s('margin:0;font-size:15px;line-height:1.6;color:#26454F')}>{note.intro}<br />{note.left}</p>
+          </div>
+        ) : (
+          <p style={s(NOTE)}>No spots left, so the website shows no note under the prices.</p>
+        )}
+        <p style={s(NOTE + ';margin-top:12px')}>
+          Lower "Spots still available" each time a commission is booked. At 0 the note disappears on its own. Raising the prices afterwards is still done by hand, above.
+        </p>
       </section>
     </div>
   );
 }
 
-function CurrencyFields({ currencyLabel, price, was, onPrice, onWas }) {
+function NumberField({ id, label, value, onChange }) {
   return (
-    <div style={s('display:flex;flex-direction:column;gap:8px')}>
-      <p style={s('margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#85949A')}>{currencyLabel}</p>
-      <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:10px')}>
-        <div style={s('display:flex;flex-direction:column;gap:6px')}>
-          <label style={s(LABEL)}>Price</label>
-          <input type="number" inputMode="decimal" min="0" value={price ?? ''} onChange={(e) => onPrice(e.target.value)} style={s(INPUT)} />
-        </div>
-        <div style={s('display:flex;flex-direction:column;gap:6px')}>
-          <label style={s(LABEL)}>Was (optional)</label>
-          <input type="number" inputMode="decimal" min="0" value={was ?? ''} onChange={(e) => onWas(e.target.value)} style={s(INPUT)} />
-        </div>
-      </div>
+    <div style={s('display:flex;flex-direction:column;gap:6px')}>
+      <label htmlFor={id} style={s(LABEL)}>{label}</label>
+      <input id={id} type="number" inputMode="decimal" min="0" value={value ?? ''} onChange={(e) => onChange(e.target.value)} style={s(INPUT)} />
     </div>
   );
 }

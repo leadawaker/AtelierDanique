@@ -15,7 +15,7 @@ export const CONTENT_KEYS = [
   'ad-video-url',           // string, Vimeo or YouTube link, '' = none
   'ad-hero-layout',         // 'banner' | 'split'
   'ad-copy',                // {stringKey: {en, pt, nl}}
-  'ad-pricing',             // {a5, a4: {eur, eurWas, brl, brlWas}, until}  see lib/pricing.js
+  'ad-pricing',             // {a5, a4: {eur, brl}, spotsTotal, spotsLeft}  see lib/pricing.js
 ];
 
 export const EMPTY_CONTENT = {

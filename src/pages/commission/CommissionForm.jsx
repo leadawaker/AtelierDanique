@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { s } from '../../lib/css.js';
 import { LINKS, whatsappLink } from '../home/settings.js';
+import { currencyFor, formatMoney, sitePricing } from '../../lib/pricing.js';
 import PhotoField from './PhotoField.jsx';
 import { sendByEmail } from './send.js';
 
@@ -9,10 +10,15 @@ import { sendByEmail } from './send.js';
 // - "Send on WhatsApp": opens WhatsApp with every answer prefilled; the client
 //   attaches their photo in that chat.
 
-const SIZES = [
-  { label: 'A5', price: '€50' },
-  { label: 'A4', price: '€75' },
-];
+// Prices follow the studio's Pricing tab, in reais for Portuguese visitors.
+function sizesFor(content, lang) {
+  const pricing = sitePricing(content);
+  const currency = currencyFor(lang);
+  return [
+    { label: 'A5', price: formatMoney(pricing.a5[currency], currency) },
+    { label: 'A4', price: formatMoney(pricing.a4[currency], currency) },
+  ];
+}
 
 const EMPTY = { name: '', contact: '', what: '', why: '', feel: '', extra: '' };
 
@@ -25,8 +31,8 @@ const PANEL_B = s('margin:0 0 14px;font-size:15px;color:#455459;font-weight:300;
 const LINK = s('color:#E36B54;border-bottom:1px solid #E0C2AE;padding-bottom:2px');
 const BUTTON = 'border-radius:2px;padding:17px 28px;font-size:15px;cursor:pointer;transition:background .25s,color .25s,border-color .25s;';
 
-function buildMessage(t, form, size) {
-  const price = SIZES.find((x) => x.label === size)?.price || '';
+function buildMessage(t, form, size, sizes) {
+  const price = sizes.find((x) => x.label === size)?.price || '';
   const rows = [
     [t.msgName, form.name],
     [t.fContact, form.contact],
@@ -52,7 +58,8 @@ function openWhatsapp(url) {
   window.open(url, '_blank', 'noopener');
 }
 
-export default function CommissionForm({ t, lang }) {
+export default function CommissionForm({ t, lang, content }) {
+  const sizes = sizesFor(content, lang);
   const [form, setForm] = useState(EMPTY);
   const [size, setSize] = useState('A4');
   const [file, setFile] = useState(null);
@@ -73,7 +80,7 @@ export default function CommissionForm({ t, lang }) {
     setError('');
     const via = e.nativeEvent.submitter && e.nativeEvent.submitter.value;
     if (via !== 'email') {
-      const url = whatsappLink(LINKS.whatsappUrl, buildMessage(t, form, size));
+      const url = whatsappLink(LINKS.whatsappUrl, buildMessage(t, form, size, sizes));
       setSentUrl(url);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       openWhatsapp(url);
@@ -133,7 +140,7 @@ export default function CommissionForm({ t, lang }) {
       <fieldset style={s('border:0;padding:0;margin:0;display:grid;gap:12px')}>
         <legend style={s('padding:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#85949A')}>{t.fSize}</legend>
         <div style={s('display:flex;gap:12px;flex-wrap:wrap')}>
-          {SIZES.map((x) => (
+          {sizes.map((x) => (
             <button key={x.label} type="button" onClick={() => setSize(x.label)} aria-pressed={size === x.label} style={sizeStyle(x.label)}>
               {x.label}<span style={priceStyle(x.label)}>{x.price}</span>
             </button>

@@ -15,7 +15,8 @@ const FIELDS = [
   ["feel", "How does it make them feel?"],
   ["extra", "Anything else"],
 ];
-const SIZES = { A5: "A5 (€50)", A4: "A4 (€75)" };
+// No price here: prices change in the studio, Danique knows the current ones.
+const SIZES = { A5: "A5", A4: "A4" };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);

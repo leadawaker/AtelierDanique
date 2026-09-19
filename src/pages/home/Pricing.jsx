@@ -1,6 +1,6 @@
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
-import { currencyFor, discountActive, formatMoney, formatUntil, priceFor, sitePricing } from '../../lib/pricing.js';
+import { currencyFor, formatMoney, launchNote, sitePricing } from '../../lib/pricing.js';
 
 const ICON = 'flex-shrink:0;margin-top:2px';
 const svgProps = { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: '#E36B54', strokeWidth: 1.4, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', style: s(ICON) };
@@ -17,30 +17,16 @@ const INCLUDED = [
 ];
 
 const PHOTO_BOX = 'position:relative;width:100%;aspect-ratio:3/4;margin-top:18px;border-radius:6px;overflow:hidden';
-const PRICE_ROW = 'display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap';
 const PRICE = "margin: 0; font-family: 'Cardo',serif; font-size: clamp(38px,4vw,52px); line-height: 1; color: #C0503B";
-const WAS = "margin: 0; font-family: 'Cardo',serif; font-size: clamp(20px,2.2vw,26px); line-height: 1; color: #A4AFB3; text-decoration: line-through";
-const UNTIL = 'margin: 0; font-size: 12px; letter-spacing: .04em; color: #85949A';
+const NOTE_INTRO = "margin:0;font-family:'Cardo',serif;font-size:clamp(18px,1.8vw,22px);line-height:1.4;color:#26454F;text-wrap:balance";
+const NOTE_LEFT = 'margin:0;font-size:14px;letter-spacing:.02em;line-height:1.6;color:#C0503B';
 const SIZE = 'margin: 0; font-size: 14px; letter-spacing: .18em; text-transform: uppercase; color: #85949A';
 const MM = 'font-size: 13px; letter-spacing: normal; text-transform: none;';
 
 export default function Pricing({ t, lang, content }) {
   const pricing = sitePricing(content);
   const currency = currencyFor(lang);
-  const showDiscount = discountActive(pricing.until);
-  const a5 = priceFor(pricing.a5, currency);
-  const a4 = priceFor(pricing.a4, currency);
-  const untilLabel = showDiscount ? formatUntil(pricing.until, lang) : '';
-
-  const PriceBlock = ({ price }) => (
-    <>
-      <div style={s(PRICE_ROW)}>
-        {showDiscount && price.was ? <p style={s(WAS)}>{formatMoney(price.was, currency)}</p> : null}
-        <p style={s(PRICE)}>{formatMoney(price.value, currency)}</p>
-      </div>
-      {showDiscount && price.was && untilLabel ? <p style={s(UNTIL)}>{t.priceUntil} {untilLabel}</p> : null}
-    </>
-  );
+  const note = launchNote(t, pricing);
 
   return (
     <section id="pricing" style={s('padding: clamp(48px,7vw,104px) clamp(24px,5vw,80px); background-color: #F1EFE8')}>
@@ -53,17 +39,23 @@ export default function Pricing({ t, lang, content }) {
             <div style={s(PHOTO_BOX)}>
               <Slot slotId="ad-price-a5" src="/uploads/a5-sheet.jpg" placeholder="A5 paper photo" />
             </div>
-            <PriceBlock price={a5} />
+            <p style={s(PRICE)}>{formatMoney(pricing.a5[currency], currency)}</p>
             <p style={s(SIZE)}>{t.sizeLabelA5}{' '}<span style={s(MM)}>148 × 210 mm</span></p>
           </div>
           <div style={s('background: #FCFAF6; border: 1px solid #E36B54; border-radius: 6px; padding: clamp(24px,3vw,32px); display: flex; flex-direction: column; gap: 8px; text-align: center; position: relative; border-width: 1px')}>
             <div style={s(PHOTO_BOX)}>
               <Slot slotId="ad-price-a4" src="/uploads/a4-sheet.jpg" placeholder="A4 paper photo" />
             </div>
-            <PriceBlock price={a4} />
+            <p style={s(PRICE)}>{formatMoney(pricing.a4[currency], currency)}</p>
             <p style={s(SIZE)}>{t.sizeLabelA4}{' '}<span style={s(MM)}>210 × 297 mm</span></p>
           </div>
         </div>
+        {note ? (
+          <div style={s('max-width:56ch;margin:0 auto clamp(32px,4vw,48px);text-align:center;display:flex;flex-direction:column;gap:6px')}>
+            <p style={s(NOTE_INTRO)}>{note.intro}</p>
+            <p style={s(NOTE_LEFT)}>{note.left}</p>
+          </div>
+        ) : null}
 
         <div style={s('max-width:720px;margin:0 auto;border-top:1px solid #D3CFC4;padding-top:clamp(24px,3vw,36px)')}>
           <p style={s('margin:0 0 16px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#26454F;text-align:center')}>{t.included}</p>

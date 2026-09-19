@@ -10,8 +10,8 @@ import InstagramPanel from '../InstagramPanel.jsx';
 const SITE_PHOTOS = [
   { slotId: 'ad-hero-banner', name: 'Hero banner', where: 'Top of the home page, behind the headline.', src: '/uploads/Project%20(20260915100023).jpg', focus: { fx: 1, fy: 0.5 }, ratio: '16/9' },
   { slotId: 'ad-which-photo', name: 'Get expert advice', where: 'The dark section about choosing a photo.', src: '/uploads/Project (20260915085353).jpg', ratio: '4/3' },
-  { slotId: 'ad-price-a5', name: 'A5 commission card', where: 'Pricing, the €50 option.', src: '/uploads/a5-sheet.jpg', ratio: '3/4' },
-  { slotId: 'ad-price-a4', name: 'A4 commission card', where: 'Pricing, the €75 option.', src: '/uploads/a4-sheet.jpg', ratio: '3/4' },
+  { slotId: 'ad-price-a5', name: 'A5 commission card', where: 'Pricing, the A5 option.', src: '/uploads/a5-sheet.jpg', ratio: '3/4' },
+  { slotId: 'ad-price-a4', name: 'A4 commission card', where: 'Pricing, the A4 option.', src: '/uploads/a4-sheet.jpg', ratio: '3/4' },
   { slotId: 'ad-about-portrait', name: 'Portrait of Danique', where: 'The About section near the footer.', src: '/uploads/danique.jpg', ratio: '3/4' },
 ];
 
