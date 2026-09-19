@@ -9,7 +9,7 @@ const MAX_PHOTO_B64 = 4_000_000;
 const PHOTO_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
 const FIELDS = [
   ["name", "Name"],
-  ["contact", "Email or phone"],
+  ["contact", "Email"],
   ["what", "Where is this, and what is it?"],
   ["why", "Why is this moment meaningful?"],
   ["feel", "How does it make them feel?"],
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
   const form = Object.fromEntries(FIELDS.map(([k]) => [k, text(body[k])]));
   const size = SIZES[body.size] ? body.size : "A4";
   const lang = ["en", "pt", "nl"].includes(body.lang) ? body.lang : "en";
-  if (!form.name || !form.contact) return res.status(400).json({ error: "Name and contact are required" });
+  if (!form.name || !EMAIL_RE.test(form.contact)) return res.status(400).json({ error: "Name and a valid email are required" });
 
   const photo = body.photo;
   if (photo) {
@@ -79,7 +79,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: process.env.COMMISSION_FROM || "Atelier Danique website <website@atelierdanique.com>",
         to: [process.env.COMMISSION_TO || "hello@atelierdanique.com"],
-        ...(EMAIL_RE.test(form.contact) ? { reply_to: form.contact } : {}),
+        reply_to: form.contact,
         subject: `New commission request: ${form.name.slice(0, 60)} (${size})`,
         html,
         text: plain,

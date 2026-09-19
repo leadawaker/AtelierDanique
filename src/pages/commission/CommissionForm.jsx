@@ -131,7 +131,7 @@ export default function CommissionForm({ t, lang, content }) {
     <form onSubmit={submit} style={s('background:#F1EFE8;border:1px solid #E2D6C4;padding:clamp(24px,4vw,52px);display:grid;gap:28px')}>
       <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px')}>
         <label style={s('display:grid;gap:8px')}><span style={LABEL}>{t.fName}</span><input {...bind('name')} required autoComplete="name" className="f-coral" style={FIELD} /></label>
-        <label style={s('display:grid;gap:8px')}><span style={LABEL}>{t.fContact}</span><input {...bind('contact')} required className="f-coral" style={FIELD} /></label>
+        <label style={s('display:grid;gap:8px')}><span style={LABEL}>{t.fContact}</span><input {...bind('contact')} type="email" required autoComplete="email" className="f-coral" style={FIELD} /></label>
       </div>
       <PhotoField t={t} file={file} onChange={setFile} label={LABEL} />
       <label style={s('display:grid;gap:8px')}><span style={LABEL}>{t.fWhat}</span><input {...bind('what')} className="f-coral" style={FIELD} /></label>
