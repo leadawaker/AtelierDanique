@@ -102,7 +102,7 @@ export default function Pricing({ t, lang, content, compact }) {
   const label = launchActive(pricing) ? t.priceLabel : '';
 
   return (
-    <section id="pricing" style={s('padding: clamp(48px,7vw,104px) clamp(24px,5vw,80px); background-color: #F1EFE8')}>
+    <section id="pricing" style={s('padding: clamp(48px,7vw,104px) clamp(24px,5vw,80px); background-color: #FCFAF6')}>
       <div data-reveal="" style={s('max-width:1400px;margin:0 auto')}>
         <div style={s('margin:0 auto clamp(28px,3.6vw,44px);text-align:center;display:flex;flex-direction:column;gap:18px;align-items:center')}>
           <div style={s('display:flex;align-items:center;justify-content:center;gap:clamp(12px,2vw,24px)')}>
