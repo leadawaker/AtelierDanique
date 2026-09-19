@@ -57,7 +57,7 @@ export const STRINGS = {
     ctaBody1: 'Upload your photo and tell me a little about the moment.', ctaBody2: "I'll get back to you with next steps.",
     ctaSend: 'Send me your photo', ctaNotSure: 'Not sure which photo?',
     footTagline: 'Turning meaningful moments into timeless artwork.', footLocation: "'s-Hertogenbosch, the Netherlands",
-    footCopy: "© 2026 Atelier Danique · 's-Hertogenbosch · All artwork made by hand.",
+    footCopy: "© 2026 Atelier Danique · 's-Hertogenbosch · All artwork made by hand.", footPrivacy: 'Privacy policy', footTerms: 'Terms & conditions',
     videoSoon: 'The film is being made. Drop the video file in later and it plays right here.'
   },
   pt: {
@@ -114,7 +114,7 @@ export const STRINGS = {
     ctaBody1: 'Envie sua foto e me conte um pouco sobre o momento.', ctaBody2: 'Eu retorno com os próximos passos.',
     ctaSend: 'Envie sua foto', ctaNotSure: 'Não sabe qual foto?',
     footTagline: 'Transformando momentos especiais em obras atemporais.', footLocation: "'s-Hertogenbosch, Holanda",
-    footCopy: "© 2026 Atelier Danique · 's-Hertogenbosch · Todas as obras feitas à mão.",
+    footCopy: "© 2026 Atelier Danique · 's-Hertogenbosch · Todas as obras feitas à mão.", footPrivacy: 'Política de privacidade', footTerms: 'Termos e condições',
     videoSoon: 'O filme está sendo feito. Depois basta colocar o vídeo aqui que ele toca neste espaço.'
   },
   nl: {
@@ -171,7 +171,7 @@ export const STRINGS = {
     ctaBody1: 'Upload je foto en vertel me iets over het moment.', ctaBody2: 'Ik kom bij je terug met de volgende stappen.',
     ctaSend: 'Stuur me je foto', ctaNotSure: 'Weet je niet welke foto?',
     footTagline: 'Betekenisvolle momenten omgezet in tijdloze kunst.', footLocation: "'s-Hertogenbosch, Nederland",
-    footCopy: "© 2026 Atelier Danique · 's-Hertogenbosch · Alle werken met de hand gemaakt.",
+    footCopy: "© 2026 Atelier Danique · 's-Hertogenbosch · Alle werken met de hand gemaakt.", footPrivacy: 'Privacybeleid', footTerms: 'Algemene voorwaarden',
     videoSoon: 'De film wordt gemaakt. Zet de video er later in en hij speelt hier.'
   }
 };

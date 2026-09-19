@@ -76,5 +76,7 @@ export const COPY_GROUPS = [
     { key: 'footTagline', label: 'Tagline' },
     { key: 'footLocation', label: 'Location' },
     { key: 'footCopy', label: 'Copyright line' },
+    { key: 'footPrivacy', label: 'Privacy policy link' },
+    { key: 'footTerms', label: 'Terms & conditions link' },
   ] },
 ];
