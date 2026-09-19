@@ -56,26 +56,47 @@ const RAW_TESTIMONIALS = [
   },
   {
     slotId: 'ad-t3',
-    name: 'Rowan',
-    handle: '',
-    instagram: '',
+    name: 'Rowan & Joppe',
+    handle: '@rowanvandekerkhof',
+    instagram: 'https://www.instagram.com/rowanvandekerkhof/',
     avatar: '',
     lines: {
-      en: ['Testimonial coming soon.'],
-      pt: ['Depoimento em breve.'],
-      nl: ['Binnenkort een reactie.']
+      en: [
+        'This takes me straight back to our van trip around Spain.',
+        'The surf, the sea, and that feeling of being completely free.',
+        'Danique captured such a special moment for us. We love having it on our wall.'
+      ],
+      pt: [
+        'Isso me leva direto de volta à nossa viagem de van pela Espanha.',
+        'O surf, o mar e aquela sensação de ser completamente livre.',
+        'A Danique capturou um momento tão especial para nós. Adoramos tê-lo na nossa parede.'
+      ],
+      nl: [
+        'Dit brengt me meteen terug naar onze busreis door Spanje.',
+        'De surf, de zee en dat gevoel van totale vrijheid.',
+        'Danique heeft zo\'n bijzonder moment voor ons vastgelegd. We vinden het heerlijk om het aan onze muur te hebben.'
+      ]
     }
   },
   {
     slotId: 'ad-t4',
-    name: '',
-    handle: '',
-    instagram: '',
+    name: 'Lore Merckx',
+    handle: '@loremerckxx',
+    instagram: 'https://www.instagram.com/loremerckxx/',
     avatar: '',
     lines: {
-      en: ['Testimonial coming soon.'],
-      pt: ['Depoimento em breve.'],
-      nl: ['Binnenkort een reactie.']
+      en: [
+        'I was immediately impressed when I first saw the painting. The warm, vibrant colours and beautiful details brought back so many memories of this place and the sense of freedom it gave me.',
+        'Now it hangs on my wall, bringing not only colour but a wonderful feeling of nostalgia. The personal note that came with it made it even more special. ❤️'
+      ],
+      pt: [
+        'Fiquei impressionada assim que vi a pintura pela primeira vez. As cores quentes e vibrantes e os detalhes lindos trouxeram de volta tantas memórias deste lugar e a sensação de liberdade que ele me deu.',
+        'Agora ela está na minha parede, trazendo não só cor, mas uma maravilhosa sensação de nostalgia. O bilhete pessoal que veio junto a tornou ainda mais especial. ❤️'
+      ],
+      nl: [
+        'Ik was meteen onder de indruk toen ik het schilderij voor het eerst zag. De warme, levendige kleuren en mooie details brachten zoveel herinneringen terug aan deze plek en aan het gevoel van vrijheid dat ik er had.',
+        'Nu hangt het aan mijn muur en brengt het niet alleen kleur, maar ook een heerlijk gevoel van nostalgie. Het persoonlijke briefje dat erbij zat maakte het nog specialer. ❤️'
+      ]
     }
   }
 ];
