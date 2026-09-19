@@ -21,7 +21,7 @@ async function accessToken() {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({ grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer", assertion: unsigned + "." + sig }),
   });
-  if (!res.ok) throw new Error("gsc token " + res.status);
+  if (!res.ok) throw new Error("gsc token " + res.status + " " + (await res.text()).slice(0, 200));
   return (await res.json()).access_token;
 }
 
@@ -29,7 +29,7 @@ async function query(token, body) {
   const res = await fetch(API + encodeURIComponent(process.env.GSC_SITE) + "/searchAnalytics/query", {
     method: "POST", headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error("gsc query " + res.status);
+  if (!res.ok) throw new Error("gsc query " + res.status + " " + (await res.text()).slice(0, 200));
   return (await res.json()).rows || [];
 }
 

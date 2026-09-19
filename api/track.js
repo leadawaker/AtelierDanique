@@ -1,6 +1,7 @@
 import { redis } from "./_lib/redis.js";
 import { isAuthed } from "./_lib/session.js";
 import { jsonBody } from "./_lib/body.js";
+import { LANGS, PAGES } from "../src/lib/routes.js";
 
 const BOT = /bot|crawl|spider|slurp|preview|headless|lighthouse|facebookexternalhit|whatsapp|curl|python|node-fetch/i;
 const SOURCES = [
@@ -9,9 +10,15 @@ const SOURCES = [
   [/facebook|fb\./, "facebook"], [/pinterest|pin\.it/, "pinterest"], [/whatsapp|wa\.me/, "whatsapp"],
 ];
 
+// The only paths a real visit can land on: the 3 languages times the 4 pages
+// (home, commission, privacy, terms), e.g. /nl, /en/commission. Anything else
+// is not counted, so the endpoint can't be used to write arbitrary Redis
+// fields.
+const PATHS = new Set(LANGS.flatMap((lang) => PAGES.map((page) => "/" + lang + (page ? "/" + page : ""))));
+
 export function sourceOf(referrer, tag) {
   const t = tag.toLowerCase().slice(0, 40);
-  if (t) return (SOURCES.find(([re]) => re.test(t)) || [, t.replace(/[^a-z0-9-]/g, "")])[1] || "other";
+  if (t) return (SOURCES.find(([re]) => re.test(t)) || [, "other"])[1];
   if (!referrer) return "direct";
   let host = "";
   try { host = new URL(referrer).hostname; } catch { return "other"; }
@@ -25,7 +32,7 @@ export default async function handler(req, res) {
   // Bots and Danique's own visits (studio cookie) are not counted.
   if (BOT.test(req.headers["user-agent"] || "") || isAuthed(req)) return res.status(204).end();
   const b = jsonBody(req) || {};
-  const path = typeof b.p === "string" && /^\/[a-z/-]{0,40}$/.test(b.p) ? b.p : null;
+  const path = typeof b.p === "string" && PATHS.has(b.p) ? b.p : null;
   if (!path) return res.status(204).end();
   const lang = ["nl", "en", "pt"].includes(b.l) ? b.l : "other";
   const raw = req.headers["x-vercel-ip-country"];
