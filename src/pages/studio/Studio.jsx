@@ -12,6 +12,7 @@ import PhotosTab from './tabs/PhotosTab.jsx';
 import TestimonialsTab from './tabs/TestimonialsTab.jsx';
 import CopyTab from './tabs/CopyTab.jsx';
 import PricingTab from './tabs/PricingTab.jsx';
+import StatsTab from './tabs/StatsTab.jsx';
 
 // /login (and /edit): Danique's private Website manager, under the site's
 // own header. The password is checked on the server; this page only asks
@@ -23,6 +24,7 @@ const TABS = [
   { id: 'testimonials', label: 'Testimonials', Component: TestimonialsTab },
   { id: 'pricing', label: 'Pricing', Component: PricingTab },
   { id: 'copy', label: 'Copy', Component: CopyTab },
+  { id: 'stats', label: 'Stats', Component: StatsTab },
 ];
 
 const PAGE_BG = 'background:#FCFAF6;min-height:100vh;color:#26454F';
