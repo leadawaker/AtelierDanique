@@ -26,7 +26,7 @@ export default function Testimonials({ t, lang, compact, content }) {
   if (!items.length) return null;
 
   return (
-    <section id="testimonials" style={s('padding: clamp(48px,7vw,100px) clamp(24px,5vw,80px); background-color: #FCFAF6')}>
+    <section id="testimonials" style={s('padding: clamp(48px,7vw,100px) clamp(24px,5vw,80px); background-color: #F1EFE8')}>
       <div data-reveal="" style={s('max-width:1400px;margin:0 auto')}>
         <div style={s('margin-bottom:clamp(28px,4vw,52px)')}>
           <p style={s('display:flex;align-items:center;gap:18px;margin:0 0 10px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E36B54')}>{t.testEyebrow}<span aria-hidden="true" style={s('width:56px;height:1px;background:rgba(227,107,84,.55)')}></span></p>
