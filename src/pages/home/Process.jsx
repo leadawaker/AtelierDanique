@@ -8,13 +8,13 @@ import { s } from '../../lib/css.js';
 // but also tints the white parts of the picture. Pictures that are already
 // transparent set `plain` to keep their real colours; leave it off for a
 // picture with a white background. `transform` turns or scales a picture
-// inside its slot (step 3 is turned 15 degrees clockwise and 21% bigger).
+// inside its slot (step 3 is turned 10 degrees clockwise and 21% bigger).
 // `cut` (% of the frame height) trims the bottom of the picture in a straight
 // line along the screen, so the turn does not leave a slanted edge (step 3's arm).
 const STEPS = [
   { key: 1, slotId: 'ad-process-1', src: '/uploads/Project%20(20260919052116).webp', focus: { s: 1.2, fx: 0.46, fy: 0.48 }, brightness: 1.1, plain: true },
   { key: 2, slotId: 'ad-process-2', src: '/uploads/Project%20(20260919072918).webp', focus: { s: 1.2, fx: 0.517, fy: 0.497 }, plain: true },
-  { key: 3, slotId: 'ad-process-3', src: '/uploads/Project%20(20260919072504).webp', focus: { s: 1.05, fx: 0.503, fy: 0.508 }, plain: true, transform: 'rotate(15deg) scale(1.21)', cut: -4, current: true },
+  { key: 3, slotId: 'ad-process-3', src: '/uploads/Project%20(20260919072504).webp', focus: { s: 1.05, fx: 0.503, fy: 0.508 }, plain: true, transform: 'rotate(10deg) scale(1.21)', cut: -5, current: true },
   { key: 4, slotId: 'ad-process-4', src: '/uploads/file_00000000d5b881f4a2eaa6c6bb25ef66.webp', focus: { fx: 0.527, fy: 0.51 }, plain: true },
 ];
 
