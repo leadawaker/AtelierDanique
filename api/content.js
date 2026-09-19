@@ -29,6 +29,10 @@ function validate(key, value) {
   if (typeOf(value) !== CONTENT_TYPES[key]) return `Value for ${key} must be ${CONTENT_TYPES[key]}`;
   if (key === "ad-hero-layout" && value !== "banner" && value !== "split") return "Layout must be banner or split";
   if (key === "ad-video-url" && value.length > 500) return "Video link is too long";
+  if (key === "ad-google-reviews") {
+    if (value.url && !/^https:\/\/(g\.page|maps\.app\.goo\.gl|search\.google\.com|www\.google\.[a-z.]+)\//.test(value.url)) return "That doesn't look like a Google review link";
+    if (value.url && value.url.length > 300) return "Link is too long";
+  }
   return null;
 }
 

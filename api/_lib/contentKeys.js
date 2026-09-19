@@ -13,6 +13,7 @@ export const CONTENT_TYPES = {
   "ad-hero-layout": "string",
   "ad-copy": "object",
   "ad-pricing": "object",
+  "ad-google-reviews": "object",
 };
 
 export const CONTENT_KEYS = Object.keys(CONTENT_TYPES);
