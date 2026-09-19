@@ -1,17 +1,18 @@
 import Slot from '../../components/Slot.jsx';
 import { s } from '../../lib/css.js';
 
-// Steps 1 to 3 are square pictures with empty margin, so they are zoomed a
-// little (s) and centred on the objects (fx, fy) to fill the frame like
-// step 4. `brightness` (1 = unchanged) lightens a picture without editing the
-// file. The frame normally multiplies pictures into the page, which drops a
-// white background (step 4's JPG needs that) but also tints the white parts of
-// pictures that are already transparent, so those set `plain`.
+// The step pictures are square with empty margin, so they are zoomed a little
+// (s) and centred on the objects (fx, fy) to fill the frame. `brightness`
+// (1 = unchanged) lightens a picture without editing the file. The frame
+// normally multiplies pictures into the page, which drops a white background
+// but also tints the white parts of the picture. Pictures that are already
+// transparent set `plain` to keep their real colours; leave it off for a
+// picture with a white background.
 const STEPS = [
   { key: 1, slotId: 'ad-process-1', src: '/uploads/Project%20(20260919052116).webp', focus: { s: 1.2, fx: 0.46, fy: 0.48 }, brightness: 1.1, plain: true },
   { key: 2, slotId: 'ad-process-2', src: '/uploads/Project2%20(20260919052438).webp', focus: { s: 1.2, fx: 0.55, fy: 0.5 }, plain: true },
   { key: 3, slotId: 'ad-process-3', src: '/uploads/Project%20(20260919055618).webp', focus: { s: 1.1, fx: 0.49, fy: 0.51 }, plain: true, current: true },
-  { key: 4, slotId: 'ad-process-4', src: '/uploads/proc-4.jpg' },
+  { key: 4, slotId: 'ad-process-4', src: '/uploads/Project%20(20260919061115).webp', focus: { s: 1.15, fx: 0.52, fy: 0.51 }, plain: true },
 ];
 
 const EYEBROW_RULE = 'height:1px;width:clamp(28px,7vw,88px);background:#D3CFC4';

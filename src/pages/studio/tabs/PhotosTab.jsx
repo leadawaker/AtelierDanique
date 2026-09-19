@@ -15,7 +15,7 @@ const SITE_PHOTOS = [
   { slotId: 'ad-process-1', name: 'How it works, step 1', where: 'Above "Choose your moment". Shown without a frame, so a picture on a light or white background looks best.', src: '/uploads/Project%20(20260919052116).webp', ratio: '5/4' },
   { slotId: 'ad-process-2', name: 'How it works, step 2', where: 'Above "Send your photo".', src: '/uploads/Project2%20(20260919052438).webp', ratio: '5/4' },
   { slotId: 'ad-process-3', name: 'How it works, step 3', where: 'Above "I create your artwork" (the highlighted step).', src: '/uploads/Project%20(20260919055618).webp', ratio: '5/4' },
-  { slotId: 'ad-process-4', name: 'How it works, step 4', where: 'Above "Receive your artwork".', src: '/uploads/proc-4.jpg', ratio: '5/4' },
+  { slotId: 'ad-process-4', name: 'How it works, step 4', where: 'Above "Receive your artwork".', src: '/uploads/Project%20(20260919061115).webp', ratio: '5/4' },
   { slotId: 'ad-about-portrait', name: 'Portrait of Danique', where: 'The About section near the footer.', src: '/uploads/danique.jpg', ratio: '3/4' },
 ];
 
