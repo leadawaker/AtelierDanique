@@ -3,7 +3,7 @@ import Slot from '../../components/Slot.jsx';
 import { currencyFor, formatMoney, launchActive, launchBanner, sitePricing } from '../../lib/pricing.js';
 
 const ICON = 'flex-shrink:0;margin-top:2px';
-const svgProps = { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: '#E36B54', strokeWidth: 1.4, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', style: s(ICON) };
+const svgProps = { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: '#E0A92E', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', style: s(ICON) };
 
 const INCLUDED = [
   { key: 'inc1', icon: <><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.7-3.7a2 2 0 0 0-2.8 0L6 20" /></> },
@@ -79,7 +79,7 @@ function LaunchBanner({ banner, compact }) {
 
 function PriceCard({ slotId, src, placeholder, size, dims, desc, price, label, badge }) {
   return (
-    <div style={s('background:#FCFAF6;border:1px solid ' + (badge ? '#E36B54' : '#E6E0D6') + ';border-radius:10px;padding:clamp(24px,3vw,32px);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative')}>
+    <div style={s('background:#FFFFFF;border:1px solid ' + (badge ? '#E36B54' : '#EAE4DA') + ';border-radius:10px;box-shadow:0 10px 30px rgba(38,69,79,.08);padding:clamp(24px,3vw,32px);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative')}>
       {badge ? (
         <span style={s('position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:' + CORAL + ';color:#FCFAF6;padding:7px 18px;border-radius:999px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap')}>{badge}</span>
       ) : null}

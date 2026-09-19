@@ -27,13 +27,11 @@ export const COPY_GROUPS = [
   { id: 'process', name: 'How it works', fields: [
     { key: 'procEyebrow', label: 'Small line above the title' },
     { key: 'procTitle', label: 'Title' },
-    { key: 'procIntro', label: 'Intro', long: true },
     { key: 'step1T', label: 'Step 1 title' }, { key: 'step1B', label: 'Step 1 text', long: true },
     { key: 'step2T', label: 'Step 2 title' }, { key: 'step2B', label: 'Step 2 text', long: true },
     { key: 'step3T', label: 'Step 3 title' }, { key: 'step3B', label: 'Step 3 text', long: true },
     { key: 'step4T', label: 'Step 4 title' }, { key: 'step4B', label: 'Step 4 text', long: true },
-    { key: 'procCloseA', label: 'Closing line (italic)' },
-    { key: 'procCloseB', label: 'Closing line, small text under it' },
+    { key: 'procCloseA', label: 'Closing line under the steps' },
   ] },
   { id: 'pricing', name: 'Pricing', fields: [
     { key: 'priceTitle', label: 'Small line above the title' },

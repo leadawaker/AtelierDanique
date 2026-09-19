@@ -41,7 +41,7 @@ input, textarea, select, button { font-family: inherit; font-size: inherit; colo
 .proc-step:first-child .proc-badge-row::before, .proc-step:last-child .proc-badge-row::after, .proc-step-current .proc-badge-row::before, .proc-step-current .proc-badge-row::after { display: none; }
 .proc-step:nth-child(2) .proc-badge-row::after { right: calc(16px - var(--g)); }
 .proc-step:nth-child(4) .proc-badge-row::before { left: calc(16px - var(--g)); }
-.proc-title { margin: 0 0 10px; font-family: 'Cardo', serif; font-weight: 400; font-size: 17px; letter-spacing: .16em; text-transform: uppercase; line-height: 1.5; color: #26454F; text-wrap: balance; }
+.proc-title { margin: 0 0 10px; font-size: 14px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; line-height: 1.6; color: #26454F; text-wrap: balance; }
 .proc-body { margin: 0; max-width: 24ch; font-size: 15px; line-height: 1.7; color: #5E6C71; font-weight: 300; text-wrap: pretty; }
 @media (max-width: 900px) {
   .proc-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
