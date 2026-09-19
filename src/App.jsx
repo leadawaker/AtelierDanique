@@ -6,8 +6,8 @@ const Studio = lazy(() => import('./pages/studio/Studio.jsx'));
 const Legal = lazy(() => import('./pages/legal/Legal.jsx'));
 
 // Three pages, so a pathname switch is enough. Links between pages are plain
-// <a href> full navigations. The studio answers at /login (the header's
-// Login button) and at its old address /edit.
+// <a href> full navigations. The studio answers at /login (the footer's
+// Login link) and at its old address /edit.
 export default function App() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
   let page = <Home />;

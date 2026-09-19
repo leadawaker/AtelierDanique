@@ -64,7 +64,6 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
     { id: 'testimonials', href: base + '#testimonials', label: t.navTestimonials },
     { id: 'faq', href: base + '#faq', label: t.navFaq },
   ];
-  const menuLinks = [...navLinks, { id: 'login', href: '/login', label: 'Login' }];
 
   const navStyle = compact
     ? 'display:none'
@@ -95,9 +94,6 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
             ))}
           </div>
           {compact ? null : (
-            <a href="/login" className="h-border-coral" style={s('border:1px solid #D3CFC4;border-radius:2px;padding:7px 14px;font-size:12.5px;letter-spacing:.04em;color:#455459;line-height:1;white-space:nowrap;transition:border-color .2s')}>Login</a>
-          )}
-          {compact ? null : (
             <a href="/commission" className="h-bg-coral-dark" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
           )}
           {compact ? (
@@ -114,7 +110,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
       </div>
       {menuOpen ? (
         <nav style={s('margin:10px calc(-1 * ' + PAD + ') -9px;border-top:1px solid #DDD9CF;border-bottom:1px solid #DDD9CF;background:#FCFAF6;padding:6px ' + PAD + ' 18px;display:grid;gap:0;font-size:16px')}>
-          {menuLinks.map((l) => (
+          {navLinks.map((l) => (
             <a
               key={l.id}
               href={l.href}
