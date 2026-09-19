@@ -10,8 +10,8 @@ import { s } from '../../lib/css.js';
 // picture with a white background.
 const STEPS = [
   { key: 1, slotId: 'ad-process-1', src: '/uploads/Project%20(20260919052116).webp', focus: { s: 1.2, fx: 0.46, fy: 0.48 }, brightness: 1.1, plain: true },
-  { key: 2, slotId: 'ad-process-2', src: '/uploads/Project%20(20260919065533).webp', focus: { s: 1.15, fx: 0.537, fy: 0.512 }, plain: true },
-  { key: 3, slotId: 'ad-process-3', src: '/uploads/Project%20(20260919055618).webp', focus: { s: 1.1, fx: 0.49, fy: 0.51 }, plain: true, current: true },
+  { key: 2, slotId: 'ad-process-2', src: '/uploads/Project%20(20260919072918).webp', focus: { s: 1.2, fx: 0.517, fy: 0.497 }, plain: true },
+  { key: 3, slotId: 'ad-process-3', src: '/uploads/Project%20(20260919072504).webp', focus: { s: 1.05, fx: 0.503, fy: 0.508 }, plain: true, current: true },
   { key: 4, slotId: 'ad-process-4', src: '/uploads/file_00000000d5b881f4a2eaa6c6bb25ef66.webp', focus: { fx: 0.527, fy: 0.51 }, plain: true },
 ];
 
