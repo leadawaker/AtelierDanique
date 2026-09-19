@@ -40,12 +40,21 @@ export function formatMoney(n, currency) {
   return currency === 'brl' ? 'R$' + rounded : '€' + rounded;
 }
 
+const spotsLeft = (pricing) => Math.max(0, Math.round(pricing.spotsLeft));
+
 // The two lines under the price cards, or null when no spots are left.
 export function launchNote(t, pricing) {
-  const left = Math.max(0, Math.round(pricing.spotsLeft));
+  const left = spotsLeft(pricing);
   if (!left) return null;
   return {
     intro: t.launchIntro.replace('{total}', Math.round(pricing.spotsTotal)),
     left: (left === 1 ? t.launchLeftOne : t.launchLeft).replace('{n}', left),
   };
+}
+
+// The short line above the hero buttons, or null when no spots are left.
+export function heroSpots(t, pricing) {
+  const left = spotsLeft(pricing);
+  if (!left) return null;
+  return t.heroSpots.replace('{left}', left).replace('{total}', Math.round(pricing.spotsTotal));
 }

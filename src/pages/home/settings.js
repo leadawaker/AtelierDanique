@@ -9,7 +9,7 @@ export const LINKS = {
 
 export const FLOATING_WHATSAPP = true;
 
-export const HERO_VEIL = { reach: 74, softness: 47, opacity: 86, mobileOpacity: 85 };
+export const HERO_VEIL = { reach: 74, softness: 47, opacity: 86 };
 
 // Design defaults. Danique's own choices, saved from the studio's gallery
 // settings panel as 'ad-gallery-settings', are layered on top field by field,

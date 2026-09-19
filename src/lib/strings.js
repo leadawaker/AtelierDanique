@@ -5,7 +5,7 @@
 export const STRINGS = {
   en: {
     navHome: 'Home', navGallery: 'Gallery', navProcess: 'How it works', navPricing: 'Pricing', navTestimonials: 'Testimonials', navWhich: 'Which photo?', navAbout: 'About', navContact: 'Contact',
-    heroEyebrow: 'Hand-painted watercolour & ink', heroT1: 'Real moments.', heroT2: 'Lasting', heroT3: 'forever.',
+    heroEyebrow: 'Hand-painted watercolour & ink', heroSpots: 'Launch prices · {left} of {total} spots remaining', heroT1: 'Real moments.', heroT2: 'Lasting', heroT3: 'forever.',
     heroBody: 'I create custom, hand-crafted artworks from your photos, turning the people and moments you love into timeless pieces for your home.',
     ctaCommission: 'Commission your piece',
     meetEyebrow: 'IN HER OWN WORDS', meetTitle: 'Meet Danique', watch: 'Meet Danique', waPrefill: 'Hi Danique!',
@@ -58,7 +58,7 @@ export const STRINGS = {
   },
   pt: {
     navHome: 'Início', navGallery: 'Galeria', navProcess: 'Como funciona', navPricing: 'Preços', navTestimonials: 'Depoimentos', navWhich: 'Qual foto?', navAbout: 'Sobre', navContact: 'Contato',
-    heroEyebrow: 'Pintado à mão em aquarela e tinta', heroT1: 'Momentos reais.', heroT2: 'Que duram', heroT3: 'para sempre.',
+    heroEyebrow: 'Pintado à mão em aquarela e tinta', heroSpots: 'Preços de lançamento · {left} de {total} vagas restantes', heroT1: 'Momentos reais.', heroT2: 'Que duram', heroT3: 'para sempre.',
     heroBody: 'Crio obras feitas à mão a partir das suas fotos, transformando as pessoas e os momentos que você ama em peças atemporais para a sua casa.',
     ctaCommission: 'Encomende sua obra',
     meetEyebrow: 'NAS PALAVRAS DELA', meetTitle: 'Conheça a Danique', watch: 'Conheça a Danique', waPrefill: 'Oi Danique!',
@@ -111,7 +111,7 @@ export const STRINGS = {
   },
   nl: {
     navHome: 'Home', navGallery: 'Galerij', navProcess: 'Hoe het werkt', navPricing: 'Prijzen', navTestimonials: 'Ervaringen', navWhich: 'Welke foto?', navAbout: 'Over', navContact: 'Contact',
-    heroEyebrow: 'Met de hand geschilderd in aquarel en inkt', heroT1: 'Echte momenten.', heroT2: 'Die blijven', heroT3: 'voor altijd.',
+    heroEyebrow: 'Met de hand geschilderd in aquarel en inkt', heroSpots: 'Introductieprijzen · nog {left} van {total} plekken', heroT1: 'Echte momenten.', heroT2: 'Die blijven', heroT3: 'voor altijd.',
     heroBody: "Ik maak met de hand gemaakte kunstwerken van jouw foto's en verander de mensen en momenten die je liefhebt in tijdloze stukken voor je huis.",
     ctaCommission: 'Bestel jouw werk',
     meetEyebrow: 'IN HAAR EIGEN WOORDEN', meetTitle: 'Maak kennis met Danique', watch: 'Maak kennis met Danique', waPrefill: 'Hoi Danique!',
