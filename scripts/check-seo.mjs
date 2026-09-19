@@ -22,8 +22,16 @@ for (const lang of LANGS) {
     assert.ok(html.includes('window.__AD_CONTENT__='), where + ': inlined content');
     const ld = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     assert.ok(ld, where + ': JSON-LD present');
-    JSON.parse(ld[1]);
+    const graph = JSON.parse(ld[1])['@graph'];
     assert.ok(!/Huygensweg/i.test(html), where + ': street address must never be published');
+    if (page === '') {
+      const types = graph.map((node) => node['@type']);
+      assert.ok(types.includes('LocalBusiness'), where + ': JSON-LD LocalBusiness');
+      assert.ok(types.includes('Person'), where + ': JSON-LD Person');
+      assert.ok(types.includes('FAQPage'), where + ': JSON-LD FAQPage');
+      const business = graph.find((node) => node['@type'] === 'LocalBusiness');
+      assert.equal(business.address.streetAddress, undefined, where + ': street address must not be in JSON-LD');
+    }
     if (page === '') assert.ok(html.includes(STRINGS[lang].faq[0].q.replace(/'/g, '&#x27;')) || html.includes(STRINGS[lang].faq[0].q), where + ': FAQ text in HTML');
   }
 }
