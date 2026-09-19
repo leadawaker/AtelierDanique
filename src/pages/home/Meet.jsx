@@ -8,22 +8,30 @@ export default function Meet({ t, content, lang }) {
   const frame = useRef(null);
 
   // The URL hint alone loses to Vimeo's own pick (it favours the browser's
-  // language), so switch the matching subtitle track on once the player is
-  // ready. English is left to Vimeo. A missing track is silently skipped.
+  // language, or a track the visitor chose before), and Vimeo re-applies that
+  // pick when playback starts. So switch the matching track on when the player
+  // is ready and again at the first play. English is left to Vimeo. A missing
+  // track is silently skipped.
   const wanted = video && video.provider === 'vimeo' ? VIMEO_TRACK[lang] : '';
   useEffect(() => {
     if (!wanted || !frame.current) return undefined;
     let live = true;
     const player = new Player(frame.current);
-    player.getTextTracks()
+    const norm = (code) => String(code || '').toLowerCase().replace('_', '-');
+    const pick = () => player.getTextTracks()
       .then((tracks) => {
-        const base = wanted.split('-')[0];
-        const hit = tracks.find((x) => x.language === wanted) || tracks.find((x) => x.language.split('-')[0] === base);
-        if (live && hit) return player.enableTextTrack(hit.language, hit.kind);
+        console.info('[meet] vimeo tracks', tracks.map((x) => x.language + '/' + x.kind + '/' + x.mode), 'wanted', wanted);
+        const want = norm(wanted);
+        const hit = tracks.find((x) => norm(x.language) === want)
+          || tracks.find((x) => norm(x.language).split('-')[0] === want.split('-')[0]);
+        if (live && hit && hit.mode !== 'showing') return player.enableTextTrack(hit.language, hit.kind);
         return null;
       })
-      .catch(() => { /* no track, or player not reachable: leave Vimeo's default */ });
-    return () => { live = false; };
+      .catch((e) => console.info('[meet] subtitle switch failed', e && e.name));
+    const onFirstPlay = () => { player.off('play', onFirstPlay); pick(); };
+    player.ready().then(pick).catch(() => {});
+    player.on('play', onFirstPlay);
+    return () => { live = false; player.off('play', onFirstPlay); };
   }, [wanted, video && video.embedUrl]);
 
   return (
