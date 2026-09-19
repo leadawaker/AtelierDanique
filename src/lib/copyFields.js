@@ -41,7 +41,8 @@ export const COPY_GROUPS = [
     { key: 'inc1', label: 'Included 1' }, { key: 'inc2', label: 'Included 2' },
     { key: 'inc3', label: 'Included 3' }, { key: 'inc4', label: 'Included 4' },
     { key: 'inc5', label: 'Included 5' }, { key: 'inc6', label: 'Included 6' },
-    { key: 'inc7', label: 'Included 7' }, { key: 'inc9', label: 'Included 8' },
+    { key: 'inc7', label: 'Included 7' }, { key: 'inc10', label: 'Included 8' },
+    { key: 'inc9', label: 'Included 9' },
   ] },
   { id: 'testimonials', name: 'Testimonials heading', fields: [
     { key: 'testEyebrow', label: 'Small line above the title' },
@@ -50,8 +51,6 @@ export const COPY_GROUPS = [
   { id: 'faq', name: 'FAQ', fields: [
     { key: 'faqEyebrow', label: 'Small line above the title' },
     { key: 'faqTitle', label: 'Title' },
-    { key: 'faqIntro', label: 'Text under the title', long: true },
-    { key: 'faqCta', label: 'WhatsApp button' },
     { key: 'faqPhotoQ', label: 'Photo question' },
     { key: 'faqPhotoA', label: 'Photo question, answer', long: true },
   ] },
