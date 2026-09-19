@@ -6,7 +6,7 @@ const SECTION_IDS = ['gallery', 'meet', 'process', 'pricing', 'testimonials', 'f
 const PAD = 'clamp(24px,5vw,80px)';
 
 // The header's call to action: always the last button, filled coral.
-const COMMISSION_BTN = 'background:#E36B54;color:#FCFAF6;border-radius:2px;padding:9px 16px;font-size:12.5px;letter-spacing:.04em;line-height:1;white-space:nowrap;transition:background .25s';
+const COMMISSION_BTN = 'background:transparent;color:#E36B54;border:1px solid #E36B54;border-radius:2px;padding:8px 15px;font-size:12.5px;letter-spacing:.04em;line-height:1;white-space:nowrap;transition:background .25s,color .25s';
 
 const navStyleFor = (active, id) => s(active === id
   ? 'color:#26454F;border-bottom:1px solid #E36B54;padding-bottom:2px'
@@ -94,7 +94,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
             ))}
           </div>
           {compact ? null : (
-            <a href="/commission" className="h-bg-coral-dark" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
+            <a href="/commission" className="h-fill-coral" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
           )}
           {compact ? (
             <button
@@ -121,7 +121,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
               style={s('color:#455459;padding:13px 0;border-bottom:1px solid #E6E2D9;transition:color .2s')}
             >{l.label}</a>
           ))}
-          <a href="/commission" onClick={() => setMenuOpen(false)} className="h-bg-coral-dark" style={s(COMMISSION_BTN + ';margin-top:16px;padding:15px 20px;text-align:center;font-size:15px')}>{t.ctaCommission}</a>
+          <a href="/commission" onClick={() => setMenuOpen(false)} className="h-fill-coral" style={s(COMMISSION_BTN + ';margin-top:16px;padding:15px 20px;text-align:center;font-size:15px')}>{t.ctaCommission}</a>
         </nav>
       ) : null}
     </header>
