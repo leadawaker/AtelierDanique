@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { s } from '../../lib/css.js';
-import { useLang } from '../../lib/lang.js';
+import { pathFor } from '../../lib/routes.js';
 import { STRINGS } from '../../lib/strings.js';
 import { useCompact } from '../../lib/useCompact.js';
 import Header from '../home/Header.jsx';
@@ -16,21 +16,16 @@ const H2 = "margin:clamp(30px,4vw,44px) 0 12px;font-family:'Cardo',serif;font-we
 const P = 'margin:0 0 14px;font-size:16px;line-height:1.8;color:#455459;font-weight:300;text-wrap:pretty';
 const LI = 'margin:0 0 8px;font-size:16px;line-height:1.75;color:#455459;font-weight:300;text-wrap:pretty';
 
-export default function Legal({ doc }) {
-  const [lang, setLang] = useLang();
+export default function Legal({ doc, lang, setLang }) {
   const compact = useCompact();
   const t = STRINGS[lang] || STRINGS.en;
   const page = LEGAL[doc][lang] || LEGAL[doc].en;
 
-  useEffect(() => {
-    document.title = page.title + ' · Atelier Danique';
-    document.documentElement.lang = lang;
-  }, [page.title, lang]);
   useEffect(() => { window.scrollTo(0, 0); }, [doc]);
 
   return (
     <div style={s('background:#FCFAF6;min-height:100vh;color:#26454F')}>
-      <Header t={t} lang={lang} setLang={setLang} compact={compact} base="/" />
+      <Header t={t} lang={lang} setLang={setLang} compact={compact} base={pathFor(lang)} />
       <main style={s('padding:clamp(40px,6vw,88px) clamp(24px,5vw,80px) clamp(48px,7vw,104px)')}>
         <article style={s('max-width:760px;margin:0 auto')}>
           <p style={s('margin:0 0 14px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E36B54')}>Atelier Danique</p>
@@ -51,7 +46,7 @@ export default function Legal({ doc }) {
           ))}
         </article>
       </main>
-      <Footer t={t} links={LINKS} base="/" />
+      <Footer t={t} lang={lang} links={LINKS} base={pathFor(lang)} />
     </div>
   );
 }

@@ -1,54 +1,34 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { STRINGS } from './strings.js';
+import { parsePath, pathFor } from './routes.js';
 
 const KEY = 'ad-lang';
 
-// The Netherlands opens in Dutch, Brazil in Portuguese, everywhere else in
-// English. Only used when the visitor has not picked a language themselves.
-const COUNTRY_LANG = { NL: 'nl', BR: 'pt' };
-
 function readLang() {
   try { const v = localStorage.getItem(KEY); if (v && STRINGS[v]) return v; } catch (e) { /* private mode */ }
-  return 'en';
+  const m = typeof document !== 'undefined' && document.cookie.match(/(?:^|; )ad-lang=(nl|en|pt)/);
+  return m ? m[1] : 'en';
 }
 
-function hasChosen() {
-  try { const v = localStorage.getItem(KEY); return !!(v && STRINGS[v]); } catch (e) { return false; }
+// The visitor's own pick. The cookie lets vercel.json send them to the same
+// language next time they open the bare address.
+function remember(id) {
+  try { localStorage.setItem(KEY, id); } catch (e) { /* private mode */ }
+  document.cookie = KEY + '=' + id + ';path=/;max-age=31536000;samesite=lax';
 }
 
-// One lookup per page load, shared by every useLang() caller.
-let geoLookup = null;
-function visitorLang() {
-  if (!geoLookup) {
-    geoLookup = fetch('/api/geo')
-      .then((r) => (r.ok ? r.json() : {}))
-      .then((d) => COUNTRY_LANG[d.country] || 'en')
-      .catch(() => 'en');
-  }
-  return geoLookup;
-}
-
-// Active language, shared across pages through localStorage['ad-lang'].
-// That key is only written when the visitor clicks a language, so a guess
-// from their country never overrides a later choice.
-export function useLang() {
-  const [lang, setLangState] = useState(readLang);
+// On public pages the language comes from the URL (routeLang). Switching
+// swaps the prefix in place, without a reload. The studio has no prefix and
+// uses the remembered choice.
+export function useLang(routeLang) {
+  const [lang, setLangState] = useState(() => routeLang || readLang());
   const setLang = useCallback((id) => {
-    try { localStorage.setItem(KEY, id); } catch (e) { /* private mode */ }
+    remember(id);
     setLangState(id);
-    document.documentElement.lang = id;
-  }, []);
-
-  useEffect(() => {
-    if (hasChosen()) return undefined;
-    let live = true;
-    visitorLang().then((id) => {
-      if (!live || hasChosen()) return;
-      setLangState(id);
-      document.documentElement.lang = id;
-    });
-    return () => { live = false; };
-  }, []);
-
+    if (routeLang) {
+      const { page } = parsePath(window.location.pathname);
+      window.history.replaceState(null, '', pathFor(id, page) + window.location.search + window.location.hash);
+    }
+  }, [routeLang]);
   return [lang, setLang];
 }

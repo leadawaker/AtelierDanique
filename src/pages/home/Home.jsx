@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useSiteContent } from '../../lib/content.js';
-import { useLang } from '../../lib/lang.js';
 import { PhotosContext } from '../../lib/photos.js';
 import { withCopy } from '../../lib/strings.js';
 import { useCompact } from '../../lib/useCompact.js';
@@ -25,9 +24,8 @@ import FloatingWhatsapp from './FloatingWhatsapp.jsx';
 //   compact  true under 1000px
 //   content  normalized site content (see lib/content.js)
 //   links    { instagramUrl, whatsappUrl (with the prefilled message), whatsappNumber, email }
-export default function Home() {
+export default function Home({ lang, setLang }) {
   const content = useSiteContent();
-  const [lang, setLang] = useLang();
   const compact = useCompact();
   const t = withCopy(lang, content['ad-copy']);
   const links = { ...LINKS, whatsappUrl: whatsappLink(LINKS.whatsappUrl, t.waPrefill) };

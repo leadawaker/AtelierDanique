@@ -1,6 +1,7 @@
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
 import { heroSpots, sitePricing } from '../../lib/pricing.js';
+import { pathFor } from '../../lib/routes.js';
 import { HERO_VEIL } from './settings.js';
 
 const BANNER_SRC = '/uploads/Project%20(20260915100023).jpg';
@@ -22,7 +23,7 @@ function veilStyle() {
     + 'rgba(252,250,246,0) ' + reach.toFixed(1) + '%)';
 }
 
-function HeroText({ t, compact, links, content }) {
+function HeroText({ t, lang, compact, links, content }) {
   const spots = heroSpots(t, sitePricing(content));
   const igStyle = 'display:flex;align-items:center;gap:10px;border:1px solid #E36B54;color:#455459;padding:16px 26px;font-size:15px;border-radius:2px;transition:border-color .25s,color .25s,background .25s;'
     + (compact ? 'background:#FCFAF6' : 'background:transparent');
@@ -42,7 +43,7 @@ function HeroText({ t, compact, links, content }) {
           </p>
         ) : null}
         <div style={s('display:flex;gap:14px;align-items:center;flex-wrap:wrap')}>
-          <a href="/commission" className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;letter-spacing:.01em;transition:background .25s')}>{t.ctaCommission}{'  →'}</a>
+          <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;letter-spacing:.01em;transition:background .25s')}>{t.ctaCommission}{'  →'}</a>
           <a href={links.instagramUrl} target="_blank" rel="noopener" className="h-ig-outline" style={s(igStyle)}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
             <span>Instagram</span>

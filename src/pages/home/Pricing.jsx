@@ -1,6 +1,7 @@
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
 import { A4_PHOTO_FOCUS, currencyFor, formatMoney, launchActive, launchBanner, sitePricing } from '../../lib/pricing.js';
+import { pathFor } from '../../lib/routes.js';
 
 const ICON = 'flex-shrink:0;margin-top:2px';
 const svgProps = { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: '#E0A92E', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', style: s(ICON) };
@@ -134,7 +135,7 @@ export default function Pricing({ t, lang, content, compact }) {
           </div>
         </div>
         <div style={s('display:flex;justify-content:center;margin-top:clamp(32px,4vw,48px)')}>
-          <a href="/commission" className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;transition:background .25s')}>{t.ctaCommission}{'  '}→</a>
+          <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;transition:background .25s')}>{t.ctaCommission}{'  '}→</a>
         </div>
       </div>
     </section>

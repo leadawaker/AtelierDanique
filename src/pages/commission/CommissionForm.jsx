@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { s } from '../../lib/css.js';
 import { LINKS, whatsappLink } from '../home/settings.js';
 import { currencyFor, formatMoney, sitePricing } from '../../lib/pricing.js';
+import { pathFor } from '../../lib/routes.js';
 import PhotoField from './PhotoField.jsx';
 import { sendByEmail } from './send.js';
 
@@ -104,7 +105,7 @@ export default function CommissionForm({ t, lang, content }) {
         <p style={PANEL_T}>{t.mailThanks}</p>
         <p style={PANEL_B}>{t.mailThanksB1}<br />{t.mailThanksB2}</p>
         {!file && <p style={s('margin:0 0 14px;font-size:14px;color:#85949A;font-weight:300;line-height:1.8')}>{t.mailThanksNoPhoto}</p>}
-        <p style={s('margin:12px 0 0')}><a href="/" style={LINK}>{'←  '}{t.back}</a></p>
+        <p style={s('margin:12px 0 0')}><a href={pathFor(lang)} style={LINK}>{'←  '}{t.back}</a></p>
       </div>
     );
   }
@@ -118,7 +119,7 @@ export default function CommissionForm({ t, lang, content }) {
           {t.thanksRetry}{' '}
           <a href={sentUrl} onClick={(e) => { e.preventDefault(); openWhatsapp(sentUrl); }} target="_blank" rel="noopener" style={LINK}>{t.thanksRetryLink}</a>
         </p>
-        <a href="/" style={LINK}>{'←  '}{t.back}</a>
+        <a href={pathFor(lang)} style={LINK}>{'←  '}{t.back}</a>
       </div>
     );
   }

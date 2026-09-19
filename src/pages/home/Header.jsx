@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { s } from '../../lib/css.js';
+import { pathFor } from '../../lib/routes.js';
 import { LANGS } from '../../lib/strings.js';
 
 const SECTION_IDS = ['gallery', 'meet', 'process', 'pricing', 'testimonials', 'faq'];
@@ -98,7 +99,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
             <a href="/login" className="h-border-coral" style={s('border:1px solid #D3CFC4;border-radius:2px;padding:7px 14px;font-size:12.5px;letter-spacing:.04em;color:#455459;line-height:1;white-space:nowrap;transition:border-color .2s')}>Login</a>
           )}
           {compact ? null : (
-            <a href="/commission" className="h-bg-coral-dark" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
+            <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
           )}
           {compact ? (
             <button
@@ -125,7 +126,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
               style={s('color:#455459;padding:13px 0;border-bottom:1px solid #E6E2D9;transition:color .2s')}
             >{l.label}</a>
           ))}
-          <a href="/commission" onClick={() => setMenuOpen(false)} className="h-bg-coral-dark" style={s(COMMISSION_BTN + ';margin-top:16px;padding:15px 20px;text-align:center;font-size:15px')}>{t.ctaCommission}</a>
+          <a href={pathFor(lang, 'commission')} onClick={() => setMenuOpen(false)} className="h-bg-coral-dark" style={s(COMMISSION_BTN + ';margin-top:16px;padding:15px 20px;text-align:center;font-size:15px')}>{t.ctaCommission}</a>
         </nav>
       ) : null}
     </header>

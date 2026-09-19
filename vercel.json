@@ -4,8 +4,23 @@
     { "path": "/api/cron/refresh-instagram", "schedule": "0 17 * * *" },
     { "path": "/api/cron/refresh-instagram", "schedule": "0 18 * * *" }
   ],
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/", "has": [{ "type": "cookie", "key": "ad-lang", "value": "(?<l>nl|en|pt)" }], "destination": "/:l", "permanent": false },
+    { "source": "/", "has": [{ "type": "header", "key": "x-vercel-ip-country", "value": "NL|BE" }], "destination": "/nl", "permanent": false },
+    { "source": "/", "has": [{ "type": "header", "key": "x-vercel-ip-country", "value": "BR|PT" }], "destination": "/pt", "permanent": false },
+    { "source": "/", "destination": "/en", "permanent": false },
+    { "source": "/:page(commission|privacy|terms)", "has": [{ "type": "cookie", "key": "ad-lang", "value": "(?<l>nl|en|pt)" }], "destination": "/:l/:page", "permanent": false },
+    { "source": "/:page(commission|privacy|terms)", "has": [{ "type": "header", "key": "x-vercel-ip-country", "value": "NL|BE" }], "destination": "/nl/:page", "permanent": false },
+    { "source": "/:page(commission|privacy|terms)", "has": [{ "type": "header", "key": "x-vercel-ip-country", "value": "BR|PT" }], "destination": "/pt/:page", "permanent": false },
+    { "source": "/:page(commission|privacy|terms)", "destination": "/en/:page", "permanent": false }
+  ],
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/:lang(nl|en|pt)", "destination": "/index.html" },
+    { "source": "/:lang(nl|en|pt)/:page(commission|privacy|terms)", "destination": "/index.html" },
+    { "source": "/login", "destination": "/index.html" },
+    { "source": "/edit", "destination": "/index.html" }
   ],
   "headers": [
     {

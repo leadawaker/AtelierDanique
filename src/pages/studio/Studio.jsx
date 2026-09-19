@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { s } from '../../lib/css.js';
 import { useLang } from '../../lib/lang.js';
+import { pathFor } from '../../lib/routes.js';
 import { PhotosContext } from '../../lib/photos.js';
 import { STRINGS } from '../../lib/strings.js';
 import { useCompact } from '../../lib/useCompact.js';
@@ -56,7 +57,7 @@ export default function Studio() {
   return (
     <>
       {header}
-      {authed ? <Manager onSignedOut={() => setAuthed(false)} /> : <PasswordScreen onSuccess={() => setAuthed(true)} />}
+      {authed ? <Manager lang={lang} onSignedOut={() => setAuthed(false)} /> : <PasswordScreen onSuccess={() => setAuthed(true)} />}
     </>
   );
 }
@@ -108,7 +109,7 @@ function readHash() {
   return TABS.some((t) => t.id === id) ? id : 'gallery';
 }
 
-function Manager({ onSignedOut }) {
+function Manager({ lang, onSignedOut }) {
   const onUnauthorized = useCallback(() => onSignedOut(), [onSignedOut]);
   const { content, ready, loadError, status, update } = useStudioContent({ onUnauthorized });
   const [tab, setTab] = useState(readHash);
@@ -140,7 +141,7 @@ function Manager({ onSignedOut }) {
             <h1 style={s("margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(30px,3.6vw,46px);line-height:1.05;letter-spacing:-.02em")}>Website manager</h1>
           </div>
           <div style={s('display:flex;align-items:center;gap:22px;flex-wrap:wrap')}>
-            <a href="/" target="_blank" rel="noopener" className="h-color-coral"
+            <a href={pathFor(lang)} target="_blank" rel="noopener" className="h-color-coral"
               style={s('font-size:14px;color:#5E6C71;border-bottom:1px solid #D3CFC4;padding-bottom:2px')}>View the website&nbsp; →</a>
             <button type="button" onClick={signOut} className="h-color-coral"
               style={s('background:none;border:0;padding:10px 0;font-size:14px;color:#85949A;cursor:pointer')}>Log out</button>

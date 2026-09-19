@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { s } from '../../lib/css.js';
 import { useSiteContent } from '../../lib/content.js';
-import { useLang } from '../../lib/lang.js';
+import { pathFor } from '../../lib/routes.js';
 import { LANGS } from '../../lib/strings.js';
 import { LINKS, whatsappLink } from '../home/settings.js';
 import { STRINGS } from './strings.js';
@@ -14,15 +13,9 @@ import './commission.css';
 const INFO_T = s('margin:0 0 6px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#E36B54');
 const INFO_B = s('margin:0;font-size:14px;line-height:1.7;color:#5E6C71;font-weight:300');
 
-export default function Commission() {
-  const [lang, setLang] = useLang();
+export default function Commission({ lang, setLang }) {
   const content = useSiteContent();
   const t = STRINGS[lang] || STRINGS.en;
-
-  useEffect(() => {
-    document.title = 'Commission a piece · Atelier Danique';
-    document.documentElement.lang = lang;
-  }, [lang]);
 
   const talkUrl = whatsappLink(LINKS.whatsappUrl, t.waPrefill);
 
@@ -31,7 +24,7 @@ export default function Commission() {
 
       <header style={s('position:sticky;top:0;z-index:40;background:rgba(252,250,246,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #DDD9CF;padding:10px clamp(24px,5vw,80px)')}>
         <div style={s('max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:20px')}>
-          <a href="/" style={s("font-family:'Satisfy',cursive;font-size:clamp(22px,2.4vw,28px);color:#26454F;line-height:1;white-space:nowrap")}>Atelier Danique</a>
+          <a href={pathFor(lang)} style={s("font-family:'Satisfy',cursive;font-size:clamp(22px,2.4vw,28px);color:#26454F;line-height:1;white-space:nowrap")}>Atelier Danique</a>
           <div style={s('margin-left:auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:flex-end')}>
             <div role="group" aria-label="Language" style={s('display:flex;align-items:center;gap:2px')}>
               {LANGS.map((l) => (
@@ -40,7 +33,7 @@ export default function Commission() {
                     + (l.id === lang ? 'color:#E36B54;background:#F7D8CF' : 'color:#85949A'))}>{l.code}</button>
               ))}
             </div>
-            <a href="/" className="h-color-coral" style={s('font-size:14px;color:#5E6C71;border-bottom:1px solid #D3CFC4;padding-bottom:2px;transition:color .2s')}>{'←  '}{t.back}</a>
+            <a href={pathFor(lang)} className="h-color-coral" style={s('font-size:14px;color:#5E6C71;border-bottom:1px solid #D3CFC4;padding-bottom:2px;transition:color .2s')}>{'←  '}{t.back}</a>
           </div>
         </div>
       </header>
