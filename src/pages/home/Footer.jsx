@@ -34,6 +34,7 @@ export default function Footer({ t, lang, links, base = '' }) {
         <div style={s('display:flex;flex-wrap:wrap;gap:8px 22px')}>
           <a href={pathFor(lang, 'privacy')} className="h-color-coral" style={s('color:#85949A')}>{t.footPrivacy}</a>
           <a href={pathFor(lang, 'terms')} className="h-color-coral" style={s('color:#85949A')}>{t.footTerms}</a>
+          <a href="/login" className="h-color-coral" style={s('color:#85949A')}>Login</a>
         </div>
       </div>
     </footer>

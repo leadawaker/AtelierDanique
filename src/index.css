@@ -13,6 +13,7 @@ input, textarea, select, button { font-family: inherit; font-size: inherit; colo
    are their one-to-one replacements. Named h-<what it does>. */
 .h-bg-coral-dark:hover { background: #C0503B !important; color: #FCFAF6 !important; }
 .h-bg-coral-light:hover { background: #EE8B75 !important; color: #FCFAF6 !important; }
+.h-fill-coral:hover { background: #E36B54 !important; color: #FCFAF6 !important; }
 .h-color-coral:hover { color: #E36B54 !important; }
 .h-color-teal:hover { color: #26454F !important; }
 .h-color-gold:hover { color: #EAC66B !important; }

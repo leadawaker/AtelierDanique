@@ -7,7 +7,7 @@ const SECTION_IDS = ['gallery', 'meet', 'process', 'pricing', 'testimonials', 'f
 const PAD = 'clamp(24px,5vw,80px)';
 
 // The header's call to action: always the last button, filled coral.
-const COMMISSION_BTN = 'background:#E36B54;color:#FCFAF6;border-radius:2px;padding:9px 16px;font-size:12.5px;letter-spacing:.04em;line-height:1;white-space:nowrap;transition:background .25s';
+const COMMISSION_BTN = 'background:transparent;color:#E36B54;border:1px solid #E36B54;border-radius:2px;padding:8px 15px;font-size:12.5px;letter-spacing:.04em;line-height:1;white-space:nowrap;transition:background .25s,color .25s';
 
 const navStyleFor = (active, id) => s(active === id
   ? 'color:#26454F;border-bottom:1px solid #E36B54;padding-bottom:2px'
@@ -68,7 +68,6 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
     { id: 'testimonials', href: base + '#testimonials', label: t.navTestimonials },
     { id: 'faq', href: base + '#faq', label: t.navFaq },
   ];
-  const menuLinks = [...navLinks, { id: 'login', href: '/login', label: 'Login' }];
 
   const navStyle = compact
     ? 'display:none'
@@ -82,6 +81,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
           {navLinks.map((l) => (
             <a key={l.id} href={l.href} className="h-color-teal" style={navStyleFor(active, l.id)}>{l.label}</a>
           ))}
+          <a href={pathFor(lang, 'commission')} className="h-fill-coral" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
         </nav>
         <div style={s('margin-left:auto;display:flex;align-items:center;gap:14px;flex-shrink:0')}>
           <div role="group" aria-label="Language" style={s('display:flex;align-items:center;gap:2px')}>
@@ -98,12 +98,6 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
               >{l.code}</button>
             ))}
           </div>
-          {compact ? null : (
-            <a href="/login" className="h-border-coral" style={s('border:1px solid #D3CFC4;border-radius:2px;padding:7px 14px;font-size:12.5px;letter-spacing:.04em;color:#455459;line-height:1;white-space:nowrap;transition:border-color .2s')}>Login</a>
-          )}
-          {compact ? null : (
-            <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s(COMMISSION_BTN)}>{t.ctaCommission}</a>
-          )}
           {compact ? (
             <button
               type="button"
@@ -118,7 +112,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
       </div>
       {menuOpen ? (
         <nav style={s('margin:10px calc(-1 * ' + PAD + ') -9px;border-top:1px solid #DDD9CF;border-bottom:1px solid #DDD9CF;background:#FCFAF6;padding:6px ' + PAD + ' 18px;display:grid;gap:0;font-size:16px')}>
-          {menuLinks.map((l) => (
+          {navLinks.map((l) => (
             <a
               key={l.id}
               href={l.href}
@@ -129,7 +123,7 @@ export default function Header({ t, lang, setLang, compact: siteCompact, base = 
               style={s('color:#455459;padding:13px 0;border-bottom:1px solid #E6E2D9;transition:color .2s')}
             >{l.label}</a>
           ))}
-          <a href={pathFor(lang, 'commission')} onClick={() => setMenuOpen(false)} className="h-bg-coral-dark" style={s(COMMISSION_BTN + ';margin-top:16px;padding:15px 20px;text-align:center;font-size:15px')}>{t.ctaCommission}</a>
+          <a href={pathFor(lang, 'commission')} onClick={() => setMenuOpen(false)} className="h-fill-coral" style={s(COMMISSION_BTN + ';margin-top:16px;padding:15px 20px;text-align:center;font-size:15px')}>{t.ctaCommission}</a>
         </nav>
       ) : null}
     </header>

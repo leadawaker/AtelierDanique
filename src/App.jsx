@@ -9,7 +9,7 @@ const Studio = lazy(() => import('./pages/studio/Studio.jsx'));
 const Legal = lazy(() => import('./pages/legal/Legal.jsx'));
 
 // `url` is passed by the prerender script. In the browser it is the address bar.
-// The studio answers at /login (the header's Login button) and at its old
+// The studio answers at /login (the footer's Login link) and at its old
 // address /edit; it has no language prefix.
 export default function App({ url }) {
   const pathname = url || window.location.pathname;

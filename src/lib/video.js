@@ -9,7 +9,7 @@
 // lang ('nl' | 'pt' | 'en') switches on the matching subtitle track of a Vimeo
 // video. English has none, so it stays off. A track that has not been uploaded
 // to Vimeo yet is simply ignored by the player.
-const VIMEO_TRACK = { nl: 'nl', pt: 'pt-BR' };
+export const VIMEO_TRACK = { nl: 'nl', pt: 'pt-BR' };
 
 export function parseVideo(input, lang) {
   if (typeof input !== 'string' || !input.trim()) return null;
