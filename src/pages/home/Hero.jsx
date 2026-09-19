@@ -55,9 +55,9 @@ function HeroText({ t, lang, compact, links, content }) {
 }
 
 export default function Hero(props) {
-  const { compact, content } = props;
+  const { compact, content, t } = props;
   const split = content['ad-hero-layout'] === 'split';
-  const slot = <Slot slotId="ad-hero-banner" src={BANNER_SRC} focus={BANNER_FOCUS} placeholder="Hero banner photo" alt="" />;
+  const slot = <Slot slotId="ad-hero-banner" src={BANNER_SRC} focus={BANNER_FOCUS} placeholder="Hero banner photo" alt={t.heroAlt} />;
 
   if (!split) {
     return (

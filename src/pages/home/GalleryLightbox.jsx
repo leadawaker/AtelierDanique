@@ -57,7 +57,7 @@ export default function GalleryLightbox({ item, photo, ratio, onClose }) {
         </button>
       </div>
       <div onClick={stop} style={s('position:relative;width:' + width + ';aspect-ratio:' + ratio + ';border-radius:6px;overflow:hidden;background:#E3E1D8')}>
-        <Slot slotId={item.slotId} photo={whole} placeholder={item.placeholder} alt={item.title} />
+        <Slot slotId={item.slotId} photo={whole} placeholder={item.placeholder} alt={[item.title, item.caption].filter(Boolean).join('. ')} />
       </div>
       <div style={s('width:' + width + ';margin-top:14px;display:flex;flex-direction:column;gap:4px')}>
         <p style={s("margin:0;font-family:'Cardo',serif;font-size:21px;line-height:1.15;color:#FCFAF6")}>{item.title}</p>

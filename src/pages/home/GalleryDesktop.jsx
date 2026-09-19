@@ -199,7 +199,7 @@ export default function GalleryDesktop({ items, tweaks }) {
                 style={s(panelStyle)}
               >
                 <div style={s(imageWrapStyle)}>
-                  <Slot slotId={it.slotId} placeholder={it.placeholder} alt={it.title} />
+                  <Slot slotId={it.slotId} placeholder={it.placeholder} alt={[it.title, it.caption].filter(Boolean).join('. ')} />
                 </div>
                 {SQ.dim > 0 && <div style={s(dimStyle)} />}
               </div>

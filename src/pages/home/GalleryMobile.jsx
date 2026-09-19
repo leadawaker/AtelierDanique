@@ -131,7 +131,7 @@ export default function GalleryMobile({ items, tweaks }) {
             onClick={() => setViewIdx(i)}
             style={s(SLIDE_STYLE + ';aspect-ratio:' + ratioAt(i) + ';max-height:' + MAX_HEIGHT + 'px;cursor:pointer')}
           >
-            <Slot slotId={item.slotId} placeholder={item.placeholder} alt={item.title} />
+            <Slot slotId={item.slotId} placeholder={item.placeholder} alt={[item.title, item.caption].filter(Boolean).join('. ')} />
           </div>
         ))}
       </div>
