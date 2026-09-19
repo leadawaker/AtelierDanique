@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { s } from '../../lib/css.js';
-import { usePhoto } from '../../lib/photos.js';
-import { buildTestimonials } from '../../lib/testimonials.js';
+import { normalizePhoto, usePhoto } from '../../lib/photos.js';
+import { PAINTING_FRAMES, buildTestimonials } from '../../lib/testimonials.js';
 import Slot from '../../components/Slot.jsx';
 
 const GAP = 'clamp(18px,2vw,28px)';
@@ -37,7 +37,6 @@ export default function Testimonials({ t, lang, compact, content }) {
             <Card
               key={item.slotId}
               item={item}
-              compact={compact}
               style={cardStyle(compact, items.length)}
               hovered={hoverT === i || bareT === i}
               onToggle={() => setBareT(bareT === i ? null : i)}
@@ -51,9 +50,14 @@ export default function Testimonials({ t, lang, compact, content }) {
   );
 }
 
-function Card({ item, compact, style, hovered, onToggle, onEnter, onLeave }) {
+function Card({ item, style, hovered, onToggle, onEnter, onLeave }) {
   const avatar = usePhoto(item.avatarSlotId, item.avatar || undefined);
-  const textStyle = "margin:0;font-family:'Newsreader',serif;font-weight:400;color:#26454F;text-wrap:pretty;font-size:" + (compact ? '14.5px;line-height:1.55' : '15.5px;line-height:1.6');
+  const painting = usePhoto(item.slotId);
+  const frame = PAINTING_FRAMES[item.slotId];
+  // Top-aligned so a wider frame cuts the bottom of the crop, never the top.
+  const framed = painting && frame && painting.url.includes(frame.match)
+    ? normalizePhoto({ url: painting.url, s: 1, fx: 0.5, fy: 0, crop: frame.crop })
+    : undefined;
   const onKey = (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); }
   };
@@ -70,23 +74,23 @@ function Card({ item, compact, style, hovered, onToggle, onEnter, onLeave }) {
       style={s(style)}
     >
       <div className="tm-art">
-        <Slot slotId={item.slotId} placeholder="Photo of the client or their piece" />
+        <Slot slotId={item.slotId} photo={framed} placeholder="Photo of the client or their piece" />
       </div>
       <div className="tm-gap" aria-hidden="true"></div>
       <figcaption className="tm-panel">
-        <span aria-hidden="true" style={s("font-family:'Cardo',serif;font-size:56px;line-height:.55;height:22px;color:#C69B4A")}>“</span>
+        <span className="tm-mark" aria-hidden="true">“</span>
         {item.lines.filter(Boolean).map((line, j) => (
-          <p key={j} style={s(textStyle)}>{line}</p>
+          <p key={j} className="tm-quote">{line}</p>
         ))}
-        <div style={s('display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:10px')}>
+        <div className="tm-by">
           {avatar ? (
             <div className="tm-avatar" role="img" aria-label={item.name}>
               <Slot slotId={item.avatarSlotId} src={item.avatar || undefined} radius="50%" />
             </div>
           ) : null}
-          <span style={s('display:flex;flex-direction:column;gap:2px;min-width:0')}>
-            {item.name ? <span style={s('font-size:14px;color:#26454F;letter-spacing:.02em')}>{item.name}</span> : null}
-            {item.from ? <span style={s('font-size:12.5px;color:#6E7440;letter-spacing:.03em;overflow-wrap:anywhere')}>{item.from}</span> : null}
+          <span className="tm-who">
+            {item.name ? <span className="tm-name">{item.name}</span> : null}
+            {item.from ? <span className="tm-handle">{item.from}</span> : null}
           </span>
         </div>
       </figcaption>

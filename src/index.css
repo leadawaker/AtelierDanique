@@ -54,16 +54,23 @@ input, textarea, select, button { font-family: inherit; font-size: inherit; colo
 
 /* Testimonials: painting behind a frosted cream panel. The panel is nearly
    see-through where it meets the painting and settles to solid toward the
-   bottom. Hover (or a tap) slides the panel away and lifts the painting. */
-.tm-card { position: relative; display: flex; flex-direction: column; overflow: hidden; overflow: clip; margin: 0; border-radius: 12px; cursor: pointer; aspect-ratio: 3 / 5; box-shadow: 0 18px 38px -22px rgba(38,69,79,.4); background: #E3E1D8; }
+   bottom. Hover (or a tap) slides the panel away and lifts the painting.
+   Sizes are in cqw (% of the card's width) so every card keeps the same shape
+   and the text scales with it. */
+.tm-card { container-type: inline-size; position: relative; display: flex; flex-direction: column; overflow: hidden; overflow: clip; margin: 0; border-radius: 12px; cursor: pointer; aspect-ratio: 5 / 8; box-shadow: 0 18px 38px -22px rgba(38,69,79,.4); background: #E3E1D8; }
 .tm-card:focus-visible { outline: 2px solid #E36B54; outline-offset: 3px; }
 .tm-art { position: absolute; inset: 0; transform-origin: 50% 38%; transition: transform 1.2s cubic-bezier(.22,.61,.36,1), filter .8s ease; }
 .tm-gap { flex: none; width: 100%; aspect-ratio: 2 / 1; }
-.tm-panel { position: relative; z-index: 1; flex: 1 0 auto; display: flex; flex-direction: column; gap: 12px; margin: 0 clamp(10px,1.1vw,16px) clamp(10px,1.1vw,16px); padding: clamp(16px,1.7vw,24px) clamp(18px,1.8vw,26px) clamp(18px,1.7vw,24px); border-radius: 14px; background: linear-gradient(to bottom, rgba(252,250,246,.5) 0%, rgba(252,250,246,.88) 24%, rgba(252,250,246,.95) 100%); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); transition: opacity .55s ease, transform .8s cubic-bezier(.22,.61,.36,1); }
+.tm-panel { position: relative; z-index: 1; flex: 1 0 auto; display: flex; flex-direction: column; gap: 3cqw; margin: 0 3.5cqw 3.5cqw; padding: 5cqw 6cqw; border-radius: 14px; background: linear-gradient(to bottom, rgba(252,250,246,.5) 0%, rgba(252,250,246,.88) 24%, rgba(252,250,246,.95) 100%); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); transition: opacity .55s ease, transform .8s cubic-bezier(.22,.61,.36,1); }
+.tm-mark { font-family: 'Cardo', serif; font-size: 15cqw; line-height: .55; height: 6cqw; color: #C69B4A; }
+.tm-quote { margin: 0; font-family: 'Newsreader', serif; font-weight: 400; font-size: clamp(13px, 4.5cqw, 17px); line-height: 1.5; color: #26454F; text-wrap: pretty; }
+.tm-by { display: flex; align-items: center; gap: 3.5cqw; margin-top: auto; padding-top: 2.5cqw; }
+.tm-who { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.tm-name { font-size: clamp(13px, 4cqw, 15px); color: #26454F; letter-spacing: .02em; }
+.tm-handle { font-size: clamp(12px, 3.5cqw, 13.5px); color: #6E7440; letter-spacing: .03em; overflow-wrap: anywhere; }
 .tm-card[data-open="true"] .tm-art { transform: scale(1.07); filter: saturate(1.12) brightness(1.03); }
 .tm-card[data-open="true"] .tm-panel { opacity: 0; transform: translateY(32px); pointer-events: none; }
-.tm-avatar { position: relative; flex: none; width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 2px solid #FFFDF9; box-shadow: 0 0 0 1px rgba(38,69,79,.12), 0 3px 8px rgba(38,69,79,.16); background: #EFE7DA; }
-@media (max-width: 999px) { .tm-avatar { width: 40px; height: 40px; } }
+.tm-avatar { position: relative; flex: none; width: clamp(38px, 12.5cqw, 46px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 2px solid #FFFDF9; box-shadow: 0 0 0 1px rgba(38,69,79,.12), 0 3px 8px rgba(38,69,79,.16); background: #EFE7DA; }
 @media (prefers-reduced-motion: reduce) {
   .tm-art, .tm-panel { transition: opacity .2s linear !important; }
   .tm-card[data-open="true"] .tm-art, .tm-card[data-open="true"] .tm-panel { transform: none; }
