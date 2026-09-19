@@ -22,8 +22,13 @@ export default function Meet({ t, content, lang }) {
       .then((tracks) => {
         console.info('[meet] vimeo tracks', tracks.map((x) => x.language + '/' + x.kind + '/' + x.mode), 'wanted', wanted);
         const want = norm(wanted);
-        const hit = tracks.find((x) => norm(x.language) === want)
-          || tracks.find((x) => norm(x.language).split('-')[0] === want.split('-')[0]);
+        // Prefer the uploaded CC track over an older subtitle track in the
+        // same language, then an exact language match over a close one.
+        const exact = (x) => norm(x.language) === want;
+        const close = (x) => norm(x.language).split('-')[0] === want.split('-')[0];
+        const cc = (x) => x.kind === 'captions';
+        const hit = tracks.find((x) => cc(x) && exact(x)) || tracks.find((x) => cc(x) && close(x))
+          || tracks.find(exact) || tracks.find(close);
         if (live && hit && hit.mode !== 'showing') return player.enableTextTrack(hit.language, hit.kind);
         return null;
       })
