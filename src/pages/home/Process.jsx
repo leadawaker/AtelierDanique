@@ -3,9 +3,10 @@ import { s } from '../../lib/css.js';
 
 // Steps 1 to 3 are square pictures with empty margin, so they are zoomed a
 // little (s) and centred on the objects (fx, fy) to fill the frame like
-// step 4.
+// step 4. `brightness` (1 = unchanged) lightens a picture without editing the
+// file.
 const STEPS = [
-  { key: 1, slotId: 'ad-process-1', src: '/uploads/Project%20(20260919052116).webp', focus: { s: 1.2, fx: 0.46, fy: 0.48 } },
+  { key: 1, slotId: 'ad-process-1', src: '/uploads/Project%20(20260919052116).webp', focus: { s: 1.2, fx: 0.46, fy: 0.48 }, brightness: 1.1 },
   { key: 2, slotId: 'ad-process-2', src: '/uploads/Project2%20(20260919052438).webp', focus: { s: 1.2, fx: 0.55, fy: 0.5 } },
   { key: 3, slotId: 'ad-process-3', src: '/uploads/Project%20(20260919055618).webp', focus: { s: 1.1, fx: 0.49, fy: 0.51 }, current: true },
   { key: 4, slotId: 'ad-process-4', src: '/uploads/proc-4.jpg' },
@@ -31,7 +32,7 @@ export default function Process({ t }) {
           {STEPS.map((step) => (
             <li key={step.key} className={'proc-step' + (step.current ? ' proc-step-current' : '')}>
               <div className="proc-art">
-                <Slot slotId={step.slotId} src={step.src} focus={step.focus} placeholder={'Photo for step ' + step.key} style={{ background: 'transparent' }} />
+                <Slot slotId={step.slotId} src={step.src} focus={step.focus} placeholder={'Photo for step ' + step.key} style={{ background: 'transparent', ...(step.brightness ? { filter: 'brightness(' + step.brightness + ')' } : {}) }} />
               </div>
               <div className="proc-badge-row">
                 <span className="proc-badge">{'0' + step.key}</span>
