@@ -64,7 +64,7 @@ export const STRINGS = {
   pt: {
     navHome: 'Início', navGallery: 'Galeria', navProcess: 'Como funciona', navPricing: 'Preços', navTestimonials: 'Depoimentos', navFaq: 'Dúvidas', navAbout: 'Sobre',
     heroEyebrow: 'Pintado à mão em aquarela e tinta', heroAlt: 'Aquarela pintada por Danique', heroSpots: 'Preços de lançamento · {left} de {total} vagas restantes', heroT1: 'Momentos reais.', heroT2: 'Que duram', heroT3: 'para sempre.',
-    heroBody: 'Crio obras feitas à mão a partir das suas fotos, transformando as pessoas e os momentos que você ama em peças atemporais para a sua casa.',
+    heroBody: 'Transformo seus momentos favoritos em obras de arte atemporais, pintadas à mão.',
     ctaCommission: 'Encomende sua obra',
     meetEyebrow: 'NAS PALAVRAS DELA', meetTitle: 'Conheça a Danique', watch: 'Conheça a Danique', waPrefill: 'Oi Danique!',
     tagline: 'Momentos reais. Arte real. Pessoas reais.',
@@ -122,7 +122,7 @@ export const STRINGS = {
   nl: {
     navHome: 'Home', navGallery: 'Galerij', navProcess: 'Hoe het werkt', navPricing: 'Prijzen', navTestimonials: 'Ervaringen', navFaq: 'Vragen', navAbout: 'Over',
     heroEyebrow: 'Met de hand geschilderd in aquarel en inkt', heroAlt: 'Aquarel geschilderd door Danique', heroSpots: 'Introductieprijzen · nog {left} van {total} plekken', heroT1: 'Echte momenten.', heroT2: 'Die blijven', heroT3: 'voor altijd.',
-    heroBody: "Ik maak met de hand gemaakte kunstwerken van jouw foto's en verander de mensen en momenten die je liefhebt in tijdloze stukken voor je huis.",
+    heroBody: "Ik verander je favoriete momenten in tijdloze, met de hand geschilderde kunstwerken.",
     ctaCommission: 'Bestel jouw werk',
     meetEyebrow: 'IN HAAR EIGEN WOORDEN', meetTitle: 'Maak kennis met Danique', watch: 'Maak kennis met Danique', waPrefill: 'Hoi Danique!',
     tagline: 'Echte momenten. Echte kunst. Echte mensen.',
