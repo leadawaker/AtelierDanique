@@ -35,7 +35,7 @@ function PhoneBackground() {
 
 // Phones: a cut-out paint palette laid over the corner of the background photo.
 // It hangs PALETTE_DROP px below the hero, onto the gallery.
-const PALETTE_DROP = 150;
+const PALETTE_DROP = 135;
 function PhonePalette() {
   return (
     <img src="/uploads/hero-phone-palette.webp" alt="" aria-hidden="true" width="768" height="1366" decoding="async"
