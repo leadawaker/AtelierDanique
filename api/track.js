@@ -3,7 +3,7 @@ import { isAuthed } from "./_lib/session.js";
 import { jsonBody } from "./_lib/body.js";
 import { LANGS, PAGES } from "../src/lib/routes.js";
 
-const BOT = /bot|crawl|spider|slurp|preview|headless|lighthouse|facebookexternalhit|whatsapp|curl|python|node-fetch/i;
+const BOT = /bot|crawl|spider|slurp|preview|headless|lighthouse|facebookexternalhit|whatsapp|curl|python|node-fetch|chatgpt|openai|gpt|claude|anthropic|perplexity|vercel|monitor|uptime/i;
 const SOURCES = [
   [/^(ig|instagram)$|instagram\./, "instagram"], [/google/, "google"], [/bing\./, "bing"],
   [/chatgpt|openai/, "chatgpt"], [/perplexity/, "perplexity"], [/claude\.ai/, "claude"], [/gemini/, "gemini"],

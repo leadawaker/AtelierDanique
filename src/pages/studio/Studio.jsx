@@ -19,12 +19,12 @@ import StatsTab from './tabs/StatsTab.jsx';
 // whether the session cookie is valid.
 
 const TABS = [
+  { id: 'stats', label: 'Stats', Component: StatsTab },
   { id: 'gallery', label: 'Gallery', Component: GalleryTab },
   { id: 'photos', label: 'Photos', Component: PhotosTab },
   { id: 'testimonials', label: 'Testimonials', Component: TestimonialsTab },
   { id: 'pricing', label: 'Pricing', Component: PricingTab },
   { id: 'copy', label: 'Copy', Component: CopyTab },
-  { id: 'stats', label: 'Stats', Component: StatsTab },
 ];
 
 const PAGE_BG = 'background:#FCFAF6;min-height:100vh;color:#26454F';
@@ -108,7 +108,7 @@ function PasswordScreen({ onSuccess }) {
 
 function readHash() {
   const id = window.location.hash.replace('#', '');
-  return TABS.some((t) => t.id === id) ? id : 'gallery';
+  return TABS.some((t) => t.id === id) ? id : 'stats';
 }
 
 function Manager({ lang, onSignedOut }) {

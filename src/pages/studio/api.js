@@ -108,6 +108,8 @@ export async function fetchSearchStats() {
 export async function requestRebuild() {
   const res = await fetch('/api/cron/rebuild', { method: 'POST' });
   if (res.status === 429) return 'busy';
+  if (res.status === 500) return 'unset'; // DEPLOY_HOOK_URL is missing in Vercel
+  if (res.status === 502) return 'hook'; // Vercel refused the deploy hook
   return res.ok ? 'ok' : 'error';
 }
 

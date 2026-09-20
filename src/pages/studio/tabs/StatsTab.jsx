@@ -52,7 +52,7 @@ export default function StatsTab() {
   const [statsError, setStatsError] = useState(false);
   const [search, setSearch] = useState(null);
   const [searchError, setSearchError] = useState(false);
-  const [rebuild, setRebuild] = useState('idle'); // idle | busy | ok | full | error
+  const [rebuild, setRebuild] = useState('idle'); // idle | busy | ok | full | unset | hook | error
 
   useEffect(() => {
     let alive = true;
@@ -71,7 +71,7 @@ export default function StatsTab() {
     setRebuild('busy');
     try {
       const result = await requestRebuild();
-      setRebuild(result === 'ok' ? 'ok' : result === 'busy' ? 'full' : 'error');
+      setRebuild(result === 'busy' ? 'full' : result);
     } catch { setRebuild('error'); }
   };
 
@@ -148,6 +148,8 @@ export default function StatsTab() {
         {rebuild === 'ok' && <p style={s('margin:12px 0 0;font-size:14px;color:#455459')}>Updating, ready in about 2 minutes</p>}
         {rebuild === 'full' && <p style={s('margin:12px 0 0;font-size:14px;color:#455459')}>Already updating</p>}
         {rebuild === 'error' && <p style={s('margin:12px 0 0;font-size:14px;color:#C0503B')}>Something went wrong</p>}
+        {rebuild === 'unset' && <p style={s('margin:12px 0 0;font-size:14px;color:#C0503B')}>Not connected yet: the DEPLOY_HOOK_URL setting is missing in Vercel (or the site was not redeployed after adding it)</p>}
+        {rebuild === 'hook' && <p style={s('margin:12px 0 0;font-size:14px;color:#C0503B')}>Vercel did not accept the request. The deploy hook may have been deleted or changed</p>}
       </section>
     </div>
   );
