@@ -1,12 +1,17 @@
 import { redis } from "./_lib/redis.js";
 import { isAuthed } from "./_lib/session.js";
-import { searchConsoleConfigured, searchStats } from "./_lib/searchConsole.js";
+import { searchConsoleConfigured, searchStats, keyInfo } from "./_lib/searchConsole.js";
 
 // A plain-words reason for the studio's Stats tab. Only a logged-in session
 // gets this, and it never contains the key itself.
 function hintFor(err) {
   const msg = String((err && (err.code || err.message)) || "");
-  if (/DECODER|ERR_OSSL|PEM|asn1/i.test(msg)) return "The private key saved in Vercel (GSC_PRIVATE_KEY) can't be read. Copy the whole private_key value from the JSON file again, from BEGIN to END.";
+  if (/DECODER|ERR_OSSL|PEM|asn1/i.test(msg)) {
+    const k = keyInfo();
+    return "The private key saved in Vercel (GSC_PRIVATE_KEY) can't be read. Vercel holds " + k.length + " characters: BEGIN line " + (k.begin ? "found" : "MISSING")
+      + ", END line " + (k.end ? "found" : "MISSING") + ", key body " + k.body + " characters" + (k.type ? " (" + k.type + ")" : "")
+      + ". A complete key has a body of about 1600 characters. Copy the whole private_key value from the JSON file again, from BEGIN to END.";
+  }
   if (/invalid_grant|invalid_client|unauthorized_client/i.test(msg)) return "Google didn't accept the service account. Check that GSC_CLIENT_EMAIL and GSC_PRIVATE_KEY come from the same JSON file.";
   if (/has not been used|is disabled|accessNotConfigured|SERVICE_DISABLED/i.test(msg)) return "The Search Console API isn't enabled in the Google Cloud project that owns the service account.";
   if (/gsc query 40[34]/.test(msg)) return "Google says this service account has no access to the property. Add its email under Users and permissions in Search Console, and check that GSC_SITE is sc-domain:atelierdanique.com.";
