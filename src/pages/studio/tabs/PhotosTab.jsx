@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { s } from '../../../lib/css.js';
 import { A4_PHOTO_FOCUS } from '../../../lib/pricing.js';
-import { CUTOUT_SLOT, CUTOUT_SRC } from '../../../lib/ctaCutout.js';
+import { CARD_FOCUS, CARD_SLOT, CARD_SRC, CUTOUT_SLOT, CUTOUT_SRC, POP_CARD_H, POP_H, POP_W } from '../../../lib/ctaCutout.js';
 import { parseVideo } from '../../../lib/video.js';
 import EditableSlot from '../EditableSlot.jsx';
 import InstagramPanel from '../InstagramPanel.jsx';
@@ -19,7 +19,8 @@ const SITE_PHOTOS = [
   { slotId: 'ad-process-2', name: 'How it works, step 2', where: 'Above "Send your photo".', src: '/uploads/Project%20(20260919072918).webp', ratio: '5/4' },
   { slotId: 'ad-process-3', name: 'How it works, step 3', where: 'Above "I create your artwork" (the highlighted step).', src: '/uploads/Project%20(20260919072504).webp', ratio: '5/4' },
   { slotId: 'ad-process-4', name: 'How it works, step 4', where: 'Above "Receive your artwork".', src: '/uploads/file_00000000d5b881f4a2eaa6c6bb25ef66.webp', ratio: '5/4' },
-  { slotId: CUTOUT_SLOT, name: 'Cut-out of Danique (phones)', where: 'Bottom call to action on phones, standing on the teal. Use a cut-out with a transparent background (PNG or WebP), a normal photo shows as a rectangle.', src: CUTOUT_SRC, ratio: '3/4', transparent: true, bg: '#26454F' },
+  { slotId: CUTOUT_SLOT, name: 'Cut-out of Danique (phones, top layer)', where: 'Bottom call to action on phones: her head rises above the photo card. A cut-out with a transparent background (PNG or WebP). Keep it the same shape as the photo below it, so the two line up.', src: CUTOUT_SRC, ratio: POP_W + '/' + POP_H, transparent: true, bg: '#26454F' },
+  { slotId: CARD_SLOT, name: 'Photo card behind the cut-out (phones)', where: 'The rounded photo card, cut off at her neck. Use the same picture as the cut-out, with its background.', src: CARD_SRC, focus: CARD_FOCUS, ratio: POP_W + '/' + POP_CARD_H },
   { slotId: 'ad-about-portrait', name: 'Portrait of Danique', where: 'The About section near the footer.', src: '/uploads/danique.jpg', ratio: '3/4' },
 ];
 
