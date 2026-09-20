@@ -1,6 +1,7 @@
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
 import { heroSpots, sitePricing } from '../../lib/pricing.js';
+import { HERO_PHONE_DEFAULT, HERO_PHONE_SLOT } from '../../lib/heroPhone.js';
 import { HERO_VEIL } from './settings.js';
 
 const BANNER_SRC = '/uploads/Project%20(20260915100023).jpg';
@@ -9,7 +10,7 @@ const BANNER_FOCUS = { fx: 1, fy: 0.5 };
 const TEXT_PAD = 'padding:clamp(56px,6vw,104px) clamp(24px,4vw,56px) clamp(52px,6vw,104px) clamp(24px,5vw,80px)';
 
 // Cream veil over the banner photo, fading out left to right. Desktop only:
-// on compact screens the banner has no photo at all.
+// on compact screens the phone background is used instead.
 function veilStyle() {
   const { reach, softness } = HERO_VEIL;
   const op = HERO_VEIL.opacity / 100;
@@ -20,6 +21,15 @@ function veilStyle() {
     + 'rgba(252,250,246,' + op + ') ' + solid.toFixed(1) + '%,'
     + 'rgba(252,250,246,' + (op * 0.45).toFixed(3) + ') ' + mid.toFixed(1) + '%,'
     + 'rgba(252,250,246,0) ' + reach.toFixed(1) + '%)';
+}
+
+// Phones: the studio-chosen background behind the hero text, in place of cream.
+function PhoneBackground() {
+  return (
+    <div style={s('position:absolute;inset:0')}>
+      <Slot slotId={HERO_PHONE_SLOT} src={HERO_PHONE_DEFAULT} alt="" />
+    </div>
+  );
 }
 
 function HeroText({ t, compact, links, content }) {
@@ -61,7 +71,7 @@ export default function Hero(props) {
   if (!split) {
     return (
       <section style={s('position:relative;background:#F1EFE8;overflow:hidden')}>
-        {compact ? null : (
+        {compact ? <PhoneBackground /> : (
           <>
             <div style={s('position:absolute;inset:0')}>{slot}</div>
             <div style={s(veilStyle())}></div>
@@ -79,8 +89,11 @@ export default function Hero(props) {
   if (compact) {
     return (
       <section style={s('position:relative;background:#F1EFE8;overflow:hidden')}>
-        <div data-reveal="" style={s(TEXT_PAD + ';display:flex;flex-direction:column;justify-content:center;gap:26px')}>
-          <HeroText {...props} />
+        <div style={s('position:relative')}>
+          <PhoneBackground />
+          <div data-reveal="" style={s('position:relative;' + TEXT_PAD + ';display:flex;flex-direction:column;justify-content:center;gap:26px')}>
+            <HeroText {...props} />
+          </div>
         </div>
         <div style={s('position:relative;width:100%;aspect-ratio:4/3')}>{slot}</div>
       </section>
