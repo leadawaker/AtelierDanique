@@ -41,7 +41,7 @@ function pageLabel(path) {
   return (PAGE_NAMES[page] ?? (page || 'Home')) + ' (' + lang.toUpperCase() + ')';
 }
 function toRanked(obj, labelFn) {
-  return Object.entries(obj || {}).map(([key, value]) => ({ label: labelFn(key), value }))
+  return Object.entries(obj || {}).map(([key, value]) => ({ key, label: labelFn(key), value }))
     .sort((a, b) => b.value - a.value).slice(0, 6);
 }
 const fmt = (n) => (n || 0).toLocaleString('en');
@@ -98,14 +98,14 @@ export default function StatsTab() {
           <p style={s(LOADING)}>Loading…</p>
         ) : (
           <>
-            <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:14px;margin-bottom:24px')}>
+            <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:14px;margin-bottom:24px')}>
               <Tile label="Visits" value={fmt(stats.totals?.visits)} />
               <Tile label="Pages viewed" value={fmt(stats.totals?.views)} />
               <Tile label="From Instagram" value={fmt(stats.sources?.instagram)} />
               <Tile label="From Google + AI assistants" value={fmt(aiTotal)} />
             </div>
 
-            <DailyBars days={stats.days} />
+            <DailyBars days={stats.days} caption={'Visits per day, ' + PERIODS.find((p) => p.days === days).label.toLowerCase()} />
 
             <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:clamp(18px,2.4vw,28px);margin-top:28px')}>
               <RankedList title="Where visitors come from" items={toRanked(stats.sources, sourceLabel)} />
@@ -126,12 +126,12 @@ export default function StatsTab() {
           <p style={s(NOTE)}>Google search data isn't connected yet.</p>
         ) : (
           <>
-            <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:14px;margin-bottom:24px')}>
+            <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:14px;margin-bottom:24px')}>
               <Tile label="Seen in Google" value={fmt(search.totals?.impressions)} />
               <Tile label="Clicked" value={fmt(search.totals?.clicks)} />
               <Tile label="Average position" value={search.totals?.position == null ? '-' : (Math.round(search.totals.position * 10) / 10).toString()} />
             </div>
-            <RankedList title="What people searched" items={(search.queries || []).slice(0, 6).map((q) => ({ label: q.query, value: q.clicks }))} />
+            <RankedList title="What people searched" items={[...(search.queries || [])].sort((a, b) => (b.clicks || 0) - (a.clicks || 0)).slice(0, 6).map((q) => ({ key: q.query, label: q.query, value: q.clicks }))} />
           </>
         )}
       </section>
@@ -145,9 +145,9 @@ export default function StatsTab() {
           style={s('background:#E36B54;color:#FCFAF6;border:0;padding:14px 22px;font-size:15px;border-radius:2px;cursor:pointer;transition:background .25s;opacity:' + (rebuild === 'busy' ? '0.6' : '1'))}>
           {rebuild === 'busy' ? 'Updating…' : 'Update what Google sees'}
         </button>
-        {rebuild === 'ok' && <p style={s('margin:12px 0 0;font-size:14px;color:#455459')}>Updating, ready in about 2 minutes.</p>}
-        {rebuild === 'full' && <p style={s('margin:12px 0 0;font-size:14px;color:#455459')}>Already updating.</p>}
-        {rebuild === 'error' && <p style={s('margin:12px 0 0;font-size:14px;color:#C0503B')}>Something went wrong.</p>}
+        {rebuild === 'ok' && <p style={s('margin:12px 0 0;font-size:14px;color:#455459')}>Updating, ready in about 2 minutes</p>}
+        {rebuild === 'full' && <p style={s('margin:12px 0 0;font-size:14px;color:#455459')}>Already updating</p>}
+        {rebuild === 'error' && <p style={s('margin:12px 0 0;font-size:14px;color:#C0503B')}>Something went wrong</p>}
       </section>
     </div>
   );

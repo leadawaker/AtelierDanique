@@ -1,6 +1,6 @@
 import { s } from '../../../lib/css.js';
 
-// Small building blocks for the Stats tab: a number tile, an inline bar chart
+// Small building blocks for the Stats tab: a number tile, a bar chart
 // of visits per day, and a short ranked list with a proportional bar. Kept
 // separate from StatsTab.jsx so neither file grows past ~200 lines.
 
@@ -15,30 +15,31 @@ export function Tile({ label, value }) {
   );
 }
 
-const BAR_W = 7;
-const BAR_GAP = 4;
 const CHART_H = 90;
 
-// One bar per day, height proportional to that day's visits. A native
-// <title> gives the hover with the date and count, no extra tooltip needed.
-export function DailyBars({ days }) {
+// One bar per day, height proportional to that day's visits. The bars share
+// the box width; with many days they keep a minimum width and the box scrolls.
+// A native title gives the hover with the date and count. `caption` says what
+// the chart shows, in plain words.
+export function DailyBars({ days, caption }) {
   const list = days || [];
   const max = Math.max(1, ...list.map((d) => d.visits || 0));
-  const width = Math.max(list.length * (BAR_W + BAR_GAP), 1);
+  const gap = list.length > 40 ? 2 : 4;
   return (
-    <div style={s('overflow-x:auto;' + PANEL)}>
-      <svg viewBox={'0 0 ' + width + ' ' + CHART_H} width={width} height={CHART_H} role="img" aria-label="Visits per day"
-        style={s('display:block;min-width:100%')}>
-        {list.map((d, i) => {
-          const h = Math.max(2, Math.round(((d.visits || 0) / max) * (CHART_H - 14)));
-          const x = i * (BAR_W + BAR_GAP);
-          return (
-            <rect key={d.date} x={x} y={CHART_H - h} width={BAR_W} height={h} rx={3} fill="#E36B54">
-              <title>{d.date + ': ' + (d.visits || 0) + (d.visits === 1 ? ' visit' : ' visits')}</title>
-            </rect>
-          );
-        })}
-      </svg>
+    <div style={s(PANEL)}>
+      <div style={s('overflow-x:auto')}>
+        <div role="img" aria-label={caption || 'Visits per day'}
+          style={s('display:flex;align-items:flex-end;gap:' + gap + 'px;height:' + CHART_H + 'px;min-width:' + list.length * (4 + gap) + 'px')}>
+          {list.map((d) => {
+            const h = Math.max(2, Math.round(((d.visits || 0) / max) * (CHART_H - 14)));
+            return (
+              <div key={d.date} title={d.date + ': ' + (d.visits || 0) + (d.visits === 1 ? ' visit' : ' visits')}
+                style={s('flex:1 1 0;min-width:4px;background:#E36B54;border-radius:3px 3px 0 0;height:' + h + 'px')} />
+            );
+          })}
+        </div>
+      </div>
+      {caption && <p style={s('margin:10px 0 0;font-size:12px;color:#85949A;font-weight:300')}>{caption}</p>}
     </div>
   );
 }
@@ -54,8 +55,8 @@ export function RankedList({ title, items }) {
         <p style={s('margin:0;font-size:13px;color:#85949A;font-weight:300')}>Nothing yet.</p>
       ) : (
         <ul style={s('list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px')}>
-          {items.map((it, i) => (
-            <li key={i} style={s('display:flex;flex-direction:column;gap:4px')}>
+          {items.map((it) => (
+            <li key={it.key ?? it.label} style={s('display:flex;flex-direction:column;gap:4px')}>
               <div style={s('display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#455459')}>
                 <span style={s('overflow:hidden;text-overflow:ellipsis;white-space:nowrap')}>{it.label}</span>
                 <span style={s('color:#85949A;flex:0 0 auto')}>{it.value}</span>
