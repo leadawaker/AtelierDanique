@@ -5,7 +5,7 @@ export default function Contact({ t }) {
   return (
     <section id="contact" style={s('position:relative;background:#26454F;color:#F1F4F2;overflow:hidden')}>
       <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:stretch')}>
-        <div style={s('position:relative;min-height:min(66vh,600px)')}>
+        <div className="cta-photo" style={s('position:relative;min-height:min(66vh,600px)')}>
           <Slot slotId="ad-about-portrait" src="/uploads/danique.jpg" placeholder="Photo of Danique" />
         </div>
         <div data-reveal="" style={s('padding:clamp(40px,6vw,92px) clamp(24px,5vw,76px);display:flex;flex-direction:column;gap:24px;justify-content:center')}>

@@ -53,6 +53,12 @@ input, textarea, select, button { font-family: inherit; font-size: inherit; colo
   .proc-art { max-width: 300px; }
 }
 
+/* Bottom call to action: the grid stacks below 640px. Photo of Danique goes
+   under the text there, and stays on the left beside it on wider screens. */
+@media (max-width: 639px) {
+  .cta-photo { order: 1; }
+}
+
 /* Testimonials: painting behind a frosted cream panel. The panel is nearly
    see-through where it meets the painting and settles to solid toward the
    bottom. Hover (or a tap) slides the panel away and lifts the painting.
