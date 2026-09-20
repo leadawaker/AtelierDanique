@@ -35,11 +35,14 @@ const SAVE_DELAY = 600;
 // status: 'idle' | 'saving' | 'saved' | 'error'. `update(key, value)` changes
 // the page immediately; the write to the server is debounced per key so typing
 // does not send a request per keystroke. Nothing needs a Save button.
+// `errors` maps a key to the server's message when it rejected that value
+// (a 400), so a field can show it next to itself.
 export function useStudioContent({ onUnauthorized } = {}) {
   const [content, setContent] = useState(EMPTY_CONTENT);
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [status, setStatus] = useState('idle');
+  const [errors, setErrors] = useState({});
   const timers = useRef({});
   const pending = useRef(new Set());
 
@@ -57,7 +60,12 @@ export function useStudioContent({ onUnauthorized } = {}) {
         body: JSON.stringify({ key, value }),
       });
       if (res.status === 401) { onUnauthorized && onUnauthorized(); throw new Error('unauthorized'); }
+      if (res.status === 400) {
+        const message = (await res.json().catch(() => null))?.error;
+        if (message) setErrors((prev) => ({ ...prev, [key]: message }));
+      }
       if (!res.ok) throw new Error('save ' + res.status);
+      setErrors((prev) => (key in prev ? { ...prev, [key]: undefined } : prev));
       pending.current.delete(key);
       if (!pending.current.size) setStatus('saved');
     } catch (e) {
@@ -80,7 +88,7 @@ export function useStudioContent({ onUnauthorized } = {}) {
     return () => window.removeEventListener('beforeunload', onLeave);
   }, []);
 
-  return { content, ready, loadError, status, update };
+  return { content, ready, loadError, status, errors, update };
 }
 
 // ---- Stats: visitor numbers, search numbers, and the "update Google" button ----

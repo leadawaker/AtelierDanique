@@ -113,7 +113,7 @@ function readHash() {
 
 function Manager({ lang, onSignedOut }) {
   const onUnauthorized = useCallback(() => onSignedOut(), [onSignedOut]);
-  const { content, ready, loadError, status, update } = useStudioContent({ onUnauthorized });
+  const { content, ready, loadError, status, errors, update } = useStudioContent({ onUnauthorized });
   const [tab, setTab] = useState(readHash);
 
   useEffect(() => {
@@ -178,7 +178,7 @@ function Manager({ lang, onSignedOut }) {
         ) : (
           <PhotosContext.Provider value={content['ad-photos']}>
             <div role="tabpanel">
-              <Active content={content} update={update} />
+              <Active content={content} update={update} errors={errors} />
             </div>
           </PhotosContext.Provider>
         )}
