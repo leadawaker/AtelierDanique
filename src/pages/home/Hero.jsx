@@ -3,6 +3,7 @@ import Slot from '../../components/Slot.jsx';
 import { heroSpots, sitePricing } from '../../lib/pricing.js';
 import { pathFor } from '../../lib/routes.js';
 import PhoneHeroArt from './PhoneHeroArt.jsx';
+import { paletteOn } from '../../lib/heroPhone.js';
 import { HERO_VEIL } from './settings.js';
 
 const BANNER_SRC = '/uploads/Project%20(20260915100023).jpg';
@@ -63,7 +64,7 @@ export default function Hero(props) {
   if (!split) {
     return (
       <section style={s('position:relative;background:#F1EFE8;' + (compact ? 'z-index:2' : 'overflow:hidden'))}>
-        {compact ? <PhoneHeroArt palette /> : (
+        {compact ? <PhoneHeroArt palette={paletteOn(content)} /> : (
           <>
             <div style={s('position:absolute;inset:0')}>{slot}</div>
             <div style={s(veilStyle())}></div>

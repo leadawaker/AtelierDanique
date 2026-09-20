@@ -34,7 +34,7 @@ export default function PhotosTab({ content, update }) {
   return (
     <div>
       <SitePhotos photos={content['ad-photos']} onChange={(next) => update('ad-photos', next)} />
-      <PhoneHero photos={content['ad-photos']} onChange={(next) => update('ad-photos', next)} h2={H2} h2Wrap={H2_WRAP} section={SECTION} />
+      <PhoneHero photos={content['ad-photos']} onChange={(next) => update('ad-photos', next)} content={content} update={update} h2={H2} h2Wrap={H2_WRAP} section={SECTION} />
       <HeroLayout value={content['ad-hero-layout']} onChange={(v) => update('ad-hero-layout', v)} />
       <VideoLink value={content['ad-video-url'] || ''} onChange={(v) => update('ad-video-url', v)} />
       <InstagramPanel />

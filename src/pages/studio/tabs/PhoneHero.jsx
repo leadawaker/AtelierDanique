@@ -2,13 +2,14 @@ import { s } from '../../../lib/css.js';
 import { HERO_PHONE_DEFAULT, HERO_PHONE_PRESETS, HERO_PHONE_SLOT } from '../../../lib/heroPhone.js';
 import { resolvePhoto } from '../../../lib/photos.js';
 import EditableSlot from '../EditableSlot.jsx';
+import PhonePalette from './PhonePalette.jsx';
 
 // Photos tab, "Hero background on phones": pick one of the built-in
 // backgrounds or drop your own, then drag, zoom and crop it in a phone-shaped frame.
 
 const NOTE = 'margin:0;font-size:13px;line-height:1.6;color:#85949A;font-weight:300';
 
-export default function PhoneHero({ photos, onChange, h2, h2Wrap, section }) {
+export default function PhoneHero({ photos, onChange, content, update, h2, h2Wrap, section }) {
   const current = resolvePhoto(photos, HERO_PHONE_SLOT, HERO_PHONE_DEFAULT);
   const choose = (url) => onChange({ ...photos, [HERO_PHONE_SLOT]: { url, s: 1, fx: 0.5, fy: 0.5 } });
 
@@ -37,6 +38,7 @@ export default function PhoneHero({ photos, onChange, h2, h2Wrap, section }) {
           })}
         </div>
       </div>
+      <PhonePalette photos={photos} onChange={onChange} content={content} update={update} />
     </section>
   );
 }

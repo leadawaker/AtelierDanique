@@ -27,6 +27,7 @@ export const CONTENT_KEYS = [
   'ad-copy',                // {stringKey: {en, pt, nl}}
   'ad-pricing',             // {a5, a4: {eur, brl}, spotsTotal, spotsLeft}  see lib/pricing.js
   'ad-google-reviews',      // {enabled, url}  Google review link under testimonials
+  'ad-hero-palette',        // {enabled}  paint palette on the phone hero, on unless enabled is false
 ];
 
 export const EMPTY_CONTENT = {
@@ -43,6 +44,7 @@ export const EMPTY_CONTENT = {
   'ad-copy': {},
   'ad-pricing': {},
   'ad-google-reviews': {},
+  'ad-hero-palette': {},
 };
 
 // Fill missing or wrongly typed keys with the empty default, so a blank or

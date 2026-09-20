@@ -14,6 +14,7 @@ export const CONTENT_TYPES = {
   "ad-copy": "object",
   "ad-pricing": "object",
   "ad-google-reviews": "object",
+  "ad-hero-palette": "object",
 };
 
 export const CONTENT_KEYS = Object.keys(CONTENT_TYPES);
