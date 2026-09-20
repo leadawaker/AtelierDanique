@@ -28,6 +28,8 @@ export function headFor(lang, page, content, { noindex = false } = {}) {
     `<meta property="og:locale" content="${OG_LOCALE[lang]}">`,
     `<meta name="twitter:card" content="summary_large_image">`,
     `<script type="application/ld+json">${ld}</script>`,
-    `<style>@media (max-width:1000px){#root[data-ssr]{visibility:hidden}}</style>`,
+    // Phones hide the desktop-layout markup until hydration removes data-ssr. The
+    // animation reveals it after 4s anyway, so a failed or slow chunk (or no JS) never leaves a blank page.
+    `<style>@media (max-width:1000px){#root[data-ssr]{visibility:hidden;animation:ad-reveal 0s 4s forwards}}@keyframes ad-reveal{to{visibility:visible}}</style>`,
   ].filter(Boolean).join('\n');
 }

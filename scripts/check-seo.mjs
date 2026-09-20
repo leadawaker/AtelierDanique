@@ -17,6 +17,7 @@ for (const lang of LANGS) {
     assert.ok(html.includes(`<link rel="canonical" href="${SITE}${path}">`), where + ': canonical');
     assert.equal((html.match(/hreflang=/g) || []).length, 4, where + ': 3 hreflang + x-default');
     assert.ok(html.includes('<div id="root" data-ssr><'), where + ': root has rendered markup');
+    assert.ok(html.includes('ad-reveal'), where + ': reveal fallback for the hidden SSR markup');
     assert.ok(html.includes('window.__AD_CONTENT__='), where + ': inlined content');
     const ld = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     assert.ok(ld, where + ': JSON-LD present');
