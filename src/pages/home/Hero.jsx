@@ -33,6 +33,16 @@ function PhoneBackground() {
   );
 }
 
+// Phones: a cut-out paint palette laid over the corner of the background photo.
+// It hangs PALETTE_DROP px below the hero, onto the gallery.
+const PALETTE_DROP = 130;
+function PhonePalette() {
+  return (
+    <img src="/uploads/hero-phone-palette.webp" alt="" aria-hidden="true" width="768" height="1366" decoding="async"
+      style={s('position:absolute;right:0;bottom:-' + PALETTE_DROP + 'px;width:min(100%,480px);height:auto;pointer-events:none;z-index:1')} />
+  );
+}
+
 function HeroText({ t, lang, compact, links, content }) {
   const spots = heroSpots(t, sitePricing(content));
   const igStyle = 'display:flex;align-items:center;gap:10px;border:1px solid #E36B54;color:#455459;padding:16px 26px;font-size:15px;border-radius:2px;transition:border-color .25s,color .25s,background .25s;'
@@ -71,14 +81,14 @@ export default function Hero(props) {
 
   if (!split) {
     return (
-      <section style={s('position:relative;background:#F1EFE8;overflow:hidden')}>
-        {compact ? <PhoneBackground /> : (
+      <section style={s('position:relative;background:#F1EFE8;' + (compact ? 'z-index:2' : 'overflow:hidden'))}>
+        {compact ? <><PhoneBackground /><PhonePalette /></> : (
           <>
             <div style={s('position:absolute;inset:0')}>{slot}</div>
             <div style={s(veilStyle())}></div>
           </>
         )}
-        <div data-reveal="" style={s('position:relative;max-width:1400px;margin:0 auto;min-height:min(72vh,640px);' + TEXT_PAD + ';display:flex;flex-direction:column;justify-content:center;gap:26px')}>
+        <div data-reveal="" style={s('position:relative;z-index:2;max-width:1400px;margin:0 auto;min-height:min(72vh,640px);' + TEXT_PAD + ';display:flex;flex-direction:column;justify-content:center;gap:26px')}>
           <HeroText {...props} />
         </div>
       </section>
