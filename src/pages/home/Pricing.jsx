@@ -78,14 +78,14 @@ function LaunchBanner({ banner, compact }) {
   );
 }
 
-function PriceCard({ slotId, src, focus, placeholder, size, dims, desc, price, label, badge }) {
+function PriceCard({ slotId, src, focus, placeholder, alt, size, dims, desc, price, label, badge }) {
   return (
     <div style={s('background:#FFFFFF;border:1px solid ' + (badge ? '#E36B54' : '#EAE4DA') + ';border-radius:10px;box-shadow:0 10px 30px rgba(38,69,79,.08);padding:clamp(24px,3vw,32px);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative')}>
       {badge ? (
         <span style={s('position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:' + CORAL + ';color:#FCFAF6;padding:7px 18px;border-radius:999px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap')}>{badge}</span>
       ) : null}
       <div style={s(PHOTO_BOX)}>
-        <Slot slotId={slotId} src={src} focus={focus} placeholder={placeholder} />
+        <Slot slotId={slotId} src={src} focus={focus} placeholder={placeholder} alt={alt} />
       </div>
       <h3 style={s("margin:22px 0 0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(30px,3vw,36px);line-height:1;color:#26454F")}>{size}</h3>
       <p style={s('margin:10px 0 0;font-size:13px;letter-spacing:.14em;color:#5E6C71')}>{dims}</p>
@@ -117,9 +117,9 @@ export default function Pricing({ t, lang, content, compact }) {
         {banner ? <LaunchBanner banner={banner} compact={compact} /> : null}
 
         <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,2.6vw,36px);max-width:1000px;margin:0 auto clamp(32px,4vw,48px)')}>
-          <PriceCard slotId="ad-price-a5" src="/uploads/a5-sheet.jpg" placeholder="A5 paper photo"
+          <PriceCard slotId="ad-price-a5" src="/uploads/a5-sheet.jpg" placeholder="A5 paper photo" alt={t.sheetAlt.replace('{size}', 'A5')}
             size="A5" dims="148 × 210 mm" desc={t.priceDescA5} price={formatMoney(pricing.a5[currency], currency)} label={label} />
-          <PriceCard slotId="ad-price-a4" src="/uploads/a4-sheet.jpg" focus={A4_PHOTO_FOCUS} placeholder="A4 paper photo"
+          <PriceCard slotId="ad-price-a4" src="/uploads/a4-sheet.jpg" focus={A4_PHOTO_FOCUS} placeholder="A4 paper photo" alt={t.sheetAlt.replace('{size}', 'A4')}
             size="A4" dims="210 × 297 mm" desc={t.priceDescA4} price={formatMoney(pricing.a4[currency], currency)} label={label} badge={t.popularLabel} />
         </div>
 

@@ -38,7 +38,7 @@ export default function Process({ t }) {
           {STEPS.map((step) => (
             <li key={step.key} className={'proc-step' + (step.current ? ' proc-step-current' : '')}>
               <div className="proc-art" style={{ ...(step.plain ? { mixBlendMode: 'normal' } : {}), ...(step.cut !== undefined ? { clipPath: 'inset(-100% -100% ' + step.cut + '% -100%)' } : {}) }}>
-                <Slot slotId={step.slotId} src={step.src} focus={step.focus} placeholder={'Photo for step ' + step.key} style={{ background: 'transparent', ...(step.brightness ? { filter: 'brightness(' + step.brightness + ')' } : {}), ...(step.transform ? { transform: step.transform } : {}) }} />
+                <Slot slotId={step.slotId} src={step.src} focus={step.focus} placeholder={'Photo for step ' + step.key} alt={t['step' + step.key + 'T']} style={{ background: 'transparent', ...(step.brightness ? { filter: 'brightness(' + step.brightness + ')' } : {}), ...(step.transform ? { transform: step.transform } : {}) }} />
               </div>
               <div className="proc-badge-row">
                 <span className="proc-badge">{'0' + step.key}</span>

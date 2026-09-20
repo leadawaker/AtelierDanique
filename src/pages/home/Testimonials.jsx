@@ -36,6 +36,7 @@ export default function Testimonials({ t, lang, compact, content }) {
         <div data-noscrollbar="" style={s(gridStyle(compact))}>
           {items.map((item, i) => (
             <Card
+              t={t}
               key={item.slotId}
               item={item}
               style={cardStyle(compact, items.length)}
@@ -52,7 +53,7 @@ export default function Testimonials({ t, lang, compact, content }) {
   );
 }
 
-function Card({ item, style, hovered, onToggle, onEnter, onLeave }) {
+function Card({ t, item, style, hovered, onToggle, onEnter, onLeave }) {
   const avatar = usePhoto(item.avatarSlotId, item.avatar || undefined);
   const painting = usePhoto(item.slotId);
   const frame = PAINTING_FRAMES[item.slotId];
@@ -76,7 +77,7 @@ function Card({ item, style, hovered, onToggle, onEnter, onLeave }) {
       style={s(style)}
     >
       <div className="tm-art">
-        <Slot slotId={item.slotId} photo={framed} placeholder="Photo of the client or their piece" />
+        <Slot slotId={item.slotId} photo={framed} placeholder="Photo of the client or their piece" alt={item.name ? t.tmPhotoAlt + ' ' + item.name : ''} />
       </div>
       <div className="tm-gap" aria-hidden="true"></div>
       <figcaption className="tm-panel">
