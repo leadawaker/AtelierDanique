@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { s } from '../../../lib/css.js';
 
 // Small building blocks for the Stats tab: a number tile, a bar chart
@@ -15,26 +16,38 @@ export function Tile({ label, value }) {
   );
 }
 
-const CHART_H = 90;
+const CHART_H = 76;
+const COL_W = 28;
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-// One bar per day, height proportional to that day's visits. The bars share
-// the box width; with many days they keep a minimum width and the box scrolls.
-// A native title gives the hover with the date and count. `caption` says what
-// the chart shows, in plain words.
+// One column per day: the day's visit count on top, a bar proportional to it,
+// and the date underneath (day of the month, with the month name on the 1st
+// and on the first column). Every column keeps a minimum width so the numbers
+// stay readable; with many days the box scrolls sideways and starts at the
+// latest day. `caption` says what the chart shows, in plain words.
 export function DailyBars({ days, caption }) {
   const list = days || [];
   const max = Math.max(1, ...list.map((d) => d.visits || 0));
-  const gap = list.length > 40 ? 2 : 4;
+  const scroller = useRef(null);
+  useEffect(() => { const el = scroller.current; if (el) el.scrollLeft = el.scrollWidth; }, [list.length]);
   return (
     <div style={s(PANEL)}>
-      <div style={s('overflow-x:auto')}>
+      <div ref={scroller} style={s('overflow-x:auto;padding-bottom:2px')}>
         <div role="img" aria-label={caption || 'Visits per day'}
-          style={s('display:flex;align-items:flex-end;gap:' + gap + 'px;height:' + CHART_H + 'px;min-width:' + list.length * (4 + gap) + 'px')}>
-          {list.map((d) => {
-            const h = Math.max(2, Math.round(((d.visits || 0) / max) * (CHART_H - 14)));
+          style={s('display:flex;align-items:flex-end;gap:2px;min-width:' + list.length * (COL_W + 2) + 'px')}>
+          {list.map((d, i) => {
+            const n = d.visits || 0;
+            const h = n ? Math.max(3, Math.round((n / max) * CHART_H)) : 2;
+            const day = Number(d.date.slice(8, 10));
+            const month = i === 0 || day === 1 ? MONTHS[Number(d.date.slice(5, 7)) - 1] : '';
             return (
-              <div key={d.date} title={d.date + ': ' + (d.visits || 0) + (d.visits === 1 ? ' visit' : ' visits')}
-                style={s('flex:1 1 0;min-width:4px;background:#E36B54;border-radius:3px 3px 0 0;height:' + h + 'px')} />
+              <div key={d.date} title={d.date + ': ' + n + (n === 1 ? ' visit' : ' visits')}
+                style={s('flex:1 0 ' + COL_W + 'px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end')}>
+                <span style={s('font-size:11px;line-height:14px;color:' + (n ? '#455459' : '#B5BDC0'))}>{n}</span>
+                <div style={s('width:70%;max-width:32px;background:' + (n ? '#E36B54' : '#E2DED4') + ';border-radius:3px 3px 0 0;height:' + h + 'px')} />
+                <span style={s('margin-top:4px;font-size:10px;line-height:12px;color:#85949A')}>{day}</span>
+                <span style={s('font-size:9px;line-height:11px;height:11px;color:#85949A')}>{month}</span>
+              </div>
             );
           })}
         </div>

@@ -152,12 +152,14 @@ function Manager({ lang, onSignedOut }) {
 
         <SaveIndicator status={status} />
 
+        {tab === 'photos' && (
         <p style={s('margin:18px 0 30px;max-width:64ch;font-size:15px;line-height:1.8;color:#455459;font-weight:300;text-wrap:pretty')}>
           Drop a photo onto any frame to replace what is on the website, then drag the photo to move it inside the frame. Every change here saves on its own, there is no Save button. Visitors can only look: nothing on the website can be changed from their side.
         </p>
+        )}
 
         <nav role="tablist" aria-label="Website manager sections" data-noscrollbar
-          style={s('display:flex;gap:clamp(18px,3vw,34px);overflow-x:auto;scrollbar-width:none;border-bottom:1px solid #DDD9CF;margin-bottom:clamp(26px,4vw,40px)')}>
+          style={s('display:flex;gap:clamp(18px,3vw,34px);overflow-x:auto;scrollbar-width:none;border-bottom:1px solid #DDD9CF;margin-bottom:clamp(26px,4vw,40px)' + (tab === 'photos' ? '' : ';margin-top:22px'))}>
           {TABS.map((t) => {
             const on = t.id === tab;
             return (
