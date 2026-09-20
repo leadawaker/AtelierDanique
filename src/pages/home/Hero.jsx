@@ -36,7 +36,7 @@ function PhoneBackground() {
 function HeroText({ t, lang, compact, links, content }) {
   const spots = heroSpots(t, sitePricing(content));
   const igStyle = 'display:flex;align-items:center;gap:10px;border:1px solid #E36B54;color:#455459;padding:16px 26px;font-size:15px;border-radius:2px;transition:border-color .25s,color .25s,background .25s;'
-    + (compact ? 'background:#FCFAF6' : 'background:transparent');
+    + (compact ? 'background:#F6F1E6' : 'background:transparent');
   return (
     <>
       <p style={s('margin:0;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#85949A')}>{t.heroEyebrow}</p>
@@ -44,21 +44,21 @@ function HeroText({ t, lang, compact, links, content }) {
         {t.heroT1}<br />{t.heroT2}{' '}
         <em style={s('font-style:italic;color:#E36B54;text-decoration:underline;text-decoration-color:#EAC66B;text-decoration-thickness:2px;text-underline-offset:.06em')}>{t.heroT3}</em>
       </h1>
-      <p style={s('margin:0;max-width:40ch;font-size:17px;line-height:1.75;color:#3B4C52;font-weight:300;text-wrap:pretty')}>{t.heroBody}</p>
+      <p style={s('margin:0;max-width:' + (compact ? '29ch' : '40ch') + ';font-size:17px;line-height:1.75;color:#3B4C52;font-weight:300;text-wrap:pretty')}>{t.heroBody}</p>
       <div style={s('display:flex;flex-direction:column;gap:14px')}>
+        <div style={s('display:flex;gap:14px;align-items:center;flex-wrap:wrap')}>
+          <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;letter-spacing:.01em;transition:background .25s')}>{t.ctaCommission}</a>
+          <a href={links.instagramUrl} target="_blank" rel="noopener" className="h-ig-outline" style={s(igStyle)}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+            <span>Instagram</span>
+          </a>
+        </div>
         {spots ? (
           <p style={s('margin:0;display:flex;align-items:center;gap:10px;font-size:14px;letter-spacing:.02em;color:#C0503B')}>
             <span aria-hidden="true" style={s('width:6px;height:6px;border-radius:50%;background:#E36B54;flex-shrink:0')}></span>
             {spots}
           </p>
         ) : null}
-        <div style={s('display:flex;gap:14px;align-items:center;flex-wrap:wrap')}>
-          <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;letter-spacing:.01em;transition:background .25s')}>{t.ctaCommission}{'  →'}</a>
-          <a href={links.instagramUrl} target="_blank" rel="noopener" className="h-ig-outline" style={s(igStyle)}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
-            <span>Instagram</span>
-          </a>
-        </div>
       </div>
     </>
   );

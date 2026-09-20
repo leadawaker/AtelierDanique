@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { s } from '../../../lib/css.js';
 import { A4_PHOTO_FOCUS } from '../../../lib/pricing.js';
+import { CUTOUT_SLOT, CUTOUT_SRC } from '../../../lib/ctaCutout.js';
 import { parseVideo } from '../../../lib/video.js';
 import EditableSlot from '../EditableSlot.jsx';
 import InstagramPanel from '../InstagramPanel.jsx';
@@ -18,6 +19,7 @@ const SITE_PHOTOS = [
   { slotId: 'ad-process-2', name: 'How it works, step 2', where: 'Above "Send your photo".', src: '/uploads/Project%20(20260919072918).webp', ratio: '5/4' },
   { slotId: 'ad-process-3', name: 'How it works, step 3', where: 'Above "I create your artwork" (the highlighted step).', src: '/uploads/Project%20(20260919072504).webp', ratio: '5/4' },
   { slotId: 'ad-process-4', name: 'How it works, step 4', where: 'Above "Receive your artwork".', src: '/uploads/file_00000000d5b881f4a2eaa6c6bb25ef66.webp', ratio: '5/4' },
+  { slotId: CUTOUT_SLOT, name: 'Cut-out of Danique (phones)', where: 'Bottom call to action on phones, standing on the teal. Use a cut-out with a transparent background (PNG or WebP), a normal photo shows as a rectangle.', src: CUTOUT_SRC, ratio: '3/4', transparent: true, bg: '#26454F' },
   { slotId: 'ad-about-portrait', name: 'Portrait of Danique', where: 'The About section near the footer.', src: '/uploads/danique.jpg', ratio: '3/4' },
 ];
 
@@ -48,8 +50,8 @@ function SitePhotos({ photos, onChange }) {
       <div style={s('display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:clamp(18px,2.4vw,28px)')}>
         {SITE_PHOTOS.map((p) => (
           <div key={p.slotId} style={s('display:flex;flex-direction:column;gap:12px;' + PANEL)}>
-            <div style={s('position:relative;aspect-ratio:' + p.ratio + ';border-radius:6px;overflow:hidden;background:#E3E1D8')}>
-              <EditableSlot slotId={p.slotId} src={p.src || undefined} focus={p.focus} placeholder="Drop a new photo" radius={6} photos={photos} onChange={onChange} croppable />
+            <div style={s('position:relative;aspect-ratio:' + p.ratio + ';border-radius:6px;overflow:hidden;background:' + (p.bg || '#E3E1D8'))}>
+              <EditableSlot slotId={p.slotId} src={p.src || undefined} focus={p.focus} placeholder="Drop a new photo" radius={6} photos={photos} onChange={onChange} croppable transparent={!!p.transparent} />
             </div>
             <div>
               <p style={s('margin:0 0 4px;font-size:15px;line-height:1.3')}>{p.name}</p>

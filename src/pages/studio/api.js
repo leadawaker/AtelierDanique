@@ -114,15 +114,16 @@ export async function requestRebuild() {
 // ---- Photo upload: shrink in the browser, then upload straight to Blob ----
 
 // Returns the public URL of the uploaded photo.
-export async function uploadPhoto(file, slotId) {
-  const small = await shrinkImage(file);
+// `keepAlpha` keeps a cut-out picture's transparency (see shrinkImage).
+export async function uploadPhoto(file, slotId, keepAlpha = false) {
+  const small = await shrinkImage(file, keepAlpha ? 2000 : 2400, 0.88, keepAlpha);
   const body = small || file;
-  const ext = small ? 'jpg' : (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const ext = small ? (small.type === 'image/webp' ? 'webp' : small.type === 'image/png' ? 'png' : 'jpg') : (file.name.split('.').pop() || 'jpg').toLowerCase();
   const safeSlot = String(slotId).replace(/[^\w-]/g, '');
   const result = await upload('photos/' + safeSlot + '.' + ext, body, {
     access: 'public',
     handleUploadUrl: '/api/upload',
-    contentType: small ? 'image/jpeg' : file.type || undefined,
+    contentType: small ? small.type : file.type || undefined,
   });
   return result.url;
 }

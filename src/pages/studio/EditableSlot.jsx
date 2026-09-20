@@ -15,8 +15,9 @@ import CropDialog from './CropDialog.jsx';
 // Props: slotId, src (built-in default), focus (its focal point), placeholder, radius, photos
 // (current ad-photos), onChange(nextPhotos), compact (small frames: one
 // "Change" button below the frame instead of controls over it), croppable
-// (adds a "Crop" button that cuts the upload down, see lib/photos.js).
-export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a photo here', radius = 0, photos, onChange, compact = false, croppable = false }) {
+// (adds a "Crop" button that cuts the upload down, see lib/photos.js), transparent
+// (a cut-out picture: uploads keep their transparency and the frame shows through).
+export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a photo here', radius = 0, photos, onChange, compact = false, croppable = false, transparent = false }) {
   const inherited = useContext(PhotosContext);
   const all = photos || inherited || {};
   const photo = resolvePhoto(all, slotId, src, focus);
@@ -41,7 +42,7 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
     if (!file || !/^image\//.test(file.type || 'image/')) { setError('That file is not a photo.'); return; }
     setBusy(true); setError('');
     try {
-      const url = await uploadPhoto(file, slotId);
+      const url = await uploadPhoto(file, slotId, transparent);
       commit({ url, s: 1, fx: 0.5, fy: 0.5 });
     } catch (e) {
       setError('The upload did not work. Please try again.');
@@ -120,7 +121,7 @@ export default function EditableSlot({ slotId, src, focus, placeholder = 'Drop a
         onClick={() => { if (!photo && !busy) inputRef.current.click(); }}
         title={photo ? 'Drag to move the photo inside the frame' : 'Click or drop a photo'}
       >
-        <Slot slotId={slotId} src={src} placeholder={placeholder} radius={radius} photo={shown} />
+        <Slot slotId={slotId} src={src} placeholder={placeholder} radius={radius} photo={shown} style={transparent ? { background: 'transparent' } : undefined} />
         <RatioProbe url={photo && photo.url} onRatio={(r) => { imgRatio.current = r; }} />
         {(over || busy) && (
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(38,69,79,.55)', color: '#FCFAF6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, textAlign: 'center', padding: 12 }}>

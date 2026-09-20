@@ -135,7 +135,7 @@ export default function Pricing({ t, lang, content, compact }) {
           </div>
         </div>
         <div style={s('display:flex;justify-content:center;margin-top:clamp(32px,4vw,48px)')}>
-          <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;transition:background .25s')}>{t.ctaCommission}{'  '}→</a>
+          <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;transition:background .25s')}>{t.ctaCommission}</a>
         </div>
       </div>
     </section>

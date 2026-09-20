@@ -156,11 +156,11 @@ export default function CommissionForm({ t, lang, content }) {
         <div style={s('display:flex;align-items:center;gap:14px;flex-wrap:wrap')}>
           <button type="submit" value="email" disabled={sending} className="h-bg-coral-dark"
             style={s(BUTTON + 'background:#E36B54;color:#FCFAF6;border:1px solid #E36B54' + (sending ? ';opacity:.7;cursor:wait' : ''))}>
-            {sending ? t.fSending : t.fSubmitEmail + '  →'}
+            {sending ? t.fSending : t.fSubmitEmail}
           </button>
           <button type="submit" value="whatsapp" disabled={sending} className="h-fill-coral"
             style={s(BUTTON + 'background:transparent;color:#26454F;border:1px solid #CDBCA4')}>
-            {t.fSubmit}{'  →'}
+            {t.fSubmit}
           </button>
         </div>
         {error && <p role="alert" style={s('margin:0;font-size:14px;color:#C0503B;line-height:1.6')}>{error}</p>}
