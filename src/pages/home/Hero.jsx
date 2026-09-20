@@ -44,7 +44,7 @@ function HeroText({ t, lang, compact, links, content }) {
         {t.heroT1}<br />{t.heroT2}{' '}
         <em style={s('font-style:italic;color:#E36B54;text-decoration:underline;text-decoration-color:#EAC66B;text-decoration-thickness:2px;text-underline-offset:.06em')}>{t.heroT3}</em>
       </h1>
-      <p style={s('margin:0;max-width:' + (compact ? '29ch' : '40ch') + ';font-size:17px;line-height:1.75;color:#3B4C52;font-weight:300;text-wrap:pretty')}>{t.heroBody}</p>
+      <p style={s('margin:0;max-width:' + (compact ? '30ch' : '40ch') + ';font-size:17px;line-height:1.75;color:#3B4C52;font-weight:300;text-wrap:pretty')}>{t.heroBody}</p>
       <div style={s('display:flex;flex-direction:column;gap:14px')}>
         <div style={s('display:flex;gap:14px;align-items:center;flex-wrap:wrap')}>
           <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;letter-spacing:.01em;transition:background .25s')}>{t.ctaCommission}</a>

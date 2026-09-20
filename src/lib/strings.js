@@ -6,7 +6,7 @@ export const STRINGS = {
   en: {
     navHome: 'Home', navGallery: 'Gallery', navProcess: 'How it works', navPricing: 'Pricing', navTestimonials: 'Testimonials', navFaq: 'FAQ', navAbout: 'About',
     heroEyebrow: 'Hand-painted watercolour & ink', heroAlt: 'Watercolour painting by Danique', heroSpots: 'Launch prices · {left} of {total} spots remaining', heroT1: 'Real moments.', heroT2: 'Lasting', heroT3: 'forever.',
-    heroBody: 'I create custom, hand-crafted artworks from your photos, turning the people and moments you love into timeless pieces for your home.',
+    heroBody: 'I turn your favourite moments into timeless, hand-painted artworks.',
     ctaCommission: 'Commission your piece',
     meetEyebrow: 'IN HER OWN WORDS', meetTitle: 'Meet Danique', watch: 'Meet Danique', waPrefill: 'Hi Danique!',
     tagline: 'Real moments. Real art. Real people.',
