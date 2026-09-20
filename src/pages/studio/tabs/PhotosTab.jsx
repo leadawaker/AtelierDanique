@@ -49,7 +49,7 @@ function SitePhotos({ photos, onChange }) {
         {SITE_PHOTOS.map((p) => (
           <div key={p.slotId} style={s('display:flex;flex-direction:column;gap:12px;' + PANEL)}>
             <div style={s('position:relative;aspect-ratio:' + p.ratio + ';border-radius:6px;overflow:hidden;background:#E3E1D8')}>
-              <EditableSlot slotId={p.slotId} src={p.src || undefined} focus={p.focus} placeholder="Drop a new photo" radius={6} photos={photos} onChange={onChange} />
+              <EditableSlot slotId={p.slotId} src={p.src || undefined} focus={p.focus} placeholder="Drop a new photo" radius={6} photos={photos} onChange={onChange} croppable />
             </div>
             <div>
               <p style={s('margin:0 0 4px;font-size:15px;line-height:1.3')}>{p.name}</p>

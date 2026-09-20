@@ -53,10 +53,18 @@ input, textarea, select, button { font-family: inherit; font-size: inherit; colo
   .proc-art { max-width: 300px; }
 }
 
-/* Bottom call to action: the grid stacks below 640px. Photo of Danique goes
-   under the text there, and stays on the left beside it on wider screens. */
+/* Bottom call to action: the grid stacks below 640px. There the framed photo
+   of Danique gives way to a cut-out of her standing on the teal, right down to
+   the footer. Wider screens keep the framed photo on the left. The text and buttons
+   are centred on phones. */
+.cta-cutout { display: none; }
+.cta-btn { align-self: flex-start; }
 @media (max-width: 639px) {
-  .cta-photo { order: 1; }
+  .cta-text { align-items: center; text-align: center; }
+  .cta-btn { align-self: center; }
+  .cta-links { justify-content: center; }
+  .cta-photo { display: none; }
+  .cta-cutout { display: flex; align-items: flex-end; justify-content: center; margin-top: -56px; pointer-events: none; }
 }
 
 /* Testimonials: painting behind a frosted cream panel. The panel is nearly
