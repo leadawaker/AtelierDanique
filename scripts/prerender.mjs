@@ -17,6 +17,8 @@ async function liveContent() {
     if (!res.ok) throw new Error('status ' + res.status);
     return await res.json();
   } catch (e) {
+    // On Vercel, fail the build so the previous deployment stays live instead of publishing default content for a day.
+    if (process.env.VERCEL) throw e;
     console.warn('prerender: could not load live content, using defaults (' + e.message + ')');
     return {};
   }

@@ -20,7 +20,7 @@ function currentAmsterdamHour() {
 // - The "Refresh Instagram" button on /edit (studio session cookie), any hour.
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
-  const cron = req.headers.authorization === `Bearer ${process.env.CRON_SECRET}`;
+  const cron = !!process.env.CRON_SECRET && req.headers.authorization === `Bearer ${process.env.CRON_SECRET}`;
   const studio = !cron && isAuthed(req);
   if (!cron && !studio) {
     return res.status(401).json({ error: "Unauthorized" });

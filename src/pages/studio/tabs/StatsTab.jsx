@@ -129,7 +129,7 @@ export default function StatsTab() {
             <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:14px;margin-bottom:24px')}>
               <Tile label="Seen in Google" value={fmt(search.totals?.impressions)} />
               <Tile label="Clicked" value={fmt(search.totals?.clicks)} />
-              <Tile label="Average position" value={search.totals?.position == null ? '—' : (Math.round(search.totals.position * 10) / 10).toString()} />
+              <Tile label="Average position" value={search.totals?.position == null ? '-' : (Math.round(search.totals.position * 10) / 10).toString()} />
             </div>
             <RankedList title="What people searched" items={(search.queries || []).slice(0, 6).map((q) => ({ label: q.query, value: q.clicks }))} />
           </>

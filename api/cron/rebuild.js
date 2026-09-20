@@ -7,7 +7,7 @@ import { isAuthed } from "../_lib/session.js";
 // at most once every 10 minutes.
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
-  const cron = req.headers.authorization === `Bearer ${process.env.CRON_SECRET}`;
+  const cron = !!process.env.CRON_SECRET && req.headers.authorization === `Bearer ${process.env.CRON_SECRET}`;
   if (!cron && !isAuthed(req)) return res.status(401).json({ error: "Unauthorized" });
   if (!process.env.DEPLOY_HOOK_URL) return res.status(500).json({ error: "DEPLOY_HOOK_URL is not set" });
   if (!cron) {
