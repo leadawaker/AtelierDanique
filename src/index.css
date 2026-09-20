@@ -57,6 +57,13 @@ input, textarea, select, button { font-family: inherit; font-size: inherit; colo
    of Danique gives way to a cut-out of her standing on the teal, right down to
    the footer. Wider screens keep the framed photo on the left. The text and buttons
    are centred on phones. */
+/* The hero palette tracks the background photo's own scale, so past phone
+   widths (where the photo is blown up to cover a wide frame) it would swamp
+   the page. Phones only. */
+@media (min-width: 701px) {
+  .hero-palette { display: none; }
+}
+
 .cta-cutout { display: none; }
 .cta-btn { align-self: flex-start; }
 @media (max-width: 639px) {

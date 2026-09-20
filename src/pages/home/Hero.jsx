@@ -2,7 +2,7 @@ import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
 import { heroSpots, sitePricing } from '../../lib/pricing.js';
 import { pathFor } from '../../lib/routes.js';
-import { HERO_PHONE_DEFAULT, HERO_PHONE_SLOT } from '../../lib/heroPhone.js';
+import PhoneHeroArt from './PhoneHeroArt.jsx';
 import { HERO_VEIL } from './settings.js';
 
 const BANNER_SRC = '/uploads/Project%20(20260915100023).jpg';
@@ -24,29 +24,10 @@ function veilStyle() {
     + 'rgba(252,250,246,0) ' + reach.toFixed(1) + '%)';
 }
 
-// Phones: the studio-chosen background behind the hero text, in place of cream.
-function PhoneBackground() {
-  return (
-    <div style={s('position:absolute;inset:0')}>
-      <Slot slotId={HERO_PHONE_SLOT} src={HERO_PHONE_DEFAULT} alt="" />
-    </div>
-  );
-}
-
-// Phones: a cut-out paint palette laid over the corner of the background photo.
-// It hangs PALETTE_DROP px below the hero, onto the gallery.
-const PALETTE_DROP = 135;
-function PhonePalette() {
-  return (
-    <img src="/uploads/hero-phone-palette.webp" alt="" aria-hidden="true" width="768" height="1366" decoding="async"
-      style={s('position:absolute;right:0;bottom:-' + PALETTE_DROP + 'px;width:min(100%,480px);height:auto;pointer-events:none;z-index:1')} />
-  );
-}
-
 function HeroText({ t, lang, compact, links, content }) {
   const spots = heroSpots(t, sitePricing(content));
   const igStyle = 'display:flex;align-items:center;gap:10px;border:1px solid #E36B54;color:#455459;padding:16px 26px;font-size:15px;border-radius:2px;transition:border-color .25s,color .25s,background .25s;'
-    + (compact ? 'background:#EAE2D7' : 'background:transparent');
+    + (compact ? 'background:#F3EDE4' : 'background:transparent');
   return (
     <>
       <p style={s('margin:0;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#85949A')}>{t.heroEyebrow}</p>
@@ -82,7 +63,7 @@ export default function Hero(props) {
   if (!split) {
     return (
       <section style={s('position:relative;background:#F1EFE8;' + (compact ? 'z-index:2' : 'overflow:hidden'))}>
-        {compact ? <><PhoneBackground /><PhonePalette /></> : (
+        {compact ? <PhoneHeroArt palette /> : (
           <>
             <div style={s('position:absolute;inset:0')}>{slot}</div>
             <div style={s(veilStyle())}></div>
@@ -101,7 +82,7 @@ export default function Hero(props) {
     return (
       <section style={s('position:relative;background:#F1EFE8;overflow:hidden')}>
         <div style={s('position:relative')}>
-          <PhoneBackground />
+          <PhoneHeroArt />
           <div data-reveal="" style={s('position:relative;' + TEXT_PAD + ';display:flex;flex-direction:column;justify-content:center;gap:26px')}>
             <HeroText {...props} />
           </div>
