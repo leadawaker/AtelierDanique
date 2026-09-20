@@ -29,11 +29,21 @@ export function sourceOf(referrer, tag) {
 export default async function handler(req, res) {
   if (req.method !== "POST") { res.setHeader("Allow", "POST"); return res.status(405).end(); }
   res.setHeader("Cache-Control", "no-store");
-  // Bots and Danique's own visits (studio cookie) are not counted.
-  if (BOT.test(req.headers["user-agent"] || "") || isAuthed(req)) return res.status(204).end();
+  // A counter must never break the page: any failure here still answers 204.
+  try {
+    // Bots and Danique's own visits (studio cookie) are not counted.
+    if (BOT.test(req.headers["user-agent"] || "") || isAuthed(req)) return res.status(204).end();
+    await count(req);
+  } catch (e) {
+    console.error("track failed:", e);
+  }
+  return res.status(204).end();
+}
+
+async function count(req) {
   const b = jsonBody(req) || {};
   const path = typeof b.p === "string" && PATHS.has(b.p) ? b.p : null;
-  if (!path) return res.status(204).end();
+  if (!path) return;
   const lang = ["nl", "en", "pt"].includes(b.l) ? b.l : "other";
   const raw = req.headers["x-vercel-ip-country"];
   const country = typeof raw === "string" && /^[A-Z]{2}$/i.test(raw) ? raw.toUpperCase() : "??";
@@ -50,5 +60,4 @@ export default async function handler(req, res) {
   p.hincrby(key, "l:" + lang, 1);
   p.expire(key, 60 * 60 * 24 * 400);
   await p.exec();
-  return res.status(204).end();
 }
