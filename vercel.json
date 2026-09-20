@@ -17,12 +17,6 @@
     { "source": "/:page(commission|privacy|terms)", "has": [{ "type": "header", "key": "x-vercel-ip-country", "value": "BR|PT" }], "destination": "/pt/:page", "permanent": false },
     { "source": "/:page(commission|privacy|terms)", "destination": "/en/:page", "permanent": false }
   ],
-  "rewrites": [
-    { "source": "/:lang(nl|en|pt)", "destination": "/index.html" },
-    { "source": "/:lang(nl|en|pt)/:page(commission|privacy|terms)", "destination": "/index.html" },
-    { "source": "/login", "destination": "/index.html" },
-    { "source": "/edit", "destination": "/index.html" }
-  ],
   "headers": [
     {
       "source": "/edit",

@@ -34,6 +34,11 @@ for (const lang of LANGS) {
     if (page === '') assert.ok(html.includes(STRINGS[lang].faq[0].q.replace(/'/g, '&#x27;')) || html.includes(STRINGS[lang].faq[0].q), where + ': FAQ text in HTML');
   }
 }
+// The studio pages are real files (no rewrite reaches them under cleanUrls).
+for (const studio of ['login', 'edit']) {
+  const html = await readFile(`dist/${studio}.html`, 'utf8');
+  assert.ok(html.includes('<div id="root"></div>'), `dist/${studio}.html: plain client-rendered shell`);
+}
 const sitemap = await readFile('dist/sitemap.xml', 'utf8');
 assert.equal((sitemap.match(/<loc>/g) || []).length, 12, 'sitemap has 12 urls');
 assert.ok((await readFile('dist/robots.txt', 'utf8')).includes('Sitemap: ' + SITE + '/sitemap.xml'), 'robots.txt sitemap line');

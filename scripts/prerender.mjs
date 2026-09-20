@@ -51,6 +51,11 @@ for (const lang of LANGS) {
 }
 // Unknown addresses: the English home page, marked noindex, served with a 404.
 await write('dist/404.html', page('en', '', await render('/en', content), { ssr: false, noindex: true }));
+// The studio is a plain client-rendered page. cleanUrls does not accept a
+// rewrite to /index.html, so /login and /edit are real files (the unmarked
+// shell, which main.jsx renders with createRoot).
+await write('dist/login.html', template);
+await write('dist/edit.html', template);
 await write('dist/sitemap.xml', sitemapXml());
 await write('dist/robots.txt', robotsTxt());
 await write('dist/llms.txt', llmsTxt(content));
