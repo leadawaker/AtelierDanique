@@ -35,7 +35,7 @@ function PhoneBackground() {
 
 // Phones: a cut-out paint palette laid over the corner of the background photo.
 // It hangs PALETTE_DROP px below the hero, onto the gallery.
-const PALETTE_DROP = 130;
+const PALETTE_DROP = 150;
 function PhonePalette() {
   return (
     <img src="/uploads/hero-phone-palette.webp" alt="" aria-hidden="true" width="768" height="1366" decoding="async"
@@ -56,6 +56,12 @@ function HeroText({ t, lang, compact, links, content }) {
       </h1>
       <p style={s('margin:0;max-width:' + (compact ? '30ch' : '40ch') + ';font-size:17px;line-height:1.75;color:#3B4C52;font-weight:300;text-wrap:pretty')}>{t.heroBody}</p>
       <div style={s('display:flex;flex-direction:column;gap:14px')}>
+        {spots ? (
+          <p style={s('margin:0;display:flex;align-items:center;gap:10px;font-size:14px;letter-spacing:.02em;color:#C0503B')}>
+            <span aria-hidden="true" style={s('width:6px;height:6px;border-radius:50%;background:#E36B54;flex-shrink:0')}></span>
+            {spots}
+          </p>
+        ) : null}
         <div style={s('display:flex;gap:14px;align-items:center;flex-wrap:wrap')}>
           <a href={pathFor(lang, 'commission')} className="h-bg-coral-dark" style={s('background:#E36B54;color:#FCFAF6;padding:17px 32px;font-size:15px;border-radius:2px;letter-spacing:.01em;transition:background .25s')}>{t.ctaCommission}</a>
           <a href={links.instagramUrl} target="_blank" rel="noopener" className="h-ig-outline" style={s(igStyle)}>
@@ -63,12 +69,6 @@ function HeroText({ t, lang, compact, links, content }) {
             <span>Instagram</span>
           </a>
         </div>
-        {spots ? (
-          <p style={s('margin:0;display:flex;align-items:center;gap:10px;font-size:14px;letter-spacing:.02em;color:#C0503B')}>
-            <span aria-hidden="true" style={s('width:6px;height:6px;border-radius:50%;background:#E36B54;flex-shrink:0')}></span>
-            {spots}
-          </p>
-        ) : null}
       </div>
     </>
   );
