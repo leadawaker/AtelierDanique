@@ -4,11 +4,9 @@
 // live API, so what crawlers see matches the site as of this build.
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { dirname } from 'node:path';
+import { LANGS, PAGES, HTML_LANG } from '../src/lib/routes.js';
 import { render, headFor, sitemapXml, robotsTxt, llmsTxt } from '../dist-ssr/entry-server.js';
 
-const LANGS = ['nl', 'en', 'pt'];
-const PAGES = ['', 'commission', 'privacy', 'terms'];
-const HTML_LANG = { nl: 'nl', en: 'en', pt: 'pt-BR' };
 const CONTENT_URL = process.env.SITE_CONTENT_URL || 'https://www.atelierdanique.com/api/content?fresh=1';
 
 async function liveContent() {
@@ -28,13 +26,15 @@ const template = await readFile('dist/index.html', 'utf8');
 const content = await liveContent();
 const inline = `<script>window.__AD_CONTENT__=${JSON.stringify(content).replace(/</g, '\\u003c')}</script>`;
 
-function page(lang, name, html, extraHead = '') {
+// `ssr: false` (the 404 page) leaves off data-ssr so the client renders from
+// the address bar instead of hydrating markup for a different URL.
+function page(lang, name, html, { ssr = true, noindex = false } = {}) {
   return template
     .replace(/<html lang="[^"]*">/, `<html lang="${HTML_LANG[lang]}">`)
     .replace(/<title>[\s\S]*?<\/title>\s*/, '')
     .replace(/<meta name="description"[^>]*>\s*/, '')
-    .replace('</head>', headFor(lang, name, content) + extraHead + '\n</head>')
-    .replace('<div id="root"></div>', `<div id="root" data-ssr>${html}</div>${inline}`);
+    .replace('</head>', headFor(lang, name, content, { noindex }) + '\n</head>')
+    .replace('<div id="root"></div>', `<div id="root"${ssr ? ' data-ssr' : ''}>${html}</div>${inline}`);
 }
 
 async function write(file, text) {
@@ -50,7 +50,7 @@ for (const lang of LANGS) {
   }
 }
 // Unknown addresses: the English home page, marked noindex, served with a 404.
-await write('dist/404.html', page('en', '', await render('/en', content), '\n<meta name="robots" content="noindex">'));
+await write('dist/404.html', page('en', '', await render('/en', content), { ssr: false, noindex: true }));
 await write('dist/sitemap.xml', sitemapXml());
 await write('dist/robots.txt', robotsTxt());
 await write('dist/llms.txt', llmsTxt(content));

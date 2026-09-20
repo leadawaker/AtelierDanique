@@ -30,10 +30,6 @@ function PublicPage({ routeLang, page }) {
     if (!routeLang) window.history.replaceState(null, '', pathFor(lang, page) + window.location.search + window.location.hash);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // The prerender hides the SSR markup on narrow screens until hydration,
-  // because the static HTML is the desktop layout.
-  useLayoutEffect(() => { document.getElementById('root')?.removeAttribute('data-ssr'); }, []);
-
   // Keep the tab title and <html lang> in sync on the client (the prerender
   // already set them for the page it wrote).
   useEffect(() => { document.title = metaFor(lang, page).title; document.documentElement.lang = HTML_LANG[lang]; }, [lang, page]);
@@ -42,5 +38,13 @@ function PublicPage({ routeLang, page }) {
   let body = <Home {...props} />;
   if (page === 'commission') body = <Commission {...props} />;
   if (page === 'privacy' || page === 'terms') body = <Legal doc={page} {...props} />;
-  return <Suspense fallback={null}>{body}</Suspense>;
+  return <Suspense fallback={null}>{body}<Hydrated /></Suspense>;
+}
+
+// The prerender hides the SSR markup on narrow screens until hydration, because
+// the static HTML is the desktop layout. This sits inside the Suspense boundary
+// so it only runs once the page body (including a lazy chunk) has hydrated.
+function Hydrated() {
+  useLayoutEffect(() => { document.getElementById('root')?.removeAttribute('data-ssr'); }, []);
+  return null;
 }

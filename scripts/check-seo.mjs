@@ -2,12 +2,10 @@
 // engines or AI crawlers need.
 import { readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import { LANGS, PAGES, HTML_LANG } from '../src/lib/routes.js';
 import { STRINGS } from '../src/lib/strings.js';
 
 const SITE = 'https://www.atelierdanique.com';
-const LANGS = ['nl', 'en', 'pt'];
-const PAGES = ['', 'commission', 'privacy', 'terms'];
-const HTML_LANG = { nl: 'nl', en: 'en', pt: 'pt-BR' };
 
 for (const lang of LANGS) {
   for (const page of PAGES) {
@@ -38,5 +36,13 @@ for (const lang of LANGS) {
 const sitemap = await readFile('dist/sitemap.xml', 'utf8');
 assert.equal((sitemap.match(/<loc>/g) || []).length, 12, 'sitemap has 12 urls');
 assert.ok((await readFile('dist/robots.txt', 'utf8')).includes('Sitemap: ' + SITE + '/sitemap.xml'), 'robots.txt sitemap line');
-await readFile('dist/llms.txt', 'utf8');
+const llms = await readFile('dist/llms.txt', 'utf8');
+assert.ok(llms.includes('half up front, the rest when the painting is finished, before shipping'), 'llms.txt: payment line');
+const notFound = await readFile('dist/404.html', 'utf8');
+assert.ok(notFound.includes('<div id="root">') && !notFound.includes('<div id="root" data-ssr'), '404.html: client renders from the address bar, no hydration');
+assert.ok(!notFound.includes('rel="canonical"') && !notFound.includes('hreflang='), '404.html: no canonical or hreflang');
+assert.ok(notFound.includes('<meta name="robots" content="noindex">'), '404.html: noindex');
+for (const [name, text] of [['llms.txt', llms], ['404.html', notFound], ['sitemap.xml', sitemap]]) {
+  assert.ok(!/Huygensweg/i.test(text), name + ': street address must never be published');
+}
 console.log('check-seo: all good');
