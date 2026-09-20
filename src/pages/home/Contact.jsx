@@ -20,7 +20,7 @@ export default function Contact({ t, lang }) {
           </div>
         </div>
         <div className="cta-cutout">
-          <div style={s('position:relative;width:calc(100% - 48px);max-width:480px;margin-bottom:32px;aspect-ratio:' + POP_W + '/' + POP_H)}>
+          <div style={s('position:relative;width:min(calc((100% - 48px) * 1.15),100%);max-width:552px;margin-bottom:32px;aspect-ratio:' + POP_W + '/' + POP_H)}>
             <div style={s('position:absolute;left:0;right:0;bottom:0;height:' + (POP_CARD_H / POP_H * 100).toFixed(3) + '%;border-radius:' + POP_RADIUS + 'px;overflow:hidden')}>
               <Slot slotId={CARD_SLOT} src={CARD_SRC} focus={CARD_FOCUS} alt="" />
             </div>

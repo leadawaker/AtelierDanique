@@ -64,7 +64,7 @@ input, textarea, select, button { font-family: inherit; font-size: inherit; colo
   .cta-btn { align-self: center; }
   .cta-links { justify-content: center; }
   .cta-photo { display: none; }
-  .cta-cutout { display: flex; align-items: flex-end; justify-content: center; margin-top: -84px; pointer-events: none; }
+  .cta-cutout { display: flex; align-items: flex-end; justify-content: center; margin-top: -96px; pointer-events: none; }
 }
 
 /* Testimonials: painting behind a frosted cream panel. The panel is nearly

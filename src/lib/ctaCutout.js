@@ -10,7 +10,7 @@ export const CARD_SRC = '/uploads/danique-pop-bottom.webp';
 export const POP_W = 888;
 export const POP_H = 1182;
 // Where the card starts, counted from the top of the picture (around her neck).
-export const POP_CARD_TOP = 490;
+export const POP_CARD_TOP = 450;
 export const POP_CARD_H = POP_H - POP_CARD_TOP;
 export const POP_RADIUS = 22;
 // The card shows the bottom part of its picture.
