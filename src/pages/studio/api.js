@@ -101,7 +101,12 @@ export async function fetchStats(days = 28) {
 
 export async function fetchSearchStats() {
   const res = await fetch('/api/search-stats', { cache: 'no-store' });
-  if (!res.ok) throw new Error('search ' + res.status);
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    const err = new Error('search ' + res.status);
+    err.hint = body && body.hint; // plain-words reason from the server, when it has one
+    throw err;
+  }
   return res.json();
 }
 

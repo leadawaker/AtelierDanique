@@ -51,7 +51,7 @@ export default function StatsTab() {
   const [stats, setStats] = useState(null);
   const [statsError, setStatsError] = useState(false);
   const [search, setSearch] = useState(null);
-  const [searchError, setSearchError] = useState(false);
+  const [searchError, setSearchError] = useState(null); // null | message
   const [rebuild, setRebuild] = useState('idle'); // idle | busy | ok | full | unset | hook | error
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function StatsTab() {
 
   useEffect(() => {
     let alive = true;
-    fetchSearchStats().then((data) => alive && setSearch(data)).catch(() => alive && setSearchError(true));
+    fetchSearchStats().then((data) => alive && setSearch(data)).catch((e) => alive && setSearchError((e && e.hint) || "Couldn't load the Google search data right now."));
     return () => { alive = false; };
   }, []);
 
@@ -119,7 +119,7 @@ export default function StatsTab() {
       <section style={s(SECTION)}>
         <div style={s(H2_WRAP)}><h2 style={s(H2)}>Google search</h2></div>
         {searchError ? (
-          <p style={s(ERROR)}>Couldn't load the Google search data right now.</p>
+          <p style={s(ERROR)}>{searchError}</p>
         ) : !search ? (
           <p style={s(LOADING)}>Loading…</p>
         ) : !search.configured ? (
