@@ -6,7 +6,7 @@ export const STRINGS = {
   en: {
     navHome: 'Home', navGallery: 'Gallery', navProcess: 'How it works', navPricing: 'Pricing', navTestimonials: 'Testimonials', navFaq: 'FAQ', navAbout: 'About',
     heroEyebrow: 'Hand-painted watercolour & ink', heroAlt: 'Watercolour painting by Danique', heroSpots: 'Launch prices · {left} of {total} spots remaining', heroT1: 'Real moments.', heroT2: 'Lasting', heroT3: 'forever.',
-    heroBody: 'I turn your favourite moments into timeless, hand-painted artworks.',
+    heroBody: 'I turn your favourite memories into timeless, hand-painted artworks.',
     ctaCommission: 'Commission your piece',
     meetEyebrow: 'IN HER OWN WORDS', meetTitle: 'Meet Danique', watch: 'Meet Danique', waPrefill: 'Hi Danique!',
     tagline: 'Real moments. Real art. Real people.',
@@ -64,7 +64,7 @@ export const STRINGS = {
   pt: {
     navHome: 'Início', navGallery: 'Galeria', navProcess: 'Como funciona', navPricing: 'Preços', navTestimonials: 'Depoimentos', navFaq: 'Dúvidas', navAbout: 'Sobre',
     heroEyebrow: 'Pintado à mão em aquarela e tinta', heroAlt: 'Aquarela pintada por Danique', heroSpots: 'Preços de lançamento · {left} de {total} vagas restantes', heroT1: 'Momentos reais.', heroT2: 'Que duram', heroT3: 'para sempre.',
-    heroBody: 'Transformo seus momentos favoritos em obras de arte atemporais, pintadas à mão.',
+    heroBody: 'Transformo suas memórias favoritas em obras de arte atemporais, pintadas à mão.',
     ctaCommission: 'Encomende sua obra',
     meetEyebrow: 'NAS PALAVRAS DELA', meetTitle: 'Conheça a Danique', watch: 'Conheça a Danique', waPrefill: 'Oi Danique!',
     tagline: 'Momentos reais. Arte real. Pessoas reais.',
@@ -122,7 +122,7 @@ export const STRINGS = {
   nl: {
     navHome: 'Home', navGallery: 'Galerij', navProcess: 'Hoe het werkt', navPricing: 'Prijzen', navTestimonials: 'Ervaringen', navFaq: 'Vragen', navAbout: 'Over',
     heroEyebrow: 'Met de hand geschilderd in aquarel en inkt', heroAlt: 'Aquarel geschilderd door Danique', heroSpots: 'Introductieprijzen · nog {left} van {total} plekken', heroT1: 'Echte momenten.', heroT2: 'Die blijven', heroT3: 'voor altijd.',
-    heroBody: "Ik verander je favoriete momenten in tijdloze, met de hand geschilderde kunstwerken.",
+    heroBody: "Ik verander je favoriete herinneringen in tijdloze, met de hand geschilderde kunstwerken.",
     ctaCommission: 'Bestel jouw werk',
     meetEyebrow: 'IN HAAR EIGEN WOORDEN', meetTitle: 'Maak kennis met Danique', watch: 'Maak kennis met Danique', waPrefill: 'Hoi Danique!',
     tagline: 'Echte momenten. Echte kunst. Echte mensen.',
