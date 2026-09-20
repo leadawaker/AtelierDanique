@@ -46,7 +46,7 @@ function PhonePalette() {
 function HeroText({ t, lang, compact, links, content }) {
   const spots = heroSpots(t, sitePricing(content));
   const igStyle = 'display:flex;align-items:center;gap:10px;border:1px solid #E36B54;color:#455459;padding:16px 26px;font-size:15px;border-radius:2px;transition:border-color .25s,color .25s,background .25s;'
-    + (compact ? 'background:#F6F1E6' : 'background:transparent');
+    + (compact ? 'background:#EAE2D7' : 'background:transparent');
   return (
     <>
       <p style={s('margin:0;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#85949A')}>{t.heroEyebrow}</p>
