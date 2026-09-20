@@ -1,7 +1,7 @@
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
 import { pathFor } from '../../lib/routes.js';
-import { CARD_FOCUS, CARD_SLOT, CARD_SRC, CUTOUT_SLOT, CUTOUT_SRC, POP_CARD_H, POP_H, POP_RADIUS, POP_W } from '../../lib/ctaCutout.js';
+import { CARD_FOCUS, CARD_SLOT, CARD_SRC, CUTOUT_SLOT, CUTOUT_SRC, POP_CARD_H, POP_H, POP_RADIUS, POP_SIDE, POP_W } from '../../lib/ctaCutout.js';
 
 export default function Contact({ t, lang }) {
   return (
@@ -21,10 +21,12 @@ export default function Contact({ t, lang }) {
         </div>
         <div className="cta-cutout">
           <div style={s('position:relative;width:min(calc((100% - 48px) * 1.15),100%);max-width:552px;margin-bottom:32px;aspect-ratio:' + POP_W + '/' + POP_H)}>
-            <div style={s('position:absolute;left:0;right:0;bottom:0;height:' + (POP_CARD_H / POP_H * 100).toFixed(3) + '%;border-radius:' + POP_RADIUS + 'px;overflow:hidden')}>
-              <Slot slotId={CARD_SLOT} src={CARD_SRC} focus={CARD_FOCUS} alt="" />
+            <div style={s('position:absolute;left:' + POP_SIDE + 'px;right:' + POP_SIDE + 'px;bottom:0;height:' + (POP_CARD_H / POP_H * 100).toFixed(3) + '%;border-radius:' + POP_RADIUS + 'px;overflow:hidden')}>
+              <div style={s('position:absolute;top:0;bottom:0;left:-' + POP_SIDE + 'px;right:-' + POP_SIDE + 'px')}>
+                <Slot slotId={CARD_SLOT} src={CARD_SRC} focus={CARD_FOCUS} alt="" />
+              </div>
             </div>
-            <div style={s('position:absolute;inset:0;clip-path:inset(0 round 0 0 ' + POP_RADIUS + 'px ' + POP_RADIUS + 'px)')}>
+            <div style={s('position:absolute;inset:0;clip-path:inset(0 ' + POP_SIDE + 'px 0 ' + POP_SIDE + 'px round 0 0 ' + POP_RADIUS + 'px ' + POP_RADIUS + 'px)')}>
               <Slot slotId={CUTOUT_SLOT} src={CUTOUT_SRC} alt={t.meetAlt} style={{ background: 'transparent' }} />
             </div>
           </div>

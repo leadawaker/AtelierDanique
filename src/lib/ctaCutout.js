@@ -13,5 +13,8 @@ export const POP_H = 1182;
 export const POP_CARD_TOP = 450;
 export const POP_CARD_H = POP_H - POP_CARD_TOP;
 export const POP_RADIUS = 22;
+// Trimmed off each side, so the card keeps a margin from the screen edges. The
+// picture keeps its size: its sides are cropped, not squeezed.
+export const POP_SIDE = 20;
 // The card shows the bottom part of its picture.
 export const CARD_FOCUS = { fx: 0.5, fy: 1 };
