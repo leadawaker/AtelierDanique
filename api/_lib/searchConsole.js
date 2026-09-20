@@ -6,6 +6,18 @@ const b64 = (o) => Buffer.from(JSON.stringify(o)).toString("base64url");
 export const searchConsoleConfigured = () =>
   !!(process.env.GSC_CLIENT_EMAIL && process.env.GSC_PRIVATE_KEY && process.env.GSC_SITE);
 
+// The private key as pasted into Vercel can arrive with its line breaks turned
+// into spaces or a literal \n, with the quotes around it, or even as the whole
+// JSON file. Rebuild a clean PEM from whichever of those it is.
+export function normalizeKey(raw) {
+  let s = String(raw).trim();
+  if (s.startsWith("{")) { try { s = JSON.parse(s).private_key || s; } catch { /* not JSON */ } }
+  const m = s.match(/-----BEGIN ([A-Z ]+)-----([\s\S]*?)-----END \1-----/);
+  if (!m) return s.replace(/\\n/g, "\n");
+  const body = m[2].replace(/\\n|\s|"/g, "");
+  return `-----BEGIN ${m[1]}-----\n${body.match(/.{1,64}/g).join("\n")}\n-----END ${m[1]}-----\n`;
+}
+
 // Service-account login (JWT bearer grant), signed with node:crypto so no
 // Google SDK is needed.
 async function accessToken() {
@@ -14,7 +26,7 @@ async function accessToken() {
     iss: process.env.GSC_CLIENT_EMAIL, scope: "https://www.googleapis.com/auth/webmasters.readonly",
     aud: "https://oauth2.googleapis.com/token", iat: now, exp: now + 3600,
   });
-  const key = process.env.GSC_PRIVATE_KEY.replace(/\\n/g, "\n");
+  const key = normalizeKey(process.env.GSC_PRIVATE_KEY);
   const sig = createSign("RSA-SHA256").update(unsigned).sign(key).toString("base64url");
   const res = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
