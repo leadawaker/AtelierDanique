@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { imageBox, isPlain, usePhoto } from '../lib/photos.js';
 
 // Read-only photo frame: fills its (positioned) parent, crops like the Design
@@ -22,6 +22,15 @@ export default function Slot({ slotId, src, focus, placeholder = '', alt = '', r
     ro.observe(el);
     return () => ro.disconnect();
   }, [plain]);
+
+  // The prerendered <img> often finishes loading before React attaches onLoad,
+  // so that load event never arrives. Measure the node on mount too, otherwise
+  // a cropped photo would stay at opacity 0 and show only its grey frame.
+  const measure = useCallback((node) => {
+    if (node && node.complete && node.naturalWidth) {
+      setRatios((prev) => ({ ...prev, image: node.naturalWidth / node.naturalHeight }));
+    }
+  }, [photo && photo.url]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const frame = { position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: radius, ...style };
 
@@ -48,6 +57,7 @@ export default function Slot({ slotId, src, focus, placeholder = '', alt = '', r
   return (
     <div ref={frameRef} style={{ ...frame, background: '#E3E1D8', ...style }}>
       <img
+        ref={measure}
         src={photo.url}
         alt={alt}
         draggable={false}
