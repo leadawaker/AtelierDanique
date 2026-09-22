@@ -60,9 +60,11 @@ function useClosedHeight(ref) {
 }
 
 // Open the photo question when the page is opened or navigated to #which-photo.
+// It sits second in the list (after "What can I have painted?"), so that's the index we open.
+const PHOTO_INDEX = 1;
 function useOpenOnHash(setOpen) {
   useEffect(() => {
-    const check = () => { if (window.location.hash === '#' + PHOTO_ID) setOpen(0); };
+    const check = () => { if (window.location.hash === '#' + PHOTO_ID) setOpen(PHOTO_INDEX); };
     check();
     window.addEventListener('hashchange', check);
     return () => window.removeEventListener('hashchange', check);
@@ -75,9 +77,11 @@ export default function Faq({ t, compact }) {
   const closedHeight = useClosedHeight(sectionRef);
   useOpenOnHash(setFaqOpen);
 
+  const faq = t.faq || [];
   const items = [
+    ...(faq[0] ? [{ q: faq[0].q, a: <p style={s(ANSWER)}>{faq[0].a}</p> }] : []),
     { id: PHOTO_ID, q: t.faqPhotoQ, a: <div style={s('display:flex;flex-direction:column;gap:16px')}><p style={s(ANSWER)}>{t.faqPhotoA}</p><Checklist items={t.checklist} /></div> },
-    ...(t.faq || []).map((f) => ({ q: f.q, a: <p style={s(ANSWER)}>{f.a}</p> })),
+    ...faq.slice(1).map((f) => ({ q: f.q, a: <p style={s(ANSWER)}>{f.a}</p> })),
   ];
   const pad = 'padding:clamp(48px,7vw,100px) clamp(24px,5vw,72px)';
   const photoBox = compact

@@ -37,13 +37,12 @@ export const STRINGS = {
     igEyebrow: 'Latest from Instagram', igTitle: 'Follow along', igSeeMore: 'See more on Instagram',
     faqEyebrow: 'Good to know', faqTitle: 'FAQ',
     faq: [
-      { q: 'What do you paint?', a: 'Places and moments that mean something to you: the home you grew up in, a wedding venue, a couple, your family, a pet, a trip or a small everyday detail. I paint from your photo and your story, in watercolour and ink. Not sure your idea fits? Send me a message and I will tell you honestly.' },
-      { q: 'How long does it take?', a: 'Your painting is ready in 5 working days. In the Netherlands, add a day or two for it to arrive. Within Europe, allow about a week, and up to four weeks worldwide, depending on the location.' },
-      { q: 'Do you ship outside the Netherlands?', a: "Yes, worldwide, always with track and trace. Shipping is €5 within the Netherlands, €10 to the rest of Europe and the UK, and €15 to the rest of the world. You can also pick up your artwork for free in 's-Hertogenbosch." },
-      { q: 'Is it framed?', a: 'No, it arrives unframed on 300g cold pressed cotton paper, cut to standard A4 or A5 so any shop frame fits.' },
-      { q: 'When do I pay?', a: 'Half up front once we agree on the photo and the size, and the other half when your artwork is finished, before I send it.' },
-      { q: 'How can I pay?', a: 'In the Netherlands you can pay by Tikkie, bank transfer or cash. In Brazil you can pay by Pix or cash.' },
-      { q: 'How does the 10 days guarantee work?', a: 'You have 10 days after receiving your painting to change your mind. If it is not right for you, just let me know within those 10 days.' }
+      { q: 'What can I have painted?', a: 'The places and moments that mean something to you: the home you grew up in, a wedding venue, a couple, your family, a pet, a trip or a small everyday detail. I paint it from your photo and your story, in watercolour and ink. Not sure your idea fits? Send me a message and I will tell you honestly.' },
+      { q: 'Does it come framed?', a: 'No, it arrives unframed on 300g cold pressed cotton paper, cut to standard A4 or A5 so any shop frame fits.' },
+      { q: 'How long until it arrives?', a: 'Your painting is ready in 5 working days. In the Netherlands, add a day or two for it to arrive. Within Europe, allow about a week, and up to four weeks worldwide, depending on the location.' },
+      { q: 'How does payment work?', a: 'Half up front once we agree on the photo and the size, and the other half when your artwork is finished, before I send it. In the Netherlands you can pay by Tikkie, bank transfer or cash, in Brazil by Pix or cash, and from anywhere else in the world by Wise transfer.' },
+      { q: 'Do you ship worldwide?', a: "Yes, always with track and trace. Shipping is €5 within the Netherlands, €10 to the rest of Europe and the UK, and €15 to the rest of the world. You can also pick up your artwork for free in 's-Hertogenbosch." },
+      { q: 'How does the 10 days guarantee work?', a: "Buying art online takes trust, so I offer a 10 day money back guarantee. If it's not what you expected, just let me know within those 10 days. I'm confident once you have the piece in your hands you won't want to send it back, but knowing it's an option brings peace of mind. (Full details in the Terms & conditions.)" }
     ],
     posts: [
       { title: 'Meaningful places', date: '2 September 2026', description: 'A commission of the house where a family spent every summer. Ink and wash, A4.' },
@@ -97,13 +96,12 @@ export const STRINGS = {
     igEyebrow: 'Últimos posts do Instagram', igTitle: 'Acompanhe', igSeeMore: 'Veja mais no Instagram',
     faqEyebrow: 'Bom saber', faqTitle: 'Perguntas frequentes',
     faq: [
-      { q: 'O que você pinta?', a: 'Lugares e momentos que significam algo para você: a casa onde cresceu, um local de casamento, um casal, a família, um bicho de estimação, uma viagem ou um pequeno detalhe do dia a dia. Pinto a partir da sua foto e da sua história, em aquarela e nanquim. Não tem certeza se a sua ideia se encaixa? Me mande uma mensagem e eu digo com sinceridade.' },
-      { q: 'Quanto tempo leva?', a: 'Sua obra fica pronta em 5 dias úteis. Na Holanda, some um ou dois dias para a entrega. Dentro da Europa, considere cerca de uma semana, e até quatro semanas para o resto do mundo, dependendo do local.' },
-      { q: 'Você envia para fora da Holanda?', a: "Sim, para o mundo todo, sempre com rastreamento. O frete custa €5 na Holanda, €10 para o resto da Europa e o Reino Unido, e €15 para o resto do mundo. Você também pode retirar sua obra de graça em 's-Hertogenbosch." },
-      { q: 'Vem com moldura?', a: 'Não, chega sem moldura em papel de algodão 300g prensado a frio, no tamanho padrão A4 ou A5, que serve em qualquer moldura de loja.' },
-      { q: 'Quando eu pago?', a: 'Metade no início, quando definimos a foto e o tamanho, e a outra metade quando a obra estiver pronta, antes de eu enviar.' },
-      { q: 'Como posso pagar?', a: 'Na Holanda, você paga por Tikkie, transferência bancária ou em dinheiro. No Brasil, por Pix ou em dinheiro.' },
-      { q: 'Como funciona a garantia de 10 dias?', a: 'Você tem 10 dias, depois de receber sua obra, para mudar de ideia. Se ela não for o que você esperava, é só me avisar dentro desses 10 dias.' }
+      { q: 'O que posso mandar pintar?', a: 'Os lugares e momentos que significam algo para você: a casa onde cresceu, um local de casamento, um casal, a família, um bicho de estimação, uma viagem ou um pequeno detalhe do dia a dia. Pinto a partir da sua foto e da sua história, em aquarela e nanquim. Não tem certeza se a sua ideia se encaixa? Me mande uma mensagem e eu digo com sinceridade.' },
+      { q: 'Vem emoldurada?', a: 'Não, chega sem moldura em papel de algodão 300g prensado a frio, no tamanho padrão A4 ou A5, que serve em qualquer moldura de loja.' },
+      { q: 'Quanto tempo até chegar?', a: 'Sua obra fica pronta em 5 dias úteis. Na Holanda, some um ou dois dias para a entrega. Dentro da Europa, considere cerca de uma semana, e até quatro semanas para o resto do mundo, dependendo do local.' },
+      { q: 'Como funciona o pagamento?', a: 'Metade no início, quando definimos a foto e o tamanho, e a outra metade quando a obra estiver pronta, antes de eu enviar. Na Holanda, você paga por Tikkie, transferência bancária ou em dinheiro; no Brasil, por Pix ou em dinheiro; e de qualquer outro lugar do mundo, por transferência Wise.' },
+      { q: 'Você envia para o mundo todo?', a: "Sim, sempre com rastreamento. O frete custa €5 na Holanda, €10 para o resto da Europa e o Reino Unido, e €15 para o resto do mundo. Você também pode retirar sua obra de graça em 's-Hertogenbosch." },
+      { q: 'Como funciona a garantia de 10 dias?', a: 'Comprar arte online exige confiança, por isso ofereço uma garantia de 10 dias com devolução do dinheiro. Se não for o que você esperava, é só me avisar dentro desses 10 dias. Tenho certeza de que, assim que a obra estiver em suas mãos, você não vai querer devolvê-la, mas saber que essa opção existe traz tranquilidade. (Detalhes completos nos Termos e condições.)' }
     ],
     posts: [
       { title: 'Lugares com significado', date: '2 de setembro de 2026', description: 'Uma encomenda da casa onde uma família passava todos os verões. Nanquim e aquarela, A4.' },
@@ -157,13 +155,12 @@ export const STRINGS = {
     igEyebrow: 'Laatste van Instagram', igTitle: 'Volg mee', igSeeMore: 'Bekijk meer op Instagram',
     faqEyebrow: 'Goed om te weten', faqTitle: 'Veelgestelde vragen',
     faq: [
-      { q: 'Wat schilder je?', a: 'Plekken en momenten die iets voor je betekenen: het huis waar je opgroeide, een trouwlocatie, een stel, je gezin, een huisdier, een reis of een klein alledaags detail. Ik schilder van jouw foto en jouw verhaal, in aquarel en inkt. Weet je niet zeker of jouw idee past? Stuur me een bericht, dan vertel ik je eerlijk wat ik ervan denk.' },
-      { q: 'Hoe lang duurt het?', a: 'Je werk is binnen 5 werkdagen klaar. Binnen Nederland komt er een dag of twee bij voor de bezorging. Binnen Europa duurt het ongeveer een week, en wereldwijd tot vier weken, afhankelijk van de locatie.' },
-      { q: 'Verstuur je ook buiten Nederland?', a: "Ja, wereldwijd, altijd met track & trace. Verzending kost €5 binnen Nederland, €10 naar de rest van Europa en het VK, en €15 naar de rest van de wereld. Je kunt je werk ook gratis ophalen in 's-Hertogenbosch." },
-      { q: 'Zit er een lijst bij?', a: 'Nee, het komt zonder lijst op 300g koudgeperst katoenpapier, op standaard A4- of A5-formaat, dus elke winkellijst past.' },
-      { q: 'Wanneer betaal ik?', a: 'De helft vooraf, zodra we de foto en het formaat hebben afgesproken, en de andere helft als je werk klaar is, voordat ik het verstuur.' },
-      { q: 'Hoe kan ik betalen?', a: 'In Nederland kun je betalen met Tikkie, per bankoverschrijving of contant. In Brazilië betaal je met Pix of contant.' },
-      { q: 'Hoe werkt de 10 dagen garantie?', a: 'Je hebt 10 dagen na ontvangst van je schilderij om je te bedenken. Is het toch niet wat je had verwacht, laat het me dan binnen die 10 dagen weten.' }
+      { q: 'Wat kan ik laten schilderen?', a: 'De plekken en momenten die iets voor je betekenen: het huis waar je opgroeide, een trouwlocatie, een stel, je gezin, een huisdier, een reis of een klein alledaags detail. Ik schilder het van jouw foto en jouw verhaal, in aquarel en inkt. Weet je niet zeker of jouw idee past? Stuur me een bericht, dan vertel ik je eerlijk wat ik ervan denk.' },
+      { q: 'Komt het met een lijst?', a: 'Nee, het komt zonder lijst op 300g koudgeperst katoenpapier, op standaard A4- of A5-formaat, dus elke winkellijst past.' },
+      { q: 'Hoe lang duurt het voordat het aankomt?', a: 'Je werk is binnen 5 werkdagen klaar. Binnen Nederland komt er een dag of twee bij voor de bezorging. Binnen Europa duurt het ongeveer een week, en wereldwijd tot vier weken, afhankelijk van de locatie.' },
+      { q: 'Hoe werkt de betaling?', a: 'De helft vooraf, zodra we de foto en het formaat hebben afgesproken, en de andere helft als je werk klaar is, voordat ik het verstuur. Binnen Nederland kun je betalen met Tikkie, per bankoverschrijving of contant; in Brazilië met Pix of contant; en vanuit de rest van de wereld via een Wise-overschrijving.' },
+      { q: 'Verstuur je wereldwijd?', a: "Ja, altijd met track & trace. Verzending kost €5 binnen Nederland, €10 naar de rest van Europa en het VK, en €15 naar de rest van de wereld. Je kunt je werk ook gratis ophalen in 's-Hertogenbosch." },
+      { q: 'Hoe werkt de 10 dagen garantie?', a: 'Kunst online kopen vraagt vertrouwen, daarom bied ik een 10 dagen niet-goed-geld-terug-garantie. Is het toch niet wat je had verwacht, laat het me dan binnen die 10 dagen weten. Ik ben ervan overtuigd dat je het werk niet meer wilt terugsturen zodra je het in handen hebt, maar het is fijn om te weten dat het kan. (Volledige details in de Algemene voorwaarden.)' }
     ],
     posts: [
       { title: 'Betekenisvolle plekken', date: '2 september 2026', description: 'Een opdracht van het huis waar een familie elke zomer doorbracht. Inkt en aquarel, A4.' },
