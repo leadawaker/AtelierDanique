@@ -9,7 +9,13 @@ export const LINKS = {
 
 export const FLOATING_WHATSAPP = true;
 
-export const HERO_VEIL = { reach: 74, softness: 47, opacity: 86 };
+export const HERO_TWEAKS = { reach: 74, softness: 47, opacity: 86, glow: 0 };
+
+// Danique's own choices, saved from the studio's header settings panel as
+// 'ad-hero-settings', layered on top of HERO_TWEAKS field by field.
+export function heroTweaks(content) {
+  return { ...HERO_TWEAKS, ...(content && content['ad-hero-settings']) };
+}
 
 // Design defaults. Danique's own choices, saved from the studio's gallery
 // settings panel as 'ad-gallery-settings', are layered on top field by field,

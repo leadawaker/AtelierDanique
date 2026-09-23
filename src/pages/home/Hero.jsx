@@ -4,7 +4,7 @@ import { heroSpots, sitePricing } from '../../lib/pricing.js';
 import { pathFor } from '../../lib/routes.js';
 import PhoneHeroArt from './PhoneHeroArt.jsx';
 import { paletteOn } from '../../lib/heroPhone.js';
-import { HERO_VEIL } from './settings.js';
+import { heroTweaks } from './settings.js';
 
 const BANNER_SRC = '/uploads/Project%20(20260915100023).jpg';
 // Aim at the right side of the photo, so narrow (phone) frames show it.
@@ -13,9 +13,9 @@ const TEXT_PAD = 'padding:clamp(56px,6vw,104px) clamp(24px,4vw,56px) clamp(52px,
 
 // Cream veil over the banner photo, fading out left to right. Desktop only:
 // on compact screens the phone background is used instead.
-function veilStyle() {
-  const { reach, softness } = HERO_VEIL;
-  const op = HERO_VEIL.opacity / 100;
+function veilStyle(tweaks) {
+  const { reach, softness } = tweaks;
+  const op = tweaks.opacity / 100;
   const solid = Math.max(0, reach * (1 - softness / 100));
   const mid = solid + (reach - solid) * 0.45;
   return 'position:absolute;inset:0;background:linear-gradient(to right,'
@@ -25,14 +25,22 @@ function veilStyle() {
     + 'rgba(252,250,246,0) ' + reach.toFixed(1) + '%)';
 }
 
-function HeroText({ t, lang, compact, links, content }) {
+// Cream glow behind the title words, same colour as the veil. 0 (default) is off.
+function glowStyle(glow) {
+  if (!glow) return '';
+  const op = (glow / 100) * 0.9;
+  const blur = 6 + (glow / 100) * 34;
+  return ';text-shadow:0 0 ' + blur.toFixed(0) + 'px rgba(252,250,246,' + op.toFixed(2) + ')';
+}
+
+function HeroText({ t, lang, compact, links, content, glow }) {
   const spots = heroSpots(t, sitePricing(content));
   const igStyle = 'display:flex;align-items:center;gap:10px;border:1px solid #E36B54;color:#455459;padding:16px 26px;font-size:15px;border-radius:2px;transition:border-color .25s,color .25s,background .25s;'
     + (compact ? 'background:#F3EDE4' : 'background:transparent');
   return (
     <>
       <p style={s('margin:0;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#85949A')}>{t.heroEyebrow}</p>
-      <h1 style={s("margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(44px,5.6vw,84px);line-height:1.02;letter-spacing:-.02em")}>
+      <h1 style={s("margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(44px,5.6vw,84px);line-height:1.02;letter-spacing:-.02em" + glowStyle(glow))}>
         {t.heroT1}<br />{t.heroT2}{' '}
         <em style={s('font-style:italic;color:#E36B54;text-decoration:underline;text-decoration-color:#EAC66B;text-decoration-thickness:2px;text-underline-offset:.06em')}>{t.heroT3}</em>
       </h1>
@@ -59,6 +67,7 @@ function HeroText({ t, lang, compact, links, content }) {
 export default function Hero(props) {
   const { compact, content, t } = props;
   const split = content['ad-hero-layout'] === 'split';
+  const tweaks = heroTweaks(content);
   const slot = <Slot slotId="ad-hero-banner" src={BANNER_SRC} focus={BANNER_FOCUS} placeholder="Hero banner photo" alt={t.heroAlt} />;
 
   if (!split) {
@@ -67,11 +76,11 @@ export default function Hero(props) {
         {compact ? <PhoneHeroArt palette={paletteOn(content)} /> : (
           <>
             <div style={s('position:absolute;inset:0')}>{slot}</div>
-            <div style={s(veilStyle())}></div>
+            <div style={s(veilStyle(tweaks))}></div>
           </>
         )}
         <div data-reveal="" style={s('position:relative;z-index:2;max-width:1400px;margin:0 auto;min-height:min(72vh,640px);' + TEXT_PAD + ';display:flex;flex-direction:column;justify-content:center;gap:26px')}>
-          <HeroText {...props} />
+          <HeroText {...props} glow={tweaks.glow} />
         </div>
       </section>
     );
@@ -85,7 +94,7 @@ export default function Hero(props) {
         <div style={s('position:relative')}>
           <PhoneHeroArt />
           <div data-reveal="" style={s('position:relative;' + TEXT_PAD + ';display:flex;flex-direction:column;justify-content:center;gap:26px')}>
-            <HeroText {...props} />
+            <HeroText {...props} glow={tweaks.glow} />
           </div>
         </div>
         <div style={s('position:relative;width:100%;aspect-ratio:4/3')}>{slot}</div>
@@ -96,7 +105,7 @@ export default function Hero(props) {
   return (
     <section style={s('position:relative;background:#F1EFE8;overflow:hidden;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))')}>
       <div data-reveal="" style={s('position:relative;min-width:0;min-height:min(72vh,640px);' + TEXT_PAD + ';display:flex;flex-direction:column;justify-content:center;gap:26px')}>
-        <HeroText {...props} />
+        <HeroText {...props} glow={tweaks.glow} />
       </div>
       <div style={s('position:relative;min-width:0;min-height:min(72vh,640px)')}>{slot}</div>
     </section>

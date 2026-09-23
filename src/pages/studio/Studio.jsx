@@ -7,6 +7,7 @@ import { STRINGS } from '../../lib/strings.js';
 import { useCompact } from '../../lib/useCompact.js';
 import Header from '../home/Header.jsx';
 import { getSession, login, logout, useStudioContent } from './api.js';
+import HeroSettingsDialog from './HeroSettingsDialog.jsx';
 import GalleryTab from './tabs/GalleryTab.jsx';
 import PhotosTab from './tabs/PhotosTab.jsx';
 import TestimonialsTab from './tabs/TestimonialsTab.jsx';
@@ -115,6 +116,7 @@ function Manager({ lang, onSignedOut }) {
   const onUnauthorized = useCallback(() => onSignedOut(), [onSignedOut]);
   const { content, ready, loadError, status, errors, update } = useStudioContent({ onUnauthorized });
   const [tab, setTab] = useState(readHash);
+  const [heroSettingsOpen, setHeroSettingsOpen] = useState(false);
 
   useEffect(() => {
     const onHash = () => setTab(readHash());
@@ -143,12 +145,24 @@ function Manager({ lang, onSignedOut }) {
             <h1 style={s("margin:0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(30px,3.6vw,46px);line-height:1.05;letter-spacing:-.02em")}>Website manager</h1>
           </div>
           <div style={s('display:flex;align-items:center;gap:22px;flex-wrap:wrap')}>
+            <button type="button" onClick={() => setHeroSettingsOpen(true)} className="h-color-coral"
+              style={s('background:none;border:1px solid #D3CFC4;color:#26454F;padding:10px 18px;font-size:14px;border-radius:2px;cursor:pointer;min-height:44px')}>
+              Header settings
+            </button>
             <a href={pathFor(lang)} target="_blank" rel="noopener" className="h-color-coral"
               style={s('font-size:14px;color:#5E6C71;border-bottom:1px solid #D3CFC4;padding-bottom:2px')}>View the website&nbsp; →</a>
             <button type="button" onClick={signOut} className="h-color-coral"
               style={s('background:none;border:0;padding:10px 0;font-size:14px;color:#85949A;cursor:pointer')}>Log out</button>
           </div>
         </header>
+
+        {heroSettingsOpen && (
+          <HeroSettingsDialog
+            value={content['ad-hero-settings']}
+            onCancel={() => setHeroSettingsOpen(false)}
+            onSave={(next) => { update('ad-hero-settings', next); setHeroSettingsOpen(false); }}
+          />
+        )}
 
         <SaveIndicator status={status} />
 
