@@ -135,6 +135,24 @@ const quoteIn = (quote, lang) => {
   return (quote && (quote[lang] || quote.en)) || '';
 };
 
+const same = (a, b) => String(a || '').replace(/\s+/g, ' ').trim() === String(b || '').replace(/\s+/g, ' ').trim();
+
+// Which quote a built-in testimonial shows in one language. A studio edit wins,
+// but only in the language it was written in: a testimonial edited in English
+// and not translated used to fall back to that English on the Dutch and
+// Portuguese pages, hiding the translation that ships with the site. So when
+// the edited English still says the same thing as the built-in English, the
+// built-in translation is used. Only a genuinely rewritten English quote falls
+// back to English, because the old translation would then say something else.
+function builtInQuote(base, over, lang) {
+  const edit = over.quote;
+  if (typeof edit === 'string') return edit;
+  const o = (edit && typeof edit === 'object') ? edit : {};
+  if (o[lang]) return o[lang];
+  if (base.quote[lang] && (!o.en || same(o.en, base.quote.en))) return base.quote[lang];
+  return o.en || base.quote[lang] || base.quote.en || '';
+}
+
 export const toLines = (text) => text.split(/\n\s*\n/).map((l) => l.trim()).filter(Boolean);
 
 // Everything showing on the site for one language, capped at MAX_TESTIMONIALS.
@@ -147,7 +165,7 @@ export function buildTestimonials(content, lang) {
     .filter((b) => !hidden.includes(b.slotId))
     .map((b) => {
       const o = over[b.slotId] || {};
-      const q = (o.quote && o.quote[lang]) || (lang !== 'en' && o.quote && o.quote.en) || quoteIn(b.quote, lang);
+      const q = builtInQuote(b, o, lang);
       return {
         slotId: b.slotId,
         avatarSlotId: avatarSlotId(b.slotId),
