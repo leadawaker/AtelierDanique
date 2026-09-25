@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { s } from '../../lib/css.js';
-import { normalizePhoto, usePhoto } from '../../lib/photos.js';
-import { PAINTING_FRAMES, buildTestimonials } from '../../lib/testimonials.js';
+import { usePhoto } from '../../lib/photos.js';
+import { buildTestimonials } from '../../lib/testimonials.js';
 import Slot from '../../components/Slot.jsx';
 import GoogleReviewsLink from './GoogleReviewsLink.jsx';
 
@@ -55,12 +55,6 @@ export default function Testimonials({ t, lang, compact, content }) {
 
 function Card({ t, item, style, hovered, onToggle, onEnter, onLeave }) {
   const avatar = usePhoto(item.avatarSlotId, item.avatar || undefined);
-  const painting = usePhoto(item.slotId);
-  const frame = PAINTING_FRAMES[item.slotId];
-  // Top-aligned so a wider frame cuts the bottom of the crop, never the top.
-  const framed = painting && frame && painting.url.includes(frame.match)
-    ? normalizePhoto({ url: painting.url, s: 1, fx: 0.5, fy: 0, crop: frame.crop })
-    : undefined;
   const onKey = (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); }
   };
@@ -77,7 +71,7 @@ function Card({ t, item, style, hovered, onToggle, onEnter, onLeave }) {
       style={s(style)}
     >
       <div className="tm-art">
-        <Slot slotId={item.slotId} photo={framed} placeholder="Photo of the client or their piece" alt={item.name ? t.tmPhotoAlt + ' ' + item.name : ''} />
+        <Slot slotId={item.slotId} placeholder="Photo of the client or their piece" alt={item.name ? t.tmPhotoAlt + ' ' + item.name : ''} />
       </div>
       <div className="tm-gap" aria-hidden="true"></div>
       <figcaption className="tm-panel">

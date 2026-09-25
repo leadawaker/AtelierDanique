@@ -16,6 +16,7 @@ function startContent() {
 export const CONTENT_KEYS = [
   'ad-gallery-extra',       // [{slotId, title:{en,pt,nl}, caption:{en,pt,nl}, category}]
   'ad-gallery-hidden',      // [slotId]
+  'ad-gallery-order',       // [slotId], Danique's drag-to-reorder order for the gallery
   'ad-gallery-text',        // {slotId: {title:{en,pt,nl}, caption:{en,pt,nl}}}
   'ad-photos',              // {slotId: {url, s, fx, fy}}  see photos.js
   'ad-gallery-settings',    // {height, gap, slatWidth, slatGap, radius, duration, interval, autoplay, hoverGrow}, see home/settings.js
@@ -33,6 +34,7 @@ export const CONTENT_KEYS = [
 export const EMPTY_CONTENT = {
   'ad-gallery-extra': [],
   'ad-gallery-hidden': [],
+  'ad-gallery-order': [],
   'ad-gallery-text': {},
   'ad-photos': {},
   'ad-gallery-settings': {},

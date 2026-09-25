@@ -1,26 +1,30 @@
 import { useState } from 'react';
 import { s } from '../../../lib/css.js';
-import { GALLERY, galleryDefaults } from '../../../lib/gallery.js';
+import { GALLERY, applyOrder, galleryDefaults } from '../../../lib/gallery.js';
 import EditableSlot from '../EditableSlot.jsx';
 import GallerySettingsDialog from '../GallerySettingsDialog.jsx';
 
 // "The gallery": the 11 built-in pieces (text overrides, hide / put back) and
-// the pieces Danique added herself (free text, remove).
+// the pieces Danique added herself (free text, remove), shown as one
+// drag-to-reorder list (ad-gallery-order).
 
 const LANGS = [{ id: 'en', label: 'English' }, { id: 'pt', label: 'Portuguese' }, { id: 'nl', label: 'Dutch' }];
 const FIELD = 'background:#FCFAF6;border:0;border-bottom:1px solid #D3C1A9;padding:8px 0;outline:none;font-weight:300;color:#26454F;width:100%;';
 const BADGE = 'font-size:11px;letter-spacing:.14em;text-transform:uppercase;';
 const ACTION = 'background:none;border:0;padding:12px 2px;min-height:44px;font-size:13px;cursor:pointer;transition:color .2s;color:';
-const CARD_ON = 'display:flex;flex-direction:column;gap:14px;border-radius:6px;padding:14px;transition:opacity .2s;background:#F1EFE8;border:1px solid #E2DED4';
-const CARD_OFF = 'display:flex;flex-direction:column;gap:14px;border-radius:6px;padding:14px;transition:opacity .2s;background:#F6F4EE;border:1px dashed #D3CFC4;opacity:.55';
+const CARD_ON = 'display:flex;flex-direction:column;gap:14px;border-radius:6px;padding:14px;transition:opacity .2s,box-shadow .2s;background:#F1EFE8;border:1px solid #E2DED4';
+const CARD_OFF = 'display:flex;flex-direction:column;gap:14px;border-radius:6px;padding:14px;transition:opacity .2s,box-shadow .2s;background:#F6F4EE;border:1px dashed #D3CFC4;opacity:.55';
+const MOVE_BTN = 'background:none;border:1px solid #D3CFC4;color:#26454F;width:32px;height:32px;border-radius:2px;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;';
 
 const pickLang = (v, id) => (typeof v === 'string' ? (id === 'en' ? v : '') : (v && v[id]) || '');
 
 export default function GalleryTab({ content, update }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [dragId, setDragId] = useState(null);
   const extras = content['ad-gallery-extra'] || [];
   const hidden = content['ad-gallery-hidden'] || [];
   const over = content['ad-gallery-text'] || {};
+  const order = content['ad-gallery-order'] || [];
   const photos = content['ad-photos'];
   const onPhotos = (next) => update('ad-photos', next);
 
@@ -36,11 +40,13 @@ export default function GalleryTab({ content, update }) {
     update('ad-gallery-text', next);
   };
 
-  const setOn = (i, key, id, value) => {
-    const next = extras.slice();
-    const cur = typeof next[i][key] === 'string' ? { en: next[i][key] } : { ...(next[i][key] || {}) };
-    cur[id] = value;
-    next[i] = { ...next[i], [key]: cur };
+  const setOn = (slotId, key, id, value) => {
+    const next = extras.map((e) => {
+      if (e.slotId !== slotId) return e;
+      const cur = typeof e[key] === 'string' ? { en: e[key] } : { ...(e[key] || {}) };
+      cur[id] = value;
+      return { ...e, [key]: cur };
+    });
     update('ad-gallery-extra', next);
   };
 
@@ -51,11 +57,39 @@ export default function GalleryTab({ content, update }) {
     category: '',
   }]));
 
-  const removePiece = (i) => {
-    const name = pickLang(extras[i].title, 'en');
+  const removePiece = (slotId) => {
+    const piece = extras.find((e) => e.slotId === slotId);
+    const name = piece && pickLang(piece.title, 'en');
     const label = name ? '"' + name + '"' : 'this piece';
     if (!window.confirm('Remove ' + label + ' from the website? This cannot be undone.')) return;
-    update('ad-gallery-extra', extras.filter((_, j) => j !== i));
+    update('ad-gallery-extra', extras.filter((e) => e.slotId !== slotId));
+  };
+
+  // One combined, ordered list: the 11 built-ins (any order, hidden ones
+  // included so they can still be put back) then the pieces Danique added.
+  const cards = applyOrder(
+    GALLERY.map((g) => ({ kind: 'base', slotId: g.slotId, base: g }))
+      .concat(extras.map((e) => ({ kind: 'extra', slotId: e.slotId, extra: e }))),
+    order
+  );
+
+  const reorder = (fromId, toId) => {
+    if (fromId === toId) return;
+    const ids = cards.map((c) => c.slotId);
+    const from = ids.indexOf(fromId);
+    const to = ids.indexOf(toId);
+    if (from === -1 || to === -1) return;
+    ids.splice(to, 0, ids.splice(from, 1)[0]);
+    update('ad-gallery-order', ids);
+  };
+
+  const moveBy = (slotId, delta) => {
+    const ids = cards.map((c) => c.slotId);
+    const i = ids.indexOf(slotId);
+    const j = i + delta;
+    if (i === -1 || j < 0 || j >= ids.length) return;
+    [ids[i], ids[j]] = [ids[j], ids[i]];
+    update('ad-gallery-order', ids);
   };
 
   const hiddenBase = hidden.filter((id) => GALLERY.some((g) => g.slotId === id));
@@ -80,7 +114,7 @@ export default function GalleryTab({ content, update }) {
           style={s('background:none;border:1px solid #D3CFC4;color:#26454F;padding:14px 22px;font-size:14px;border-radius:2px;cursor:pointer;min-height:44px')}>
           Gallery settings
         </button>
-        <p style={s('margin:0;font-size:13px;color:#85949A;font-weight:300')}>New pieces appear at the end of the carousel.</p>
+        <p style={s('margin:0;font-size:13px;color:#85949A;font-weight:300')}>Drag a piece by its photo, or use the arrows, to change the order it shows in.</p>
       </div>
 
       {settingsOpen && (
@@ -92,67 +126,92 @@ export default function GalleryTab({ content, update }) {
       )}
 
       <div style={s('display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:clamp(18px,2.4vw,28px)')}>
-        {GALLERY.map((g) => {
-          const off = hidden.includes(g.slotId);
-          const o = over[g.slotId] || {};
+        {cards.map((c, i) => {
+          if (c.kind === 'base') {
+            const g = c.base;
+            const off = hidden.includes(g.slotId);
+            const o = over[g.slotId] || {};
+            return (
+              <Card
+                key={g.slotId}
+                slotId={g.slotId}
+                cardStyle={off ? CARD_OFF : CARD_ON}
+                placeholder={g.placeholder}
+                photos={photos}
+                onPhotos={onPhotos}
+                dragId={dragId}
+                setDragId={setDragId}
+                onReorder={reorder}
+                onMoveEarlier={i > 0 ? () => moveBy(g.slotId, -1) : null}
+                onMoveLater={i < cards.length - 1 ? () => moveBy(g.slotId, 1) : null}
+                fields={LANGS.map((l) => {
+                  const def = galleryDefaults(g.slotId, l.id);
+                  return {
+                    ...l,
+                    title: (o.title && o.title[l.id]) || def.title,
+                    caption: (o.caption && o.caption[l.id]) || def.caption,
+                    setTitle: (v) => setOver(g.slotId, 'title', l.id, v, def.title),
+                    setCaption: (v) => setOver(g.slotId, 'caption', l.id, v, def.caption),
+                  };
+                })}
+                badge={off ? 'Hidden' : 'On the website'}
+                badgeColor={off ? '#C0503B' : '#A4AFB3'}
+                action={off ? 'Put back' : 'Hide'}
+                actionColor={off ? '#E36B54' : '#A4AFB3'}
+                onAction={() => update('ad-gallery-hidden', off ? hidden.filter((id) => id !== g.slotId) : hidden.concat([g.slotId]))}
+              />
+            );
+          }
+          const e = c.extra;
           return (
             <Card
-              key={g.slotId}
-              cardStyle={off ? CARD_OFF : CARD_ON}
-              slotId={g.slotId}
-              placeholder={g.placeholder}
+              key={e.slotId}
+              slotId={e.slotId}
+              cardStyle={CARD_ON}
+              placeholder="Drop the artwork photo"
               photos={photos}
               onPhotos={onPhotos}
-              fields={LANGS.map((l) => {
-                const def = galleryDefaults(g.slotId, l.id);
-                return {
-                  ...l,
-                  title: (o.title && o.title[l.id]) || def.title,
-                  caption: (o.caption && o.caption[l.id]) || def.caption,
-                  setTitle: (v) => setOver(g.slotId, 'title', l.id, v, def.title),
-                  setCaption: (v) => setOver(g.slotId, 'caption', l.id, v, def.caption),
-                };
-              })}
-              badge={off ? 'Hidden' : 'On the website'}
-              badgeColor={off ? '#C0503B' : '#A4AFB3'}
-              action={off ? 'Put back' : 'Hide'}
-              actionColor={off ? '#E36B54' : '#A4AFB3'}
-              onAction={() => update('ad-gallery-hidden', off ? hidden.filter((id) => id !== g.slotId) : hidden.concat([g.slotId]))}
+              dragId={dragId}
+              setDragId={setDragId}
+              onReorder={reorder}
+              onMoveEarlier={i > 0 ? () => moveBy(e.slotId, -1) : null}
+              onMoveLater={i < cards.length - 1 ? () => moveBy(e.slotId, 1) : null}
+              fields={LANGS.map((l) => ({
+                ...l,
+                title: pickLang(e.title, l.id),
+                caption: pickLang(e.caption, l.id),
+                setTitle: (v) => setOn(e.slotId, 'title', l.id, v),
+                setCaption: (v) => setOn(e.slotId, 'caption', l.id, v),
+              }))}
+              badge="Added by you"
+              badgeColor="#A4AFB3"
+              action="Remove"
+              actionColor="#A4AFB3"
+              onAction={() => removePiece(e.slotId)}
             />
           );
         })}
-        {extras.map((e, i) => (
-          <Card
-            key={e.slotId}
-            cardStyle={CARD_ON}
-            slotId={e.slotId}
-            placeholder="Drop the artwork photo"
-            photos={photos}
-            onPhotos={onPhotos}
-            fields={LANGS.map((l) => ({
-              ...l,
-              title: pickLang(e.title, l.id),
-              caption: pickLang(e.caption, l.id),
-              setTitle: (v) => setOn(i, 'title', l.id, v),
-              setCaption: (v) => setOn(i, 'caption', l.id, v),
-            }))}
-            badge="Added by you"
-            badgeColor="#A4AFB3"
-            action="Remove"
-            actionColor="#A4AFB3"
-            onAction={() => removePiece(i)}
-          />
-        ))}
       </div>
     </section>
   );
 }
 
-function Card({ cardStyle, slotId, placeholder, photos, onPhotos, fields, badge, badgeColor, action, actionColor, onAction }) {
+function Card({ slotId, cardStyle, placeholder, photos, onPhotos, fields, badge, badgeColor, action, actionColor, onAction,
+  dragId, setDragId, onReorder, onMoveEarlier, onMoveLater }) {
+  const dragging = dragId === slotId;
   return (
-    <div style={s(cardStyle)}>
-      <div style={s('position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden;background:#E3E1D8')}>
-        <EditableSlot slotId={slotId} placeholder={placeholder} radius={6} photos={photos} onChange={onPhotos} croppable />
+    <div
+      style={s(cardStyle + (dragging ? ';opacity:.4' : ''))}
+      onDragOver={(ev) => { if (dragId && dragId !== slotId) ev.preventDefault(); }}
+      onDrop={(ev) => { ev.preventDefault(); if (dragId) { onReorder(dragId, slotId); setDragId(null); } }}
+    >
+      <div
+        draggable
+        onDragStart={() => setDragId(slotId)}
+        onDragEnd={() => setDragId(null)}
+        style={s('position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden;background:#E3E1D8;cursor:grab;')}
+      >
+        <EditableSlot slotId={slotId} placeholder={placeholder} radius={6} photos={photos} onChange={onPhotos} />
       </div>
       <div style={s('display:grid;gap:14px')}>
         {fields.map((f) => (
@@ -166,6 +225,12 @@ function Card({ cardStyle, slotId, placeholder, photos, onPhotos, fields, badge,
         ))}
       </div>
       <div style={s('display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #E2DED4;padding-top:4px')}>
+        <div style={s('display:flex;gap:6px')}>
+          <button type="button" onClick={onMoveEarlier} disabled={!onMoveEarlier} aria-label="Move earlier in the gallery"
+            style={s(MOVE_BTN + (onMoveEarlier ? '' : 'opacity:.35;cursor:default;'))}>‹</button>
+          <button type="button" onClick={onMoveLater} disabled={!onMoveLater} aria-label="Move later in the gallery"
+            style={s(MOVE_BTN + (onMoveLater ? '' : 'opacity:.35;cursor:default;'))}>›</button>
+        </div>
         <span style={s(BADGE + 'color:' + badgeColor)}>{badge}</span>
         <button type="button" onClick={onAction} className="h-color-coral" style={s(ACTION + actionColor)}>{action}</button>
       </div>

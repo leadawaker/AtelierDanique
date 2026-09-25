@@ -3,6 +3,7 @@
 export const CONTENT_TYPES = {
   "ad-gallery-extra": "array",
   "ad-gallery-hidden": "array",
+  "ad-gallery-order": "array",
   "ad-gallery-text": "object",
   "ad-photos": "object",
   "ad-gallery-settings": "object",

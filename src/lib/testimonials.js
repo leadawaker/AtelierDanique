@@ -103,19 +103,6 @@ const RAW_TESTIMONIALS = [
 
 export const MAX_TESTIMONIALS = 6;
 
-// How each testimonial painting is framed on its card: the photos show the
-// painting lying on wood or paper, so `crop` (fractions of the upload) cuts to
-// the painting alone, aimed at the part that makes the card recognisable
-// (bell tower top, surfboards and sky, the face). Each entry only applies while
-// the slot still holds that exact upload (`match` is part of its file name):
-// a new photo uploaded in the studio falls back to the studio's own framing.
-export const PAINTING_FRAMES = {
-  'ad-t1': { match: 'ad-t1-LECpPMRgtdRsWykts9oIE0xEMS8hrK', crop: { x: 0.3458, y: 0.1200, w: 0.4655, h: 0.7650 } },
-  'ad-t2': { match: 'ad-t2-UrrWWf2wmPzI50jyifWhoIfGyKMS5G', crop: { x: 0.2793, y: 0.2013, w: 0.6185, h: 0.5571 } },
-  'ad-t3': { match: 'ad-t3-RXqdoVVXT5P5lRb7ptzBxj7AvNNO3C', crop: { x: 0.4289, y: 0.3686, w: 0.3000, h: 0.2700 } },
-  'ad-t4': { match: 'ad-t4-mA9Rf1khSx48XxlFbPW7ZwX6Nghs6U', crop: { x: 0.5350, y: 0.1180, w: 0.3200, h: 0.6825 } },
-};
-
 export const BASE_TESTIMONIALS = RAW_TESTIMONIALS.map((r) => ({
   slotId: r.slotId,
   quote: {

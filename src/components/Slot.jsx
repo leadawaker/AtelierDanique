@@ -10,6 +10,7 @@ export default function Slot({ slotId, src, focus, placeholder = '', alt = '', r
   const photo = forced || looked;
   const frameRef = useRef(null);
   const [ratios, setRatios] = useState(null);
+  const [failedUrl, setFailedUrl] = useState(null);
   const plain = !photo || isPlain(photo);
 
   useEffect(() => {
@@ -43,8 +44,10 @@ export default function Slot({ slotId, src, focus, placeholder = '', alt = '', r
   }
 
   // A cropped photo stays invisible until it can be placed: shown uncropped
-  // for a moment, the part she cut away would flash up first.
-  let imgStyle = { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: photo.crop ? 0 : 1 };
+  // for a moment, the part she cut away would flash up first. If it never
+  // loads, show it anyway rather than leaving an empty grey frame.
+  const hide = photo.crop && failedUrl !== photo.url;
+  let imgStyle = { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: hide ? 0 : 1 };
   if (!plain && ratios && ratios.frame && ratios.image) {
     const box = imageBox(photo, ratios.image, ratios.frame);
     imgStyle = {
@@ -67,6 +70,7 @@ export default function Slot({ slotId, src, focus, placeholder = '', alt = '', r
           const { naturalWidth: w, naturalHeight: h } = e.currentTarget;
           if (w && h) setRatios((prev) => ({ ...prev, image: w / h }));
         }}
+        onError={() => setFailedUrl(photo.url)}
         style={imgStyle}
       />
     </div>

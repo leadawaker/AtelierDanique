@@ -19,16 +19,30 @@ export const GALLERY = [
 
 const pickLang = (v, lang) => (typeof v === 'string' ? (lang === 'en' ? v : '') : (v && v[lang]) || '');
 
+// Danique's chosen display order (an array of slotIds, from the studio's
+// drag-to-reorder list) applied on top of a list of {slotId, ...}. A piece
+// not mentioned in `order` yet (just added, or just put back from hidden)
+// falls in at the end, in the order it already had.
+export function applyOrder(items, order) {
+  if (!order || !order.length) return items;
+  const bySlot = new Map(items.map((it) => [it.slotId, it]));
+  const ordered = order.map((id) => bySlot.get(id)).filter(Boolean);
+  const seen = new Set(ordered.map((it) => it.slotId));
+  return ordered.concat(items.filter((it) => !seen.has(it.slotId)));
+}
+
 // The pieces showing on the site for one language: base pieces minus hidden,
-// with text overrides applied, then the pieces Danique added.
+// with text overrides applied, then the pieces Danique added, in Danique's
+// chosen order.
 // Shapes: extra = [{slotId, title:{en,pt,nl}, caption:{en,pt,nl}, category}],
-// hidden = [slotId], text = {slotId: {title:{..}, caption:{..}}}.
+// hidden = [slotId], text = {slotId: {title:{..}, caption:{..}}}, order = [slotId].
 export function buildGallery(content, lang) {
   const t = STRINGS[lang] || STRINGS.en;
   const over = content['ad-gallery-text'] || {};
   const hidden = content['ad-gallery-hidden'] || [];
   const extras = content['ad-gallery-extra'] || [];
-  return GALLERY
+  const order = content['ad-gallery-order'] || [];
+  const items = GALLERY
     .map((g, i) => {
       const o = over[g.slotId] || {};
       return {
@@ -45,6 +59,7 @@ export function buildGallery(content, lang) {
       title: pickLang(e.title, lang) || pickLang(e.title, 'en'),
       caption: pickLang(e.caption, lang) || pickLang(e.caption, 'en'),
     })));
+  return applyOrder(items, order);
 }
 
 // Built-in default text for a base piece, used by the studio as the fallback.

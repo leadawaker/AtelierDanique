@@ -20,11 +20,16 @@ import DEFAULT_PHOTOS from './defaultPhotos.json';
 
 export const PhotosContext = createContext({});
 
+// Gallery and testimonial photos are cropped before upload, so a crop saved
+// there earlier is ignored and the whole photo shows.
+const NO_CROP = /^ad-(gal|t)-|^ad-t\d/;
+
 export function resolvePhoto(photos, slotId, fallbackSrc, fallbackFocus) {
   const own = photos && photos[slotId];
-  if (own && own.url) return normalizePhoto(own);
+  const strip = (p) => (NO_CROP.test(slotId) ? { ...p, crop: undefined } : p);
+  if (own && own.url) return normalizePhoto(strip(own));
   const def = DEFAULT_PHOTOS[slotId];
-  if (def && def.url) return normalizePhoto(def);
+  if (def && def.url) return normalizePhoto(strip(def));
   if (fallbackSrc) return normalizePhoto({ url: fallbackSrc, ...fallbackFocus });
   return null;
 }
