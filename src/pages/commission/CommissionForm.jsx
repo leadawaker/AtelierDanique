@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { s } from '../../lib/css.js';
 import { LINKS, whatsappLink } from '../home/settings.js';
-import { currencyFor, formatMoney, sitePricing } from '../../lib/pricing.js';
+import { SIZE_IDS, currencyFor, formatMoney, sitePricing } from '../../lib/pricing.js';
 import { pathFor } from '../../lib/routes.js';
 import PhotoField from './PhotoField.jsx';
 import { sendByEmail } from './send.js';
@@ -15,10 +15,7 @@ import { sendByEmail } from './send.js';
 function sizesFor(content, lang) {
   const pricing = sitePricing(content);
   const currency = currencyFor(lang);
-  return [
-    { label: 'A5', price: formatMoney(pricing.a5[currency], currency) },
-    { label: 'A4', price: formatMoney(pricing.a4[currency], currency) },
-  ];
+  return SIZE_IDS.map((id) => ({ label: id.toUpperCase(), price: formatMoney(pricing[id][currency], currency) }));
 }
 
 const EMPTY = { name: '', contact: '', what: '', why: '', feel: '', extra: '' };

@@ -18,9 +18,19 @@ const INCLUDED = [
   { key: 'inc9', icon: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" /><path d="m9 12 2 2 4-4" /></> },
 ];
 
+// The three sizes, smallest first. A3 is the newest and largest.
+const SIZE_CARDS = [
+  { id: 'a5', size: 'A5', dims: '148 × 210 mm', src: '/uploads/a5-sheet.jpg', desc: 'priceDescA5' },
+  { id: 'a4', size: 'A4', dims: '210 × 297 mm', src: '/uploads/a4-sheet.jpg', desc: 'priceDescA4', focus: A4_PHOTO_FOCUS, popular: true },
+  { id: 'a3', size: 'A3', dims: '297 × 420 mm', src: '/uploads/a3-sheet.jpg', desc: 'priceDescA3' },
+];
+
 const CORAL = '#C0503B';
 const LINE = '#E3BFB1';
 const PHOTO_BOX = 'position:relative;width:100%;aspect-ratio:3/4;border-radius:6px;overflow:hidden';
+const PHOTO_BOX_ROW = 'position:relative;flex:0 0 96px;align-self:stretch;min-height:128px;border-radius:6px;overflow:hidden';
+const NAME = "font-family:'Cardo',serif;font-weight:400;font-size:clamp(30px,3vw,36px);line-height:1;color:#26454F";
+const DESC = "font-family:'Cardo',serif;font-size:17px;line-height:1.5;color:#5E6C71";
 const PRICE = "margin:0;font-family:'Cardo',serif;font-size:clamp(38px,4vw,52px);line-height:1;color:" + CORAL;
 const CAPS = 'margin:0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:' + CORAL;
 const STROKE = { fill: 'none', stroke: CORAL, strokeWidth: 1.3, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', style: s('flex-shrink:0') };
@@ -78,18 +88,50 @@ function LaunchBanner({ banner, compact }) {
   );
 }
 
-function PriceCard({ slotId, src, focus, placeholder, alt, size, dims, desc, price, label, badge }) {
+// One size, the full card: photo on top, then the size, the paper size, the
+// description and the price. Under 1000px (compact) it becomes a short row
+// instead: a small photo on the left, everything else beside it, so all three
+// sizes fit on roughly one phone screen and are easy to compare.
+function PriceCard({ slotId, src, focus, placeholder, alt, size, dims, desc, price, label, badge, compact }) {
+  const border = badge ? '#E36B54' : '#EAE4DA';
+  const photo = (
+    <div style={s(compact ? PHOTO_BOX_ROW : PHOTO_BOX)}>
+      <Slot slotId={slotId} src={src} focus={focus} placeholder={placeholder} alt={alt} />
+    </div>
+  );
+  const name = <h3 style={s(NAME + (compact ? ';margin:0' : ';margin:22px 0 0'))}>{size}</h3>;
+  const dimsLine = <p style={s('margin:0;font-size:13px;letter-spacing:.14em;color:#5E6C71')}>{dims}</p>;
+  const description = <p style={s(DESC + (compact ? ';margin:8px 0 0;max-width:none;font-size:15px' : ';flex:1 1 auto;margin:14px 0 0;max-width:30ch;text-wrap:balance'))}>{desc}</p>;
+
+  if (compact) {
+    return (
+      <div style={s('background:#FFFFFF;border:1px solid ' + border + ';border-radius:10px;box-shadow:0 6px 20px rgba(38,69,79,.07);padding:16px;display:flex;gap:16px;align-items:stretch;position:relative')}>
+        {photo}
+        <div style={s('flex:1 1 auto;min-width:0;display:flex;flex-direction:column')}>
+          <div style={s('display:flex;align-items:baseline;justify-content:space-between;gap:10px')}>
+            {name}
+            <p style={s(PRICE + ';font-size:30px')}>{price}</p>
+          </div>
+          <div style={s('display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:6px')}>
+            {dimsLine}
+            {label ? <p style={s(CAPS + ';font-size:11px')}>{label}</p> : null}
+          </div>
+          {description}
+          {badge ? <p style={s(CAPS + ';margin-top:10px;font-size:11px')}>{badge}</p> : null}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div style={s('background:#FFFFFF;border:1px solid ' + (badge ? '#E36B54' : '#EAE4DA') + ';border-radius:10px;box-shadow:0 10px 30px rgba(38,69,79,.08);padding:clamp(24px,3vw,32px);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative')}>
+    <div style={s('background:#FFFFFF;border:1px solid ' + border + ';border-radius:10px;box-shadow:0 10px 30px rgba(38,69,79,.08);padding:clamp(24px,3vw,32px);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative')}>
       {badge ? (
         <span style={s('position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:' + CORAL + ';color:#FCFAF6;padding:7px 18px;border-radius:999px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap')}>{badge}</span>
       ) : null}
-      <div style={s(PHOTO_BOX)}>
-        <Slot slotId={slotId} src={src} focus={focus} placeholder={placeholder} alt={alt} />
-      </div>
-      <h3 style={s("margin:22px 0 0;font-family:'Cardo',serif;font-weight:400;font-size:clamp(30px,3vw,36px);line-height:1;color:#26454F")}>{size}</h3>
+      {photo}
+      {name}
       <p style={s('margin:10px 0 0;font-size:13px;letter-spacing:.14em;color:#5E6C71')}>{dims}</p>
-      <p style={s("flex:1 1 auto;margin:14px 0 0;max-width:30ch;font-family:'Cardo',serif;font-size:17px;line-height:1.5;color:#5E6C71;text-wrap:balance")}>{desc}</p>
+      {description}
       <p style={s(PRICE + ';margin-top:22px')}>{price}</p>
       {label ? <p style={s(CAPS + ';margin-top:8px')}>{label}</p> : null}
     </div>
@@ -116,11 +158,17 @@ export default function Pricing({ t, lang, content, compact }) {
 
         {banner ? <LaunchBanner banner={banner} compact={compact} /> : null}
 
-        <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,2.6vw,36px);max-width:1000px;margin:0 auto clamp(32px,4vw,48px)')}>
-          <PriceCard slotId="ad-price-a5" src="/uploads/a5-sheet.jpg" placeholder="A5 paper photo" alt={t.sheetAlt.replace('{size}', 'A5')}
-            size="A5" dims="148 × 210 mm" desc={t.priceDescA5} price={formatMoney(pricing.a5[currency], currency)} label={label} />
-          <PriceCard slotId="ad-price-a4" src="/uploads/a4-sheet.jpg" focus={A4_PHOTO_FOCUS} placeholder="A4 paper photo" alt={t.sheetAlt.replace('{size}', 'A4')}
-            size="A4" dims="210 × 297 mm" desc={t.priceDescA4} price={formatMoney(pricing.a4[currency], currency)} label={label} badge={t.popularLabel} />
+        <div style={s(compact
+          ? 'display:flex;flex-direction:column;gap:14px;max-width:560px;margin:0 auto clamp(32px,4vw,48px)'
+          : 'display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.2vw,32px);max-width:1180px;margin:0 auto clamp(32px,4vw,48px)')}>
+          {SIZE_CARDS.map((card) => (
+            <PriceCard key={card.id} compact={compact}
+              slotId={'ad-price-' + card.id} src={card.src} focus={card.focus}
+              placeholder={card.size + ' paper photo'} alt={t.sheetAlt.replace('{size}', card.size)}
+              size={card.size} dims={card.dims} desc={t[card.desc]}
+              price={formatMoney(pricing[card.id][currency], currency)} label={label}
+              badge={card.popular ? t.popularLabel : null} />
+          ))}
         </div>
 
         <div style={s('max-width:720px;margin:0 auto;border-top:1px solid #D3CFC4;padding-top:clamp(24px,3vw,36px)')}>

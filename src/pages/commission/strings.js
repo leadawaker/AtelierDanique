@@ -6,7 +6,7 @@ export const STRINGS = {
   en: {
     back: 'Back to the website',
     eyebrow: 'Start your commission', title1: 'Tell me about', title2: 'your moment.',
-    intro: "A few questions and the size you'd like, then send it to me by email or on WhatsApp. Artworks are made in A5 and A4. I'll confirm the price with you before anything is started.",
+    intro: "A few questions and the size you'd like, then send it to me by email or on WhatsApp. Artworks are made in A5, A4 and A3. I'll confirm the price with you before anything is started.",
     secureT: 'Secure & private', secureB: 'Your photos are only used for your artwork.',
     fastT: 'Fast response', fastB: 'Usually within the same day.',
     studioT: 'Studio', studioB: "'s-Hertogenbosch, the Netherlands",
@@ -37,7 +37,7 @@ export const STRINGS = {
   pt: {
     back: 'Voltar ao site',
     eyebrow: 'Comece sua encomenda', title1: 'Conte-me sobre', title2: 'o seu momento.',
-    intro: 'Algumas perguntas e o tamanho que você prefere, depois é só me enviar por e-mail ou pelo WhatsApp. As obras são feitas em A5 e A4. Confirmo o preço com você antes de começar qualquer coisa.',
+    intro: 'Algumas perguntas e o tamanho que você prefere, depois é só me enviar por e-mail ou pelo WhatsApp. As obras são feitas em A5, A4 e A3. Confirmo o preço com você antes de começar qualquer coisa.',
     secureT: 'Seguro e privado', secureB: 'Suas fotos são usadas apenas para a sua obra.',
     fastT: 'Resposta rápida', fastB: 'Normalmente no mesmo dia.',
     studioT: 'Ateliê', studioB: "'s-Hertogenbosch, Holanda",
@@ -68,7 +68,7 @@ export const STRINGS = {
   nl: {
     back: 'Terug naar de website',
     eyebrow: 'Start je opdracht', title1: 'Vertel me over', title2: 'jouw moment.',
-    intro: 'Een paar vragen en het formaat dat je wilt, daarna stuur je het me per e-mail of via WhatsApp. Werken worden gemaakt in A5 en A4. Ik bevestig de prijs met je voordat er iets begint.',
+    intro: 'Een paar vragen en het formaat dat je wilt, daarna stuur je het me per e-mail of via WhatsApp. Werken worden gemaakt in A5, A4 en A3. Ik bevestig de prijs met je voordat er iets begint.',
     secureT: 'Veilig & privé', secureB: "Je foto's worden alleen voor jouw werk gebruikt.",
     fastT: 'Snel antwoord', fastB: 'Meestal dezelfde dag.',
     studioT: 'Atelier', studioB: "'s-Hertogenbosch, Nederland",

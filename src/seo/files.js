@@ -23,7 +23,7 @@ export function llmsTxt(content) {
 
 > Handmade watercolour and ink paintings of meaningful places, painted by Danique from the client's photo and story. Studio in 's-Hertogenbosch, the Netherlands. Ships worldwide.
 
-- Sizes and prices: A5 ${formatMoney(p.a5.eur, 'eur')}, A4 ${formatMoney(p.a4.eur, 'eur')} (unframed, 300g cotton paper)
+- Sizes and prices: A5 ${formatMoney(p.a5.eur, 'eur')}, A4 ${formatMoney(p.a4.eur, 'eur')}, A3 ${formatMoney(p.a3.eur, 'eur')} (unframed, 300g cotton paper)
 - Turnaround: 5 working days, plus shipping
 - Shipping: ${formatMoney(5, 'eur')} Netherlands, ${formatMoney(10, 'eur')} Europe and UK, ${formatMoney(15, 'eur')} rest of the world, free pickup in 's-Hertogenbosch
 - Payment: half up front, the rest when the painting is finished, before shipping

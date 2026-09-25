@@ -25,7 +25,7 @@ export const CONTENT_KEYS = [
   'ad-video-url',           // string, Vimeo or YouTube link, '' = none
   'ad-hero-layout',         // 'banner' | 'split'
   'ad-copy',                // {stringKey: {en, pt, nl}}
-  'ad-pricing',             // {a5, a4: {eur, brl}, spotsTotal, spotsLeft}  see lib/pricing.js
+  'ad-pricing',             // {a5, a4, a3: {eur, brl}, spotsTotal, spotsLeft}  see lib/pricing.js
   'ad-google-reviews',      // {enabled, url}  Google review link under testimonials
   'ad-hero-palette',        // {enabled}  paint palette on the phone hero, on unless enabled is false
 ];

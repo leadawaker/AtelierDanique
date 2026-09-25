@@ -12,7 +12,7 @@ export const TERMS = {
     ],
     sections: [
       { h: 'Your commission', p: [
-        'You send me a photo and a few words about why it matters. Nothing is binding until we agree the photo, the size (A5 148 × 210 mm or A4 210 × 297 mm) and the price, and I always confirm the price with you first.',
+        'You send me a photo and a few words about why it matters. Nothing is binding until we agree the photo, the size (A5 148 × 210 mm, A4 210 × 297 mm or A3 297 × 420 mm) and the price, and I always confirm the price with you first.',
         'Each painting is watercolour and ink on 300 g cotton paper, unframed and signed by hand. It is painted from your photo in my own style, so it is one of a kind rather than an exact copy, and colours can look different on your screen. Please only send photos you have the right to use. If a photo will not work well, I will tell you honestly and help you choose another.',
       ] },
       { h: 'Paying', p: [
@@ -56,7 +56,7 @@ export const TERMS = {
     ],
     sections: [
       { h: 'Jouw opdracht', p: [
-        'Je stuurt me een foto en een paar woorden over waarom die ertoe doet. Niets is bindend zolang we de foto, het formaat (A5 148 × 210 mm of A4 210 × 297 mm) en de prijs niet hebben afgesproken, en ik bevestig de prijs altijd eerst met je.',
+        'Je stuurt me een foto en een paar woorden over waarom die ertoe doet. Niets is bindend zolang we de foto, het formaat (A5 148 × 210 mm, A4 210 × 297 mm of A3 297 × 420 mm) en de prijs niet hebben afgesproken, en ik bevestig de prijs altijd eerst met je.',
         'Elk schilderij is aquarel en inkt op 300 g katoenpapier, zonder lijst en met de hand gesigneerd. Het is geschilderd naar je foto in mijn eigen stijl, dus uniek in plaats van een exacte kopie, en kleuren kunnen op jouw scherm anders overkomen. Stuur alleen foto’s waarvan je het recht hebt ze te gebruiken. Werkt een foto niet goed, dan zeg ik dat eerlijk en help ik je een andere kiezen.',
       ] },
       { h: 'Betalen', p: [
@@ -100,7 +100,7 @@ export const TERMS = {
     ],
     sections: [
       { h: 'A sua encomenda', p: [
-        'Você me envia uma foto e algumas palavras sobre por que ela importa. Nada obriga ninguém até combinarmos a foto, o tamanho (A5 148 × 210 mm ou A4 210 × 297 mm) e o preço, e eu sempre confirmo o preço com você primeiro.',
+        'Você me envia uma foto e algumas palavras sobre por que ela importa. Nada obriga ninguém até combinarmos a foto, o tamanho (A5 148 × 210 mm, A4 210 × 297 mm ou A3 297 × 420 mm) e o preço, e eu sempre confirmo o preço com você primeiro.',
         'Cada obra é aquarela e nanquim em papel de algodão 300 g, sem moldura e assinada à mão. Ela é pintada a partir da sua foto no meu próprio estilo, então é única em vez de uma cópia exata, e as cores podem parecer diferentes na sua tela. Envie apenas fotos que você tenha o direito de usar. Se uma foto não funcionar bem, eu digo com sinceridade e ajudo você a escolher outra.',
       ] },
       { h: 'Pagamento', p: [

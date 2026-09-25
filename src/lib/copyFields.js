@@ -41,6 +41,7 @@ export const COPY_GROUPS = [
     { key: 'popularLabel', label: 'Badge on the A4 card' },
     { key: 'priceDescA5', label: 'A5 description', long: true },
     { key: 'priceDescA4', label: 'A4 description', long: true },
+    { key: 'priceDescA3', label: 'A3 description', long: true },
     { key: 'priceLabel', label: 'Small label under each price' },
     { key: 'included', label: "\"What's included\" heading" },
     { key: 'inc1', label: 'Included 1' }, { key: 'inc2', label: 'Included 2' },

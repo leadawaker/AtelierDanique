@@ -1,5 +1,5 @@
 import { s } from '../../../lib/css.js';
-import { NOTE_LANGS, launchBanner, sitePricing } from '../../../lib/pricing.js';
+import { NOTE_LANGS, SIZE_IDS, launchBanner, sitePricing } from '../../../lib/pricing.js';
 import { STRINGS } from '../../../lib/strings.js';
 
 // Pricing tab: the euro and reais price per size, and the launch banner above
@@ -18,10 +18,7 @@ const INPUT = 'background:#FCFAF6;border:1px solid #D3CFC4;border-radius:2px;pad
 
 const LANG_NAMES = { en: 'English', pt: 'Português', nl: 'Nederlands' };
 
-const SIZES = [
-  { id: 'a5', name: 'A5' },
-  { id: 'a4', name: 'A4' },
-];
+const SIZES = SIZE_IDS.map((id) => ({ id, name: id.toUpperCase() }));
 
 const toNumber = (raw) => {
   const num = raw === '' ? null : Number(raw);
@@ -82,7 +79,7 @@ export default function PricingTab({ content, update }) {
 
         <p style={s('margin:0 0 6px;font-size:15px')}>Text in the launch banner</p>
         <p style={s(NOTE + ';margin-bottom:18px;max-width:64ch')}>
-          Write {'{total}'} where the total number of spots goes, {'{left}'} where the spots still available go and {'{prices}'} where the current prices go (for example €65–€90, filled in from the prices above). Each line of the box becomes a line in the banner. The title and the "spots remaining" label next to the number are in the Copy tab. Leave a box empty to go back to the original text.
+          Write {'{total}'} where the total number of spots goes, {'{left}'} where the spots still available go and {'{prices}'} where the current prices go (for example €65–€150, filled in from the prices above). Each line of the box becomes a line in the banner. The title and the "spots remaining" label next to the number are in the Copy tab. Leave a box empty to go back to the original text.
         </p>
         <div style={s('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(18px,2.4vw,28px)')}>
           {NOTE_LANGS.map((lang) => {

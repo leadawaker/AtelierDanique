@@ -12,11 +12,16 @@ export const BRL_MULTIPLIER = 6;
 export const DEFAULT_PRICING = {
   a5: { eur: 65, brl: 65 * BRL_MULTIPLIER },
   a4: { eur: 90, brl: 90 * BRL_MULTIPLIER },
+  a3: { eur: 150, brl: 150 * BRL_MULTIPLIER },
   spotsTotal: 7,
   spotsLeft: 5,
 };
 
 export const NOTE_LANGS = ['en', 'pt', 'nl'];
+
+// The three paper sizes, smallest first: the order the price cards, the
+// commission form's buttons and the studio's Pricing tab all follow.
+export const SIZE_IDS = ['a5', 'a4', 'a3'];
 
 // The A4 card's photo starts 20% zoomed in inside its frame (s = 1.2 around
 // the paper). Used by the page and by the studio's Photos tab, so both show
@@ -44,6 +49,7 @@ export function sitePricing(content) {
   return {
     a5: sizePricing(raw.a5, DEFAULT_PRICING.a5),
     a4: sizePricing(raw.a4, DEFAULT_PRICING.a4),
+    a3: sizePricing(raw.a3, DEFAULT_PRICING.a3),
     spotsTotal: num(raw.spotsTotal, DEFAULT_PRICING.spotsTotal),
     spotsLeft: num(raw.spotsLeft, DEFAULT_PRICING.spotsLeft),
     banner: bannerTexts(raw.banner),
@@ -61,9 +67,9 @@ const spotsLeft = (pricing) => Math.max(0, Math.round(pricing.spotsLeft || 0));
 
 export const launchActive = (pricing) => spotsLeft(pricing) > 0;
 
-// "€65–€90": the lowest and highest price in the visitor's currency.
+// "€65–€150": the lowest and highest price in the visitor's currency.
 export function priceRange(pricing, currency) {
-  const values = [pricing.a5[currency], pricing.a4[currency]].filter((v) => typeof v === 'number');
+  const values = SIZE_IDS.map((id) => pricing[id][currency]).filter((v) => typeof v === 'number');
   if (!values.length) return '';
   const lo = Math.min(...values);
   const hi = Math.max(...values);
