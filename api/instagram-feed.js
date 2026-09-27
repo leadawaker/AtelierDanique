@@ -5,7 +5,8 @@ import { redis } from "./_lib/redis.js";
 export default async function handler(req, res) {
   const posts = (await redis.get("ig_posts")) || [];
   const updatedAt = await redis.get("ig_posts_updated_at");
+  const followers = (await redis.get("ig_followers")) || null;
 
   res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate");
-  return res.status(200).json({ posts, updatedAt });
+  return res.status(200).json({ posts, updatedAt, followers });
 }

@@ -35,7 +35,21 @@ export async function refreshInstagram() {
     await redis.set("ig_posts", media.data);
     const updatedAt = new Date().toISOString();
     await redis.set("ig_posts_updated_at", updatedAt);
-    return { count: media.data.length, updatedAt, renewed: !!refreshed.access_token };
+
+    // Follower count for the family planner. A failure here must not break the feed.
+    let followers = null;
+    try {
+      const me = await getJson(
+        `https://graph.instagram.com/v21.0/me?fields=followers_count&access_token=${encodeURIComponent(refreshed.access_token || token)}`
+      );
+      if (typeof me.followers_count === "number") {
+        followers = me.followers_count;
+        await redis.set("ig_followers", { count: followers, at: updatedAt });
+      }
+    } catch (err) {
+      console.error("instagram followers fetch failed", err);
+    }
+    return { count: media.data.length, updatedAt, renewed: !!refreshed.access_token, followers };
   }
 
   throw new Error(`Instagram rejected the token: ${JSON.stringify(lastError)}`);
