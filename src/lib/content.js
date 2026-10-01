@@ -71,6 +71,19 @@ export async function fetchContent({ fresh = false } = {}) {
   return normalizeContent(await res.json());
 }
 
+// The build copies studio uploads from Blob into /img (scripts/mirror-photos.mjs)
+// and inlines the {blobUrl: localUrl} map, so fresh reads keep using the site's
+// copies. Public pages only: the studio must keep saving the Blob URLs.
+function withLocalPhotos(c) {
+  const map = typeof window !== 'undefined' && window.__AD_IMG__;
+  if (!map) return c;
+  const photos = {};
+  for (const [slot, p] of Object.entries(c['ad-photos'])) {
+    photos[slot] = p && map[p.url] ? { ...p, url: map[p.url] } : p;
+  }
+  return { ...c, 'ad-photos': photos };
+}
+
 // Public pages: render defaults immediately, swap in the stored content when
 // it arrives, and re-read when the tab regains focus (so an edit made in the
 // studio shows up on switching back).
@@ -78,7 +91,7 @@ export function useSiteContent() {
   const [content, setContent] = useState(startContent);
   useEffect(() => {
     let alive = true;
-    const load = () => fetchContent().then((c) => { if (alive) setContent(c); }).catch(() => {});
+    const load = () => fetchContent().then((c) => { if (alive) setContent(withLocalPhotos(c)); }).catch(() => {});
     load();
     window.addEventListener('focus', load);
     return () => { alive = false; window.removeEventListener('focus', load); };

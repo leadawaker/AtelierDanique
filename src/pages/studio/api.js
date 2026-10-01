@@ -123,7 +123,7 @@ export async function requestRebuild() {
 // Returns the public URL of the uploaded photo.
 // `keepAlpha` keeps a cut-out picture's transparency (see shrinkImage).
 export async function uploadPhoto(file, slotId, keepAlpha = false) {
-  const small = await shrinkImage(file, keepAlpha ? 2000 : 2400, 0.88, keepAlpha);
+  const small = await shrinkImage(file, 2000, 0.85, keepAlpha, true);
   const body = small || file;
   const ext = small ? (small.type === 'image/webp' ? 'webp' : small.type === 'image/png' ? 'png' : 'jpg') : (file.name.split('.').pop() || 'jpg').toLowerCase();
   const safeSlot = String(slotId).replace(/[^\w-]/g, '');

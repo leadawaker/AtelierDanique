@@ -6,6 +6,7 @@ import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { LANGS, PAGES, HTML_LANG } from '../src/lib/routes.js';
 import { render, headFor, sitemapXml, robotsTxt, llmsTxt } from '../dist-ssr/entry-server.js';
+import { mirrorPhotos } from './mirror-photos.mjs';
 
 const CONTENT_URL = process.env.SITE_CONTENT_URL || 'https://www.atelierdanique.com/api/content?fresh=1';
 
@@ -24,7 +25,9 @@ async function liveContent() {
 
 const template = await readFile('dist/index.html', 'utf8');
 const content = await liveContent();
-const inline = `<script>window.__AD_CONTENT__=${JSON.stringify(content).replace(/</g, '\\u003c')}</script>`;
+const photoMap = await mirrorPhotos(content);
+const json = (v) => JSON.stringify(v).replace(/</g, '\\u003c');
+const inline = `<script>window.__AD_CONTENT__=${json(content)};window.__AD_IMG__=${json(photoMap)}</script>`;
 
 // `ssr: false` (the 404 page) leaves off data-ssr so the client renders from
 // the address bar instead of hydrating markup for a different URL.
