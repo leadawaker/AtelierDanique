@@ -7,17 +7,16 @@ import GoogleReviewsLink from './GoogleReviewsLink.jsx';
 
 const GAP = 'clamp(18px,2vw,28px)';
 
-// Desktop layout adapts to the count: up to 4 cards share one centred row;
-// 5 or 6 use rows of three with the short last row centred.
+// Desktop: small fixed-width cards in centred rows. Mobile: a swipe rail.
 function gridStyle(compact) {
   if (compact) return 'display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:6px';
   return '--tg:' + GAP + ';display:flex;flex-wrap:wrap;justify-content:center;gap:var(--tg);max-width:1400px;margin:0 auto';
 }
 
-function cardStyle(compact, count) {
+function cardStyle(compact) {
   if (compact) return 'flex:0 0 86%;scroll-snap-align:center';
-  const perRow = count === 4 ? 4 : 3;
-  return 'min-width:0;flex:0 0 calc((100% - ' + (perRow - 1) + ' * var(--tg)) / ' + perRow + ')';
+  // Fixed, modest width; the row wraps and centres on its own.
+  return 'min-width:0;flex:0 0 clamp(200px,15vw,240px)';
 }
 
 export default function Testimonials({ t, lang, compact, content }) {
@@ -39,7 +38,7 @@ export default function Testimonials({ t, lang, compact, content }) {
               t={t}
               key={item.slotId}
               item={item}
-              style={cardStyle(compact, items.length)}
+              style={cardStyle(compact)}
               hovered={hoverT === i || bareT === i}
               onToggle={() => setBareT(bareT === i ? null : i)}
               onEnter={() => setHoverT(i)}
