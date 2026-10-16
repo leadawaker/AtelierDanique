@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { s } from '../../lib/css.js';
 import PolaroidLineCarousel from '../../components/PolaroidLineCarousel.jsx';
 
-const MAX_POSTS = 8;
+const MAX_POSTS = 14;
 const LOCALES = { en: 'en-GB', pt: 'pt-BR', nl: 'nl-NL' };
 const IG_ICON = (
   <>
@@ -19,9 +19,8 @@ function toCards(posts) {
     const url = p && (p.media_type === 'VIDEO' ? p.thumbnail_url : p.media_url);
     if (!url) continue;
     const caption = String(p.caption || '').trim();
-    const [first] = caption.split('\n');
-    const firstLine = first.trim();
-    const title = firstLine.length > 60 ? firstLine.slice(0, 59).trimEnd() + '…' : firstLine;
+    // Hashtag-only lines are dropped so the text shown is the story itself.
+    const title = caption.split('\n').filter((l) => !/^(#\S+\s*)+$/.test(l.trim())).join('\n').replace(/\n{2,}/g, '\n').trim();
     out.push({ id: p.id, url, title, timestamp: p.timestamp, permalink: p.permalink });
     if (out.length >= MAX_POSTS) break;
   }
@@ -53,7 +52,7 @@ export default function Instagram({ t, lang, links }) {
     image: post.url,
     title: post.title || '@atelierdanique',
     caption: formatDate(post.timestamp, lang),
-    alt: post.title,
+    alt: post.title.split('\n')[0].slice(0, 120),
     href: post.permalink,
   }));
   // The last print sends people to her profile.
@@ -83,7 +82,7 @@ export default function Instagram({ t, lang, links }) {
           </div>
         </div>
       </div>
-      <PolaroidLineCarousel slides={slides} height="clamp(500px,68vh,680px)" ariaLabel={t.igEyebrow} />
+      <PolaroidLineCarousel slides={slides} height="clamp(540px,74vh,740px)" ariaLabel={t.igEyebrow} />
     </section>
   );
 }

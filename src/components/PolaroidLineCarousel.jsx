@@ -42,15 +42,15 @@ const PL_CSS = `
 .pl-card[data-on='1'][data-link='1']{cursor:pointer}
 .pl-print{margin-top:10px;background:#FFFEFB;padding:10px 10px 0;box-shadow:0 1px 2px rgba(38,69,79,.12),0 18px 30px -16px rgba(38,69,79,.45);transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .5s ease}
 .pl-card[data-on='0'] .pl-print{transform:scale(.9);filter:saturate(.7) brightness(.96)}
-.pl-shot{position:relative;aspect-ratio:1;overflow:hidden;background:#E3E1D8}
+.pl-shot{position:relative;aspect-ratio:3/4;overflow:hidden;background:#E3E1D8}
 .pl-shot img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block;pointer-events:none}
-.pl-note{height:46px;line-height:46px !important;text-align:center;padding:0 6px;font:italic 400 15px/1.1 'Cardo',Georgia,serif;color:#455459;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-note{height:34px}
 .pl-peg{position:absolute;left:50%;top:0;width:10px;height:26px;margin-left:-5px;border-radius:2px;background:linear-gradient(90deg,#c9a67a,#e3c9a1 45%,#b8915f);box-shadow:0 2px 3px rgba(0,0,0,.25)}
 .pl-peg::after{content:'';position:absolute;left:4px;top:8px;width:2px;height:7px;background:rgba(80,60,30,.45);border-radius:1px}
 .pl-bar{position:absolute;left:clamp(24px,5vw,80px);right:clamp(24px,5vw,80px);bottom:clamp(16px,3vh,32px);display:flex;align-items:center;gap:clamp(12px,2vw,24px);cursor:default}
 .pl-cap{flex:1;min-width:0;overflow:hidden;padding-bottom:.15em}
 .pl-cap>*{display:block;animation:pl-in .55s cubic-bezier(.2,.8,.2,1) both}
-.pl-title{font:400 clamp(18px,2.2vw,26px)/1.15 'Cardo',Georgia,serif;color:var(--pl-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-title{max-width:760px;font:400 clamp(14px,1.2vw,16px)/1.5 'Cardo',Georgia,serif;color:var(--pl-ink);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;white-space:pre-line}
 a.pl-title:hover{color:#E36B54}
 .pl-sub{margin-top:4px;font-size:12px;font-weight:300;letter-spacing:.04em;color:var(--pl-muted)}
 .pl-count{font-size:12px;letter-spacing:.14em;color:var(--pl-muted)}
@@ -59,6 +59,7 @@ a.pl-title:hover{color:#E36B54}
 .pl-btn:hover{background:#E36B54;border-color:#E36B54;color:#FCFAF6}
 .pl-btn:focus-visible{outline:2px solid var(--pl-ink);outline-offset:2px}
 .pl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:639px){.pl-count,.pl-btn{display:none}.pl-title{-webkit-line-clamp:4}}
 @keyframes pl-in{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.pl-cap>*{animation:none}.pl-print{transition:none}}
 `;
@@ -103,7 +104,7 @@ export default function PolaroidLineCarousel({
       const r = root.getBoundingClientRect();
       // Narrow screens get a bigger share of the width so the print stays legible.
       const share = r.width < 640 ? 0.6 : 0.42;
-      const cw = Math.round(Math.max(150, Math.min(cardWidth, r.width * share, r.height * 0.42)));
+      const cw = Math.round(Math.max(150, Math.min(cardWidth, r.width * share, r.height * 0.34)));
       setSize({ w: r.width, h: r.height, cw });
     });
     ro.observe(root);
@@ -294,7 +295,7 @@ export default function PolaroidLineCarousel({
             <div className="pl-shot">
               {sl.node || (sl.image ? <img src={sl.image} alt={sl.alt || sl.title || ''} draggable={false} loading="lazy" /> : null)}
             </div>
-            <div className="pl-note">{sl.title || ''}</div>
+            <div className="pl-note" />
           </div>
           <div className="pl-peg" />
         </div>
