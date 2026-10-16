@@ -160,7 +160,7 @@ function SizeCarousel({ cards }) {
         style={s('display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:24px 9vw 8px')}>
         {cards.map((c) => (
           <div key={c.id} style={s('flex:0 0 82vw;max-width:400px;scroll-snap-align:center;scroll-snap-stop:always;display:flex')}>
-            <div style={s('flex:1;display:flex;flex-direction:column')}><PriceCard {...c} ratio="1" /></div>
+            <div style={s('flex:1;display:flex;flex-direction:column')}><PriceCard {...c} /></div>
           </div>
         ))}
       </div>
