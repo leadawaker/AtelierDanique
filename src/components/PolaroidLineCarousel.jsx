@@ -40,9 +40,9 @@ const PL_CSS = `
 .pl-string{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .pl-card{position:absolute;left:0;top:0;width:var(--pl-cw);transform-origin:50% 0;will-change:transform;cursor:inherit}
 .pl-card[data-on='1'][data-link='1']{cursor:pointer}
-.pl-print{margin-top:10px;background:#FFFEFB;padding:10px 10px 0;box-shadow:0 1px 2px rgba(38,69,79,.12),0 18px 30px -16px rgba(38,69,79,.45);transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .5s ease}
+.pl-print{margin-top:10px;background:#FFFEFB;padding:10px 10px 0;box-shadow:0 1px 2px rgba(38,69,79,.12),0 18px 30px -16px rgba(38,69,79,.45);transform-origin:50% 0;transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .5s ease}
 .pl-card[data-on='0'] .pl-print{transform:scale(.9);filter:saturate(.7) brightness(.96)}
-.pl-shot{position:relative;aspect-ratio:3/4;overflow:hidden;background:#E3E1D8}
+.pl-shot{position:relative;aspect-ratio:1;overflow:hidden;background:#E3E1D8}
 .pl-shot img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block;pointer-events:none}
 .pl-note{height:34px}
 .pl-peg{position:absolute;left:50%;top:0;width:10px;height:26px;margin-left:-5px;border-radius:2px;background:linear-gradient(90deg,#c9a67a,#e3c9a1 45%,#b8915f);box-shadow:0 2px 3px rgba(0,0,0,.25)}
@@ -59,7 +59,7 @@ a.pl-title:hover{color:#E36B54}
 .pl-btn:hover{background:#E36B54;border-color:#E36B54;color:#FCFAF6}
 .pl-btn:focus-visible{outline:2px solid var(--pl-ink);outline-offset:2px}
 .pl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media (max-width:639px){.pl-count,.pl-btn{display:none}.pl-title{-webkit-line-clamp:4}}
+@media (max-width:639px){.pl-count,.pl-btn{display:none}.pl-shot{aspect-ratio:3/4}.pl-title{-webkit-line-clamp:4}}
 @keyframes pl-in{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.pl-cap>*{animation:none}.pl-print{transition:none}}
 `;
@@ -83,6 +83,9 @@ export default function PolaroidLineCarousel({
   const n = slides.length;
   const [active, setActive] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(false);
+  pausedRef.current = paused;
   const [size, setSize] = useState({ w: 1200, h: 800, cw: cardWidth });
   const rootRef = useRef(null);
   const pathRef = useRef(null);
@@ -104,7 +107,7 @@ export default function PolaroidLineCarousel({
       const r = root.getBoundingClientRect();
       // Narrow screens get a bigger share of the width so the print stays legible.
       const share = r.width < 640 ? 0.6 : 0.42;
-      const cw = Math.round(Math.max(150, Math.min(cardWidth, r.width * share, r.height * 0.34)));
+      const cw = Math.round(Math.max(150, Math.min(cardWidth, r.width * share, r.height * (r.width < 640 ? 0.34 : 0.42))));
       setSize({ w: r.width, h: r.height, cw });
     });
     ro.observe(root);
@@ -190,7 +193,7 @@ export default function PolaroidLineCarousel({
   useEffect(() => {
     if (!autoplay || n < 2) return undefined;
     const t = window.setInterval(() => {
-      if (document.hidden || drag.current || performance.now() - lastTouch.current < autoplay) return;
+      if (pausedRef.current || document.hidden || drag.current || performance.now() - lastTouch.current < autoplay) return;
       goTo(activeRef.current >= n - 1 ? 0 : activeRef.current + 1);
     }, autoplay);
     return () => window.clearInterval(t);
@@ -314,6 +317,11 @@ export default function PolaroidLineCarousel({
         </span>
         <button type="button" className="pl-btn" aria-label="Previous" onClick={() => step(-1)}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="currentColor" strokeWidth="1.4" /></svg>
+        </button>
+        <button type="button" className="pl-btn" aria-label={paused ? 'Play' : 'Pause'} aria-pressed={paused} onClick={() => setPaused((v) => !v)}>
+          {paused
+            ? <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" /></svg>
+            : <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="4.5" y="3.5" width="2.2" height="9" rx=".5" /><rect x="9.3" y="3.5" width="2.2" height="9" rx=".5" /></svg>}
         </button>
         <button type="button" className="pl-btn" aria-label="Next" onClick={() => step(1)}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m6 3 5 5-5 5" stroke="currentColor" strokeWidth="1.4" /></svg>
