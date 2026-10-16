@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { s } from '../../lib/css.js';
 import Slot from '../../components/Slot.jsx';
 import { A4_PHOTO_FOCUS, currencyFor, formatMoney, launchActive, launchBanner, sitePricing } from '../../lib/pricing.js';
@@ -28,7 +29,6 @@ const SIZE_CARDS = [
 const CORAL = '#C0503B';
 const LINE = '#E3BFB1';
 const PHOTO_BOX = 'position:relative;width:100%;aspect-ratio:3/4;border-radius:6px;overflow:hidden';
-const PHOTO_BOX_ROW = 'position:relative;flex:0 0 96px;align-self:stretch;min-height:128px;border-radius:6px;overflow:hidden';
 const NAME = "font-family:'Cardo',serif;font-weight:400;font-size:clamp(30px,3vw,36px);line-height:1;color:#26454F";
 const DESC = "font-family:'Cardo',serif;font-size:17px;line-height:1.5;color:#5E6C71";
 const PRICE = "margin:0;font-family:'Cardo',serif;font-size:clamp(38px,4vw,52px);line-height:1;color:" + CORAL;
@@ -89,39 +89,16 @@ function LaunchBanner({ banner, compact }) {
 }
 
 // One size, the full card: photo on top, then the size, the paper size, the
-// description and the price. Under 1000px (compact) it becomes a short row
-// instead: a small photo on the left, everything else beside it, so all three
-// sizes fit on roughly one phone screen and are easy to compare.
-function PriceCard({ slotId, src, focus, placeholder, alt, size, dims, desc, price, label, badge, compact }) {
+// description and the price. On phones the cards sit in a snap carousel.
+function PriceCard({ slotId, src, focus, placeholder, alt, size, dims, desc, price, label, badge, ratio = '3/4' }) {
   const border = badge ? '#E36B54' : '#EAE4DA';
   const photo = (
-    <div style={s(compact ? PHOTO_BOX_ROW : PHOTO_BOX)}>
+    <div style={s(PHOTO_BOX + ';aspect-ratio:' + ratio)}>
       <Slot slotId={slotId} src={src} focus={focus} placeholder={placeholder} alt={alt} />
     </div>
   );
-  const name = <h3 style={s(NAME + (compact ? ';margin:0' : ';margin:22px 0 0'))}>{size}</h3>;
-  const dimsLine = <p style={s('margin:0;font-size:13px;letter-spacing:.14em;color:#5E6C71')}>{dims}</p>;
-  const description = <p style={s(DESC + (compact ? ';margin:8px 0 0;max-width:none;font-size:15px' : ';flex:1 1 auto;margin:14px 0 0;max-width:30ch;text-wrap:balance'))}>{desc}</p>;
-
-  if (compact) {
-    return (
-      <div style={s('background:#FFFFFF;border:1px solid ' + border + ';border-radius:10px;box-shadow:0 6px 20px rgba(38,69,79,.07);padding:16px;display:flex;gap:16px;align-items:stretch;position:relative')}>
-        {photo}
-        <div style={s('flex:1 1 auto;min-width:0;display:flex;flex-direction:column')}>
-          <div style={s('display:flex;align-items:baseline;justify-content:space-between;gap:10px')}>
-            {name}
-            <p style={s(PRICE + ';font-size:30px')}>{price}</p>
-          </div>
-          <div style={s('display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:6px')}>
-            {dimsLine}
-            {label ? <p style={s(CAPS + ';font-size:11px')}>{label}</p> : null}
-          </div>
-          {description}
-          {badge ? <p style={s(CAPS + ';margin-top:10px;font-size:11px')}>{badge}</p> : null}
-        </div>
-      </div>
-    );
-  }
+  const name = <h3 style={s(NAME + ';margin:22px 0 0')}>{size}</h3>;
+  const description = <p style={s(DESC + ';flex:1 1 auto;margin:14px 0 0;max-width:30ch;text-wrap:balance')}>{desc}</p>;
 
   return (
     <div style={s('background:#FFFFFF;border:1px solid ' + border + ';border-radius:10px;box-shadow:0 10px 30px rgba(38,69,79,.08);padding:clamp(24px,3vw,32px);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative')}>
@@ -138,11 +115,71 @@ function PriceCard({ slotId, src, focus, placeholder, alt, size, dims, desc, pri
   );
 }
 
+// Phones: one size at a time in a snap carousel, opening on the popular A4.
+// The tabs above show all three sizes with their price and jump to that card.
+function SizeCarousel({ cards }) {
+  const railRef = useRef(null);
+  const start = Math.max(0, cards.findIndex((c) => c.badge));
+  const [active, setActive] = useState(start);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    const card = rail && rail.children[start];
+    if (card) rail.scrollLeft = card.offsetLeft - (rail.clientWidth - card.offsetWidth) / 2;
+  }, [start]);
+
+  const onScroll = () => {
+    const rail = railRef.current;
+    const mid = rail.scrollLeft + rail.clientWidth / 2;
+    let best = 0, dist = Infinity;
+    [...rail.children].forEach((el, i) => {
+      const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid);
+      if (d < dist) { dist = d; best = i; }
+    });
+    if (best !== active) setActive(best);
+  };
+  const go = (i) => {
+    const rail = railRef.current;
+    const card = rail.children[i];
+    rail.scrollTo({ left: card.offsetLeft - (rail.clientWidth - card.offsetWidth) / 2, behavior: 'smooth' });
+  };
+
+  return (
+    <div style={s('margin:0 calc(-1 * clamp(24px,5vw,80px)) clamp(32px,4vw,48px)')}>
+      <div role="tablist" style={s('display:flex;justify-content:center;gap:8px;margin:0 clamp(24px,5vw,80px) 8px')}>
+        {cards.map((c, i) => (
+          <button key={c.id} type="button" role="tab" aria-selected={i === active} onClick={() => go(i)}
+            style={s('flex:1 1 0;max-width:120px;padding:10px 6px;border-radius:999px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:background .25s,border-color .25s,color .25s;'
+              + (i === active ? 'background:' + CORAL + ';border:1px solid ' + CORAL + ';color:#FCFAF6' : 'background:transparent;border:1px solid #E3D9CF;color:#26454F'))}>
+            <span style={s("font-family:'Cardo',serif;font-size:18px;line-height:1")}>{c.size}</span>
+            <span style={s('font-size:12px;letter-spacing:.06em;opacity:.85')}>{c.price}</span>
+          </button>
+        ))}
+      </div>
+      <div ref={railRef} onScroll={onScroll} data-noscrollbar=""
+        style={s('display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:24px 9vw 8px')}>
+        {cards.map((c) => (
+          <div key={c.id} style={s('flex:0 0 82vw;max-width:400px;scroll-snap-align:center;scroll-snap-stop:always;display:flex')}>
+            <div style={s('flex:1;display:flex;flex-direction:column')}><PriceCard {...c} ratio="1" /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Pricing({ t, lang, content, compact }) {
   const pricing = sitePricing(content);
   const currency = currencyFor(lang);
   const banner = launchBanner(t, pricing, lang);
   const label = launchActive(pricing) ? t.priceLabel : '';
+  const cards = SIZE_CARDS.map((card) => ({
+    id: card.id, slotId: 'ad-price-' + card.id, src: card.src, focus: card.focus,
+    placeholder: card.size + ' paper photo', alt: t.sheetAlt.replace('{size}', card.size),
+    size: card.size, dims: card.dims, desc: t[card.desc],
+    price: formatMoney(pricing[card.id][currency], currency), label,
+    badge: card.popular ? t.popularLabel : null,
+  }));
 
   return (
     <section id="pricing" style={s('padding: clamp(48px,7vw,104px) clamp(24px,5vw,80px); background-color: #FCFAF6')}>
@@ -158,18 +195,13 @@ export default function Pricing({ t, lang, content, compact }) {
 
         {banner ? <LaunchBanner banner={banner} compact={compact} /> : null}
 
-        <div style={s(compact
-          ? 'display:flex;flex-direction:column;gap:14px;max-width:560px;margin:0 auto clamp(32px,4vw,48px)'
-          : 'display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.2vw,32px);max-width:1180px;margin:0 auto clamp(32px,4vw,48px)')}>
-          {SIZE_CARDS.map((card) => (
-            <PriceCard key={card.id} compact={compact}
-              slotId={'ad-price-' + card.id} src={card.src} focus={card.focus}
-              placeholder={card.size + ' paper photo'} alt={t.sheetAlt.replace('{size}', card.size)}
-              size={card.size} dims={card.dims} desc={t[card.desc]}
-              price={formatMoney(pricing[card.id][currency], currency)} label={label}
-              badge={card.popular ? t.popularLabel : null} />
-          ))}
-        </div>
+        {compact
+          ? <SizeCarousel cards={cards} />
+          : (
+            <div style={s('display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.2vw,32px);max-width:1180px;margin:0 auto clamp(32px,4vw,48px)')}>
+              {cards.map((c) => <PriceCard key={c.id} {...c} />)}
+            </div>
+          )}
 
         <div style={s('max-width:720px;margin:0 auto;border-top:1px solid #D3CFC4;padding-top:clamp(24px,3vw,36px)')}>
           <p style={s('margin:0 0 16px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#26454F;text-align:center')}>{t.included}</p>
